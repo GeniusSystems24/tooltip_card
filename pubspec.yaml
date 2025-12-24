@@ -1,14 +1,10 @@
 name: tooltip_card
 description: >-
-  A powerful, highly customizable tooltip and popover widget for Flutter inspired by 
-  Microsoft Fluent UI TeachingTip. Features include: smart auto-positioning with 12 
-  placement options and viewport-aware auto-flip, beautiful beak/arrow pointer with 
-  shadow matching the panel, Material 3 theming with dark mode optimization, multiple 
-  trigger modes (tap, hover, double-tap, right-click), modal barrier with blur effect, 
-  programmatic control via TooltipCardController, RTL support, keyboard navigation, 
-  screen reader accessibility, spring-based animations, and structured content widget 
-  (TooltipCardContent) with icons, titles, actions, and close button. Perfect for 
-  onboarding tours, contextual help, feature discovery, and rich interactive popovers.
+  A powerful tooltip/popover widget inspired by Fluent UI TeachingTip. Features smart 
+  auto-positioning with 12 placements, beak/arrow pointer, Material 3 theming, multiple 
+  triggers (tap/hover/double-tap/right-click), modal barrier with blur, RTL support, 
+  accessibility, TooltipCardController, and TooltipCardContent for onboarding and 
+  feature discovery.
 version: 2.4.0
 homepage: https://github.com/geniussystems24/tooltip_card
 repository: https://github.com/geniussystems24/tooltip_card
