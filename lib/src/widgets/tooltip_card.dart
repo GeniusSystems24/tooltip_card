@@ -302,6 +302,10 @@ class _TooltipCardState extends State<TooltipCard>
       widget.whenContentVisible == WhenContentVisible.secondaryTapButton;
 
   bool get _shouldAutoCloseOnHoverOut {
+    // When modal barrier is enabled, don't auto-close on hover out
+    // The user must explicitly close it (via close button, barrier tap, or ESC)
+    if (widget.modalBarrierEnabled) return false;
+
     return widget.whenContentVisible == WhenContentVisible.hoverButton ||
         (_isPressLike && widget.whenContentHide == WhenContentHide.goAway) ||
         widget.dismissOnPointerMoveAway;

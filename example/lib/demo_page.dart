@@ -1,1493 +1,787 @@
+import 'package:flutter/material.dart';
 import 'package:tooltip_card/tooltip_card.dart';
 
-// DemoTooltipCards — v5.0.0 Comprehensive Showcase
-// ------------------------------------------------
-// This screen demonstrates ALL features of TooltipCard (v5.0.0):
-//  • Compound placement sides (added in v4.8.0)
-//  • Unified child parameter API (NEW in v5.0.0)
-//  • Builder API with close()
-//  • Legacy static content
-//  • Visibility modes: press / hover / double‑tap / secondary‑tap
-//  • Hide modes: goAway / pressOutSide
-//  • Viewport‑fit (clamping, tall content auto‑scroll)
-//  • PublicState (one open at a time)
-//  • Modal barrier: color + blur + dismissible toggle
-//  • Beak/Caret: enabled/disabled, size, alignment (start/center/end), side (top/bottom)
-//  • RTL alignment
-//  • Programmatic control with TooltipCardController
-//  • Performance optimizations (v4.7.3)
-//
-// Quick run:
-//   void main() => runApp(const DemoTooltipCardApp());
-
-import 'package:flutter/material.dart';
-
+/// Modern TooltipCard Demo Page
+/// A clean, elegant showcase of TooltipCard features
 class DemoPage extends StatelessWidget {
   const DemoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('TooltipCard Demo'), centerTitle: true),
-      body: const DemoTooltipCards(),
+    return Theme(
+      data: _buildModernTheme(context),
+      child: const Scaffold(
+        body: _DemoContent(),
+      ),
+    );
+  }
+
+  ThemeData _buildModernTheme(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+
+    return ThemeData(
+      useMaterial3: true,
+      brightness: brightness,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xFF6366F1), // Indigo
+        brightness: brightness,
+      ),
+      fontFamily: 'Inter',
+      cardTheme: CardTheme(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.06),
+          ),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
     );
   }
 }
 
-class DemoTooltipCards extends StatefulWidget {
-  const DemoTooltipCards({super.key});
+class _DemoContent extends StatefulWidget {
+  const _DemoContent();
+
   @override
-  State<DemoTooltipCards> createState() => _DemoTooltipCardsState();
+  State<_DemoContent> createState() => _DemoContentState();
 }
 
-class _DemoTooltipCardsState extends State<DemoTooltipCards> {
-  // Shared public state: only one tooltip open at a time across this screen.
-  final TooltipCardPublicState pub = TooltipCardPublicState.global;
-
-  // Programmatic controller
-  final TooltipCardController ctl = TooltipCardController();
-  bool isProgramOpen = false;
+class _DemoContentState extends State<_DemoContent> {
+  final TooltipCardPublicState _publicState = TooltipCardPublicState.global;
+  final TooltipCardController _controller = TooltipCardController();
+  bool _isControlledOpen = false;
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
-    return LayoutBuilder(
-      builder: (context, _) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return CustomScrollView(
+      slivers: [
+        // Modern App Bar
+        SliverAppBar.large(
+          floating: true,
+          backgroundColor: colorScheme.surface,
+          surfaceTintColor: Colors.transparent,
+          title: Row(
             children: [
-              // Header
-              Row(
-                children: [
-                  Icon(
-                    Icons.info_outline,
-                    size: 32,
-                    color: Theme.of(context).colorScheme.primary,
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      colorScheme.primary,
+                      colorScheme.tertiary,
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'TooltipCard v5.0.0 — Full Showcase',
-                          style: t.headlineSmall,
-                        ),
-                        Text(
-                          'Comprehensive examples for all features',
-                          style: t.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.widgets_rounded, color: Colors.white, size: 24),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(width: 14),
+              const Text('TooltipCard'),
+            ],
+          ),
+          actions: [
+            Container(
+              margin: const EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                'v5.3.0',
+                style: TextStyle(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
 
-              // Section 1: Compound Placement Sides
-              _section('🎯 Compound Placement Sides (v4.8.0)', [
-                _subsection('Vertical Compound Placements', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.topStart,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Top-Start Placement',
-                      description:
-                          'Positioned above with start alignment.\nNo need for placementAlign parameter!',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_upward),
-                        SizedBox(width: 8),
-                        Text('Top-Start'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.topEnd,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Top-End Placement',
-                      description: 'Positioned above with end alignment.',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_upward),
-                        SizedBox(width: 8),
-                        Text('Top-End'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottomStart,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Bottom-Start Placement',
-                      description: 'Positioned below with start alignment.',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_downward),
-                        SizedBox(width: 8),
-                        Text('Bottom-Start'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottomEnd,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Bottom-End Placement',
-                      description: 'Positioned below with end alignment.',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_downward),
-                        SizedBox(width: 8),
-                        Text('Bottom-End'),
-                      ],
-                    ),
-                  ),
-                ]),
-                _subsection('Horizontal Compound Placements', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.startTop,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Start-Top Placement',
-                      description: 'Positioned at start with top alignment.',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_back),
-                        SizedBox(width: 8),
-                        Text('Start-Top'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.startBottom,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Start-Bottom Placement',
-                      description: 'Positioned at start with bottom alignment.',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_back),
-                        SizedBox(width: 8),
-                        Text('Start-Bottom'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.endTop,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'End-Top Placement',
-                      description: 'Positioned at end with top alignment.',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_forward),
-                        SizedBox(width: 8),
-                        Text('End-Top'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.endBottom,
-                    flyoutBackgroundColor: Colors.grey,
-                    beakColor: Colors.grey,
-                    beakEnabled: true,
-                    builder: (ctx, close) => SizedBox(
-                      width: 100,
-                      child: _panelShell(
-                        title: 'End-Bottom Placement',
-                        description: 'Positioned at end with bottom alignment.',
-                        onClose: close,
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_forward),
-                        SizedBox(width: 8),
-                        Text('End-Bottom'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
+        // Content
+        SliverPadding(
+          padding: const EdgeInsets.all(20),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate([
+              // Hero Section
+              _buildHeroSection(colorScheme, isDark),
+              const SizedBox(height: 32),
 
-              // Section 2: Basic Placements (Centered by Default)
-              _section('📍 Basic Placements (Centered)', [
-                _subsection('Top & Bottom', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.top,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      child: const _FilterPanel(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.filter_list),
-                        SizedBox(width: 8),
-                        Text('Top (Centered)'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    beakEnabled: true,
-                    builder: (ctx, close) =>
-                        _panelShell(child: const _SortPanel(), onClose: close),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.sort),
-                        SizedBox(width: 8),
-                        Text('Bottom (Centered)'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      child: const _ExportPanel(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.upload_file),
-                        SizedBox(width: 8),
-                        Text('Bottom (Centered)'),
-                      ],
-                    ),
-                  ),
-                ]),
-                _subsection('Start & End', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.start,
-                    beakEnabled: true,
-                    builder: (ctx, close) =>
-                        _panelShell(child: const _SmallMenu(), onClose: close),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.menu),
-                        SizedBox(width: 8),
-                        Text('Start Side'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.end,
-                    beakEnabled: true,
-                    builder: (ctx, close) =>
-                        _panelShell(child: const _SmallMenu(), onClose: close),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.info),
-                        SizedBox(width: 8),
-                        Text('End Side'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
+              // Quick Actions Grid
+              _buildSectionHeader('Quick Start', Icons.bolt_rounded),
+              const SizedBox(height: 16),
+              _buildQuickActionsGrid(colorScheme),
+              const SizedBox(height: 40),
 
-              // Section 3: Trigger Modes
-              _section('🖱️ Trigger Modes', [
-                _subsection('Press & Hover', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    whenContentVisible: WhenContentVisible.pressButton,
-                    whenContentHide: WhenContentHide.goAway,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Press Mode',
-                      description:
-                          'Opens on click, closes on hover out or second click',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.touch_app),
-                        SizedBox(width: 8),
-                        Text('Press to Open'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    whenContentVisible: WhenContentVisible.hoverButton,
-                    hoverOpenDelay: const Duration(milliseconds: 90),
-                    hoverCloseDelay: const Duration(milliseconds: 220),
-                    placementSide: TooltipCardPlacementSide.top,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Hover Mode',
-                      description: 'Opens on hover with 90ms delay',
-                      child: const _PaletteMenu(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.mouse),
-                        SizedBox(width: 8),
-                        Text('Hover to Open'),
-                      ],
-                    ),
-                  ),
-                ]),
-                _subsection('Special Triggers', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    whenContentVisible: WhenContentVisible.doubleTapButton,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Double-Tap Mode',
-                      description: 'Requires double-tap to open',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.double_arrow),
-                        SizedBox(width: 8),
-                        Text('Double-Tap'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    whenContentVisible: WhenContentVisible.secondaryTapButton,
-                    builder: (ctx, close) => _panelShell(
-                      child: const _ContextMenu(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.more_horiz),
-                        SizedBox(width: 8),
-                        Text('Right-Click'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
+              // Placement Section
+              _buildSectionHeader('Placement Options', Icons.grid_view_rounded),
+              const SizedBox(height: 16),
+              _buildPlacementSection(colorScheme, isDark),
+              const SizedBox(height: 40),
 
-              // Section 4: Hide Modes
-              _section('🚪 Hide Modes', [
-                TooltipCard.builder(
-                  publicState: pub,
-                  whenContentHide: WhenContentHide.goAway,
-                  builder: (ctx, close) => _panelShell(
-                    title: 'GoAway Hide',
-                    description:
-                        'Closes when hovering out from button and panel',
-                    onClose: close,
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.exit_to_app),
-                      SizedBox(width: 8),
-                      Text('GoAway Mode'),
-                    ],
+              // Trigger Modes Section
+              _buildSectionHeader('Trigger Modes', Icons.touch_app_rounded),
+              const SizedBox(height: 16),
+              _buildTriggerModesSection(colorScheme),
+              const SizedBox(height: 40),
+
+              // Modal & Effects Section
+              _buildSectionHeader('Modal & Effects', Icons.blur_on_rounded),
+              const SizedBox(height: 16),
+              _buildModalSection(colorScheme, isDark),
+              const SizedBox(height: 40),
+
+              // Programmatic Control Section
+              _buildSectionHeader('Programmatic Control', Icons.code_rounded),
+              const SizedBox(height: 16),
+              _buildProgrammaticSection(colorScheme),
+              const SizedBox(height: 40),
+
+              // Style Variations Section
+              _buildSectionHeader('Style Variations', Icons.palette_rounded),
+              const SizedBox(height: 16),
+              _buildStyleVariationsSection(colorScheme, isDark),
+              const SizedBox(height: 60),
+
+              // Footer
+              _buildFooter(colorScheme),
+              const SizedBox(height: 20),
+            ]),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeroSection(ColorScheme colorScheme, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(28),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            colorScheme.primaryContainer.withValues(alpha: 0.4),
+            colorScheme.tertiaryContainer.withValues(alpha: 0.3),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: colorScheme.primary.withValues(alpha: 0.1),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.auto_awesome,
+                color: colorScheme.primary,
+                size: 28,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Fluent-Inspired Tooltips',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Beautiful, customizable tooltip cards with smart positioning, beak arrows, modal barriers, and smooth animations.',
+            style: TextStyle(
+              fontSize: 15,
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 20),
+          TooltipCard.builder(
+            publicState: _publicState,
+            placementSide: TooltipCardPlacementSide.bottom,
+            beakEnabled: true,
+            modalBarrierEnabled: true,
+            barrierBlur: 4,
+            builder: (ctx, close) => TooltipCardContent(
+              icon: const Icon(Icons.celebration_rounded),
+              iconColor: colorScheme.primary,
+              title: 'Welcome!',
+              subtitle: 'This is a TooltipCard in action. It supports rich content, actions, and beautiful animations.',
+              primaryAction: FilledButton(
+                onPressed: close,
+                child: const Text('Got it!'),
+              ),
+              onClose: close,
+            ),
+            child: FilledButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.play_arrow_rounded),
+              label: const Text('Try it now'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title, IconData icon) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: colorScheme.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: colorScheme.primary, size: 20),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuickActionsGrid(ColorScheme colorScheme) {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: [
+        _QuickActionCard(
+          icon: Icons.arrow_upward_rounded,
+          label: 'Top',
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.top,
+        ),
+        _QuickActionCard(
+          icon: Icons.arrow_downward_rounded,
+          label: 'Bottom',
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.bottom,
+        ),
+        _QuickActionCard(
+          icon: Icons.arrow_back_rounded,
+          label: 'Start',
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.start,
+        ),
+        _QuickActionCard(
+          icon: Icons.arrow_forward_rounded,
+          label: 'End',
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.end,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlacementSection(ColorScheme colorScheme, bool isDark) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Compound Placements',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: colorScheme.onSurface,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Fine-grained control over tooltip positioning',
+              style: TextStyle(
+                fontSize: 13,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                _PlacementChip(label: 'Top Start', placement: TooltipCardPlacementSide.topStart, publicState: _publicState),
+                _PlacementChip(label: 'Top End', placement: TooltipCardPlacementSide.topEnd, publicState: _publicState),
+                _PlacementChip(label: 'Bottom Start', placement: TooltipCardPlacementSide.bottomStart, publicState: _publicState),
+                _PlacementChip(label: 'Bottom End', placement: TooltipCardPlacementSide.bottomEnd, publicState: _publicState),
+                _PlacementChip(label: 'Start Top', placement: TooltipCardPlacementSide.startTop, publicState: _publicState),
+                _PlacementChip(label: 'Start Bottom', placement: TooltipCardPlacementSide.startBottom, publicState: _publicState),
+                _PlacementChip(label: 'End Top', placement: TooltipCardPlacementSide.endTop, publicState: _publicState),
+                _PlacementChip(label: 'End Bottom', placement: TooltipCardPlacementSide.endBottom, publicState: _publicState),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTriggerModesSection(ColorScheme colorScheme) {
+    return Row(
+      children: [
+        Expanded(
+          child: _TriggerModeCard(
+            icon: Icons.touch_app_rounded,
+            title: 'Press',
+            description: 'Tap to open',
+            publicState: _publicState,
+            whenVisible: WhenContentVisible.pressButton,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _TriggerModeCard(
+            icon: Icons.mouse_rounded,
+            title: 'Hover',
+            description: 'Hover to open',
+            publicState: _publicState,
+            whenVisible: WhenContentVisible.hoverButton,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _TriggerModeCard(
+            icon: Icons.ads_click_rounded,
+            title: 'Double Tap',
+            description: 'Double-tap to open',
+            publicState: _publicState,
+            whenVisible: WhenContentVisible.doubleTapButton,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildModalSection(ColorScheme colorScheme, bool isDark) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.blur_circular_rounded, color: colorScheme.primary),
+                const SizedBox(width: 10),
+                Text(
+                  'Modal Barrier with Blur',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Focus attention with a beautiful backdrop blur effect',
+              style: TextStyle(
+                fontSize: 13,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
                 TooltipCard.builder(
-                  publicState: pub,
-                  whenContentHide: WhenContentHide.pressOutSide,
-                  builder: (ctx, close) => _panelShell(
-                    title: 'PressOutside Hide',
-                    description: 'Closes only when clicking outside',
-                    onClose: close,
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.logout),
-                      SizedBox(width: 8),
-                      Text('PressOutside Mode'),
-                    ],
-                  ),
-                ),
-              ]),
-
-              // Section 5: Beak Variations
-              _section('🔺 Beak (Callout Arrow) Variations', [
-                _subsection('Beak Enabled', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    beakEnabled: true,
-                    beakSize: 10,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Default Beak',
-                      description: 'Standard beak at center',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.info_outline),
-                        SizedBox(width: 8),
-                        Text('Beak • Center'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    beakEnabled: true,
-                    beakSize: 16,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Large Beak',
-                      description: 'Beak size: 16px',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.info),
-                        SizedBox(width: 8),
-                        Text('Large Beak'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.top,
-                    beakEnabled: true,
-                    beakColor: Colors.red,
-                    flyoutBackgroundColor: Colors.red.shade50,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Custom Beak',
-                      description: 'Beak with custom color',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.error_outline),
-                        SizedBox(width: 8),
-                        Text('Custom Color Beak'),
-                      ],
-                    ),
-                  ),
-                ]),
-                _subsection('No Beak', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Without Beak',
-                      description: 'Clean panel without arrow',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.block),
-                        SizedBox(width: 8),
-                        Text('No Beak'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
-
-              // Section 6: Fluent Callout Styles
-              _section('🎨 Fluent Callout Styles', [
-                TooltipCard.builder(
-                  publicState: pub,
-                  flyoutBackgroundColor: Colors.black87,
+                  publicState: _publicState,
+                  modalBarrierEnabled: true,
+                  barrierBlur: 6,
+                  barrierColor: Colors.black.withValues(alpha: 0.3),
                   placementSide: TooltipCardPlacementSide.bottom,
                   beakEnabled: true,
-                  beakSize: 10,
-                  builder: (ctx, close) => DefaultTextStyle(
-                    style: const TextStyle(color: Colors.white),
-                    child: _panelShell(
-                      onClose: close,
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Fluent Dark Callout',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Classic Fluent Design with dark background',
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ],
-                      ),
-                    ),
+                  builder: (ctx, close) => _buildModalContent(
+                    'Soft Blur',
+                    'A subtle blur effect (6px)',
+                    colorScheme,
+                    close,
                   ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.dark_mode),
-                      SizedBox(width: 8),
-                      Text('Black Callout'),
-                    ],
+                  child: _ModalButton(
+                    label: 'Soft Blur',
+                    icon: Icons.blur_on_rounded,
+                    color: colorScheme.primary,
                   ),
                 ),
                 TooltipCard.builder(
-                  publicState: pub,
-                  flyoutBackgroundColor: Colors.blue.shade700,
+                  publicState: _publicState,
+                  modalBarrierEnabled: true,
+                  barrierBlur: 16,
+                  barrierColor: Colors.black.withValues(alpha: 0.5),
                   placementSide: TooltipCardPlacementSide.bottom,
                   beakEnabled: true,
-                  builder: (ctx, close) => DefaultTextStyle(
-                    style: const TextStyle(color: Colors.white),
-                    child: _panelShell(
-                      onClose: close,
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Information',
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(height: 6),
-                          Text('Important information in blue accent'),
-                        ],
-                      ),
-                    ),
+                  builder: (ctx, close) => _buildModalContent(
+                    'Heavy Blur',
+                    'Maximum focus effect (16px)',
+                    colorScheme,
+                    close,
                   ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.info),
-                      SizedBox(width: 8),
-                      Text('Blue Callout'),
-                    ],
+                  child: _ModalButton(
+                    label: 'Heavy Blur',
+                    icon: Icons.blur_circular_rounded,
+                    color: colorScheme.tertiary,
                   ),
                 ),
                 TooltipCard.builder(
-                  publicState: pub,
-                  flyoutBackgroundColor: Colors.orange.shade100,
-                  beakColor: Colors.orange.shade100,
-                  placementSide: TooltipCardPlacementSide.top,
+                  publicState: _publicState,
+                  modalBarrierEnabled: true,
+                  barrierDismissible: false,
+                  barrierBlur: 8,
+                  placementSide: TooltipCardPlacementSide.bottom,
                   beakEnabled: true,
-                  builder: (ctx, close) => _panelShell(
+                  builder: (ctx, close) => _buildModalContent(
+                    'Non-Dismissible',
+                    'Must use the close button',
+                    colorScheme,
+                    close,
+                  ),
+                  child: _ModalButton(
+                    label: 'Locked',
+                    icon: Icons.lock_rounded,
+                    color: colorScheme.error,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildModalContent(String title, String description, ColorScheme colorScheme, VoidCallback close) {
+    return TooltipCardContent(
+      icon: const Icon(Icons.layers_rounded),
+      iconColor: colorScheme.primary,
+      title: title,
+      subtitle: description,
+      primaryAction: FilledButton(
+        onPressed: close,
+        child: const Text('Close'),
+      ),
+      onClose: close,
+    );
+  }
+
+  Widget _buildProgrammaticSection(ColorScheme colorScheme) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                TooltipCard.builder(
+                  publicState: _publicState,
+                  controller: _controller,
+                  placementSide: TooltipCardPlacementSide.bottom,
+                  beakEnabled: true,
+                  onOpenChanged: (isOpen) => setState(() => _isControlledOpen = isOpen),
+                  builder: (ctx, close) => TooltipCardContent(
+                    icon: const Icon(Icons.smart_toy_rounded),
+                    iconColor: colorScheme.primary,
+                    title: 'Controlled Tooltip',
+                    subtitle: 'This tooltip is controlled programmatically using TooltipCardController.',
+                    primaryAction: FilledButton(
+                      onPressed: close,
+                      child: const Text('Dismiss'),
+                    ),
                     onClose: close,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: _isControlledOpen
+                          ? colorScheme.primary
+                          : colorScheme.surfaceContainerHighest,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.warning, color: Colors.orange.shade700),
+                        Icon(
+                          _isControlledOpen ? Icons.visibility : Icons.visibility_off,
+                          size: 18,
+                          color: _isControlledOpen
+                              ? colorScheme.onPrimary
+                              : colorScheme.onSurface,
+                        ),
                         const SizedBox(width: 8),
-                        const Flexible(
-                          child: Text('This action requires confirmation'),
+                        Text(
+                          _isControlledOpen ? 'Visible' : 'Hidden',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: _isControlledOpen
+                                ? colorScheme.onPrimary
+                                : colorScheme.onSurface,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.warning_amber),
-                      SizedBox(width: 8),
-                      Text('Warning Callout'),
-                    ],
                   ),
                 ),
-              ]),
-
-              // Section 7: Modal Barrier
-              _section('🔒 Modal Barrier', [
-                _subsection('Modal with Blur', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    modalBarrierEnabled: true,
-                    barrierBlur: 8,
-                    barrierColor: Colors.black.withValues(alpha: 0.35),
-                    builder: (ctx, close) => _panelShell(
-                      child: const _ConfirmPanel(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.security),
-                        SizedBox(width: 8),
-                        Text('Modal • Blur 8'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    modalBarrierEnabled: true,
-                    barrierBlur: 16,
-                    barrierColor: Colors.black.withValues(alpha: 0.5),
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Heavy Blur',
-                      description: 'Maximum blur for focus',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.blur_on),
-                        SizedBox(width: 8),
-                        Text('Heavy Blur'),
-                      ],
-                    ),
-                  ),
-                ]),
-                _subsection('Modal Dismissible', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    modalBarrierEnabled: true,
-                    barrierDismissible: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Dismissible Modal',
-                      description: 'Click outside to close',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.touch_app),
-                        SizedBox(width: 8),
-                        Text('Dismissible'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    modalBarrierEnabled: true,
-                    barrierDismissible: false,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Non-Dismissible',
-                      description: 'Must use close button',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.lock_outline),
-                        SizedBox(width: 8),
-                        Text('NOT Dismissible'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
-
-              // Section 8: Content Types
-              _section('📦 Content Types', [
-                _subsection('Simple Content', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.text_fields),
-                        SizedBox(width: 8),
-                        Text('Simple Text'),
-                      ],
-                    ),
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Simple Content',
-                      description: 'Just text, nothing fancy',
-                      onClose: close,
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.list),
-                        SizedBox(width: 8),
-                        Text('Menu List'),
-                      ],
-                    ),
-                    builder: (ctx, close) =>
-                        _panelShell(child: const _SmallMenu(), onClose: close),
-                  ),
-                ]),
-                _subsection('Rich Content', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      child: const _PaletteMenu(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.palette),
-                        SizedBox(width: 8),
-                        Text('Color Picker'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.tune),
-                        SizedBox(width: 8),
-                        Text('Filter Panel'),
-                      ],
-                    ),
-                    builder: (ctx, close) => _panelShell(
-                      child: const _FilterPanel(),
-                      onClose: close,
-                    ),
-                  ),
-                ]),
-                _subsection('Tall Content', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    placementSide: TooltipCardPlacementSide.top,
-                    viewportMargin: const EdgeInsetsDirectional.all(12),
-                    builder: (ctx, close) => _panelShell(
-                      child: const _VeryTallContent(),
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.view_agenda_outlined),
-                        SizedBox(width: 8),
-                        Text('Scrollable'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
-
-              // Section 9: Styling
-              _section('🎨 Custom Styling', [
-                TooltipCard.builder(
-                  publicState: pub,
-                  flyoutBackgroundColor: Theme.of(
-                    context,
-                  ).colorScheme.surfaceTint.withValues(alpha: 0.06),
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  padding: const EdgeInsets.all(16),
-                  elevation: 12,
-                  constraints: const BoxConstraints(maxWidth: 420),
-                  builder: (ctx, close) =>
-                      _panelShell(child: const _StyledPanel(), onClose: close),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.design_services),
-                      SizedBox(width: 8),
-                      Text('Custom Style'),
-                    ],
-                  ),
+                const Spacer(),
+                _ControlButton(
+                  icon: Icons.play_arrow_rounded,
+                  label: 'Open',
+                  onPressed: () => _controller.open(),
+                  color: Colors.green,
                 ),
-                TooltipCard.builder(
-                  publicState: pub,
-                  borderRadius: BorderRadius.zero,
-                  elevation: 4,
-                  builder: (ctx, close) => _panelShell(
-                    title: 'Square Design',
-                    description: 'Sharp corners, minimal elevation',
-                    onClose: close,
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.square),
-                      SizedBox(width: 8),
-                      Text('Square Corners'),
-                    ],
-                  ),
+                const SizedBox(width: 8),
+                _ControlButton(
+                  icon: Icons.stop_rounded,
+                  label: 'Close',
+                  onPressed: () => _controller.close(),
+                  color: Colors.red,
                 ),
-                TooltipCard.builder(
-                  publicState: pub,
-                  borderRadius: const BorderRadius.all(Radius.circular(24)),
-                  elevation: 16,
-                  beakEnabled: true,
-                  builder: (ctx, close) => _panelShell(
-                    title: 'Very Rounded',
-                    description: 'Maximum roundness with high elevation',
-                    onClose: close,
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.circle_outlined),
-                      SizedBox(width: 8),
-                      Text('Rounded'),
-                    ],
-                  ),
+                const SizedBox(width: 8),
+                _ControlButton(
+                  icon: Icons.swap_horiz_rounded,
+                  label: 'Toggle',
+                  onPressed: () => _controller.toggle(),
+                  color: colorScheme.primary,
                 ),
-              ]),
-
-              // Section 10: Programmatic Control
-              _section('🎮 Programmatic Control', [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TooltipCard.builder(
-                      publicState: pub,
-                      controller: ctl,
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.play_circle),
-                          SizedBox(width: 8),
-                          Text('Controlled Tooltip'),
-                        ],
-                      ),
-                      onOpenChanged: (v) => setState(() => isProgramOpen = v),
-                      builder: (ctx, close) => _panelShell(
-                        title: 'Programmatic Control',
-                        description:
-                            'Use buttons below to control this tooltip',
-                        onClose: close,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        FilledButton.icon(
-                          onPressed: () => ctl.open(),
-                          icon: const Icon(Icons.open_in_new, size: 18),
-                          label: const Text('Open'),
-                        ),
-                        OutlinedButton.icon(
-                          onPressed: () => ctl.close(),
-                          icon: const Icon(Icons.close, size: 18),
-                          label: const Text('Close'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () => ctl.toggle(),
-                          icon: const Icon(Icons.swap_horiz, size: 18),
-                          label: const Text('Toggle'),
-                        ),
-                        Chip(
-                          avatar: Icon(
-                            isProgramOpen ? Icons.check_circle : Icons.cancel,
-                            size: 18,
-                          ),
-                          label: Text(isProgramOpen ? 'OPEN' : 'CLOSED'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ]),
-
-              // Section 11: RTL Support
-              _section('🔄 RTL (Right-to-Left) Support', [
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Wrap(
-                    spacing: 12,
-                    runSpacing: 8,
-                    children: [
-                      TooltipCard.builder(
-                        publicState: pub,
-                        placementSide: TooltipCardPlacementSide.bottomStart,
-                        beakEnabled: true,
-                        builder: (ctx, close) => _panelShell(
-                          title: 'محاذاة البداية',
-                          description: 'في وضع RTL، البداية هي اليمين',
-                          onClose: close,
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.format_align_left),
-                            SizedBox(width: 8),
-                            Text('RTL • start'),
-                          ],
-                        ),
-                      ),
-                      TooltipCard.builder(
-                        publicState: pub,
-                        placementSide: TooltipCardPlacementSide.bottom,
-                        beakEnabled: true,
-                        builder: (ctx, close) => _panelShell(
-                          title: 'محاذاة المركز',
-                          description: 'المحاذاة في المركز',
-                          onClose: close,
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.format_align_center),
-                            SizedBox(width: 8),
-                            Text('RTL • center'),
-                          ],
-                        ),
-                      ),
-                      TooltipCard.builder(
-                        publicState: pub,
-                        placementSide: TooltipCardPlacementSide.bottomEnd,
-                        beakEnabled: true,
-                        builder: (ctx, close) => _panelShell(
-                          title: 'محاذاة النهاية',
-                          description: 'في وضع RTL، النهاية هي اليسار',
-                          onClose: close,
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.format_align_right),
-                            SizedBox(width: 8),
-                            Text('RTL • end'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
-
-              // Section 12: Legacy Constructor
-              _section('📜 Legacy Constructor (Static Content)', [
-                TooltipCard(
-                  publicState: pub,
-                  flyoutContent: const Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Text(
-                      'Static widget content via legacy constructor.',
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.auto_awesome),
-                      SizedBox(width: 8),
-                      Text('Legacy API'),
-                    ],
-                  ),
-                ),
-              ]),
-
-              // Section 13: Theme Integration
-              _section('🌓 Theme Integration', [
-                _subsection('Auto Theme Colors', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    // No flyoutBackgroundColor - uses theme automatically
-                    beakEnabled: true,
-                    builder: (ctx, close) => _panelShell(
-                      title: 'Theme-Aware',
-                      description:
-                          'Automatically uses ${isDark ? 'dark' : 'light'} mode surface color',
-                      onClose: close,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.brightness_auto),
-                        SizedBox(width: 8),
-                        Text('Auto Surface'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    flyoutBackgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.primaryContainer,
-                    beakEnabled: true,
-                    builder: (ctx, close) => DefaultTextStyle(
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
-                      child: _panelShell(
-                        onClose: close,
-                        child: const Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Primary Container',
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                            SizedBox(height: 6),
-                            Text('Uses theme primary color'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.color_lens),
-                        SizedBox(width: 8),
-                        Text('Primary Color'),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
-
-              // Section 14: TooltipCardThemeData Usage
-              _section('🎨 TooltipCardThemeData (v2.4.0)', [
-                _subsection('Using Theme Extension', [
-                  Builder(
-                    builder: (context) {
-                      // Access theme data via context extension
-                      final tooltipTheme = context.tooltipCardTheme;
-                      return TooltipCard.builder(
-                        publicState: pub,
-                        beakEnabled: true,
-                        placementSide: TooltipCardPlacementSide.bottom,
-                        builder: (ctx, close) => TooltipCardContent(
-                          icon: const Icon(Icons.palette),
-                          iconColor: tooltipTheme?.iconColor,
-                          title: 'Theme Extension',
-                          subtitle:
-                              'This tooltip uses TooltipCardThemeData from context',
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Icon Color: ${tooltipTheme?.iconColor}',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              Text(
-                                'Elevation: ${tooltipTheme?.elevation}',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              Text(
-                                'Beak Size: ${tooltipTheme?.beakSize}',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ],
-                          ),
-                          primaryAction: FilledButton(
-                            onPressed: close,
-                            child: const Text('Got it'),
-                          ),
-                          onClose: close,
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.extension),
-                            SizedBox(width: 8),
-                            Text('Context Extension'),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  Builder(
-                    builder: (context) {
-                      final tooltipTheme = context.tooltipCardTheme;
-                      return TooltipCard.builder(
-                        publicState: pub,
-                        beakEnabled: tooltipTheme?.beakEnabled ?? true,
-                        beakSize: tooltipTheme?.beakSize ?? 10,
-                        elevation: tooltipTheme?.elevation ?? 8,
-                        borderRadius:
-                            tooltipTheme?.borderRadius ??
-                            BorderRadius.circular(8),
-                        placementSide: TooltipCardPlacementSide.bottom,
-                        builder: (ctx, close) => TooltipCardContent(
-                          icon: const Icon(Icons.style),
-                          iconColor: tooltipTheme?.iconColor,
-                          title: 'Themed Properties',
-                          subtitle: 'All properties from TooltipCardThemeData',
-                          primaryAction: FilledButton(
-                            onPressed: close,
-                            child: const Text('Nice!'),
-                          ),
-                          onClose: close,
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.brush),
-                            SizedBox(width: 8),
-                            Text('Themed Properties'),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ]),
-                _subsection('TooltipCardContent with Theme', [
-                  TooltipCard.builder(
-                    publicState: pub,
-                    beakEnabled: true,
-                    modalBarrierEnabled: true,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    builder: (ctx, close) {
-                      final theme = ctx.tooltipCardTheme;
-                      return TooltipCardContent(
-                        icon: const Icon(Icons.rocket_launch),
-                        iconColor:
-                            theme?.iconColor ??
-                            Theme.of(ctx).colorScheme.primary,
-                        iconSize: theme?.iconSize ?? 24,
-                        title: 'New Feature Discovery',
-                        subtitle:
-                            'Check out this amazing new feature that will boost your productivity!',
-                        content: const Text(
-                          'The TooltipCardThemeData allows you to define consistent styles for all tooltips in your app.',
-                        ),
-                        primaryAction: FilledButton(
-                          onPressed: close,
-                          child: const Text('Explore Now'),
-                        ),
-                        secondaryAction: OutlinedButton(
-                          onPressed: close,
-                          child: const Text('Later'),
-                        ),
-                        onClose: close,
-                        maxWidth: theme?.contentMaxWidth ?? 320,
-                        padding: const EdgeInsets.all(16),
-                        spacing: theme?.contentSpacing ?? 12,
-                      );
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.auto_awesome),
-                        SizedBox(width: 8),
-                        Text('Feature Discovery'),
-                      ],
-                    ),
-                  ),
-                  TooltipCard.builder(
-                    publicState: pub,
-                    beakEnabled: true,
-                    placementSide: TooltipCardPlacementSide.bottom,
-                    builder: (ctx, close) {
-                      final theme = ctx.tooltipCardTheme;
-                      return TooltipCardContent(
-                        icon: const Icon(Icons.school),
-                        iconColor: Colors.amber,
-                        title: 'Onboarding Tip',
-                        titleStyle: theme?.titleStyle,
-                        subtitle: 'Learn how to use this feature effectively',
-                        subtitleStyle: theme?.subtitleStyle,
-                        primaryAction: FilledButton(
-                          onPressed: close,
-                          child: const Text('Next'),
-                        ),
-                        tertiaryAction: TextButton(
-                          onPressed: close,
-                          child: const Text('Skip Tutorial'),
-                        ),
-                        onClose: close,
-                      );
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.lightbulb),
-                        SizedBox(width: 8),
-                        Text('Onboarding Style'),
-                      ],
-                    ),
-                  ),
-                ]),
-                _subsection('Theme Comparison', [
-                  // Light theme style
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      extensions: [
-                        TooltipCardThemeData.light(primaryColor: Colors.blue),
-                      ],
-                    ),
-                    child: Builder(
-                      builder: (ctx) {
-                        return TooltipCard.builder(
-                          publicState: pub,
-                          beakEnabled: true,
-                          flyoutBackgroundColor: Colors.white,
-                          beakColor: Colors.white,
-                          placementSide: TooltipCardPlacementSide.bottom,
-                          builder: (innerCtx, close) => TooltipCardContent(
-                            icon: const Icon(Icons.light_mode),
-                            iconColor: Colors.blue,
-                            title: 'Light Theme',
-                            subtitle: 'Using TooltipCardThemeData.light()',
-                            primaryAction: FilledButton(
-                              onPressed: close,
-                              child: const Text('OK'),
-                            ),
-                            onClose: close,
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.wb_sunny),
-                              SizedBox(width: 8),
-                              Text('Light Factory'),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  // Dark theme style
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      extensions: [
-                        TooltipCardThemeData.dark(
-                          primaryColor: Colors.lightBlueAccent,
-                        ),
-                      ],
-                    ),
-                    child: Builder(
-                      builder: (ctx) {
-                        return TooltipCard.builder(
-                          publicState: pub,
-                          beakEnabled: true,
-                          flyoutBackgroundColor: const Color(0xFF2D2D30),
-                          beakColor: const Color(0xFF2D2D30),
-                          placementSide: TooltipCardPlacementSide.bottom,
-                          builder: (innerCtx, close) => DefaultTextStyle(
-                            style: const TextStyle(color: Colors.white),
-                            child: TooltipCardContent(
-                              icon: const Icon(Icons.dark_mode),
-                              iconColor: Colors.lightBlueAccent,
-                              title: 'Dark Theme',
-                              titleStyle: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              subtitle: 'Using TooltipCardThemeData.dark()',
-                              subtitleStyle: TextStyle(
-                                color: Colors.grey.shade400,
-                              ),
-                              primaryAction: FilledButton(
-                                onPressed: close,
-                                child: const Text('OK'),
-                              ),
-                              onClose: close,
-                            ),
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.nights_stay),
-                              SizedBox(width: 8),
-                              Text('Dark Factory'),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  // Fluent theme style
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      extensions: [
-                        TooltipCardThemeData.fluent(
-                          brightness: Theme.of(context).brightness,
-                          accentColor: Colors.deepPurple,
-                        ),
-                      ],
-                    ),
-                    child: Builder(
-                      builder: (ctx) {
-                        final fluentTheme = ctx.tooltipCardTheme;
-                        return TooltipCard.builder(
-                          publicState: pub,
-                          beakEnabled: true,
-                          beakSize: fluentTheme?.beakSize ?? 12,
-                          elevation: fluentTheme?.elevation ?? 16,
-                          placementSide: TooltipCardPlacementSide.bottom,
-                          modalBarrierEnabled: true,
-                          barrierBlur: fluentTheme?.barrierBlur ?? 2,
-                          builder: (innerCtx, close) => TooltipCardContent(
-                            icon: const Icon(Icons.window),
-                            iconColor: Colors.deepPurple,
-                            title: 'Fluent Theme',
-                            subtitle: 'Using TooltipCardThemeData.fluent()',
-                            content: const Text(
-                              'Inspired by Microsoft Fluent UI design system.',
-                            ),
-                            primaryAction: FilledButton(
-                              onPressed: close,
-                              child: const Text('Awesome!'),
-                            ),
-                            onClose: close,
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.apps),
-                              SizedBox(width: 8),
-                              Text('Fluent Factory'),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ]),
-              ]),
-
-              const SizedBox(height: 28),
-              const Divider(),
-              const SizedBox(height: 8),
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      '💡 Tip: Resize window/scroll — panels re‑clamp to viewport',
-                      style: t.bodySmall,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '🎯 v5.0.0: Unified child parameter API for cleaner code',
-                      style: t.bodySmall?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _section(String title, List<Widget> children) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 28),
+  Widget _buildStyleVariationsSection(ColorScheme colorScheme, bool isDark) {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: [
+        // Dark Theme Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          flyoutBackgroundColor: const Color(0xFF1E1E1E),
+          beakColor: const Color(0xFF1E1E1E),
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          elevation: 12,
+          builder: (ctx, close) => DefaultTextStyle(
+            style: const TextStyle(color: Colors.white),
+            child: TooltipCardContent(
+              icon: const Icon(Icons.dark_mode_rounded),
+              iconColor: Colors.blueAccent,
+              title: 'Dark Theme',
+              titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              subtitle: 'Elegant dark appearance',
+              subtitleStyle: TextStyle(color: Colors.grey.shade400),
+              primaryAction: FilledButton(
+                onPressed: close,
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                ),
+                child: const Text('Nice!'),
+              ),
+              onClose: close,
+            ),
+          ),
+          child: _StyleCard(
+            icon: Icons.dark_mode_rounded,
+            label: 'Dark',
+            color: const Color(0xFF1E1E1E),
+            textColor: Colors.white,
+          ),
+        ),
+
+        // Gradient Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          flyoutBackgroundColor: colorScheme.primaryContainer,
+          beakColor: colorScheme.primaryContainer,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.gradient_rounded),
+            iconColor: colorScheme.primary,
+            title: 'Primary Container',
+            subtitle: 'Uses theme primary container colors',
+            primaryAction: FilledButton(
+              onPressed: close,
+              child: const Text('Beautiful!'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.gradient_rounded,
+            label: 'Primary',
+            color: colorScheme.primaryContainer,
+            textColor: colorScheme.onPrimaryContainer,
+          ),
+        ),
+
+        // Warning Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          flyoutBackgroundColor: Colors.amber.shade50,
+          beakColor: Colors.amber.shade50,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.warning_rounded),
+            iconColor: Colors.amber.shade700,
+            title: 'Warning',
+            subtitle: 'Attention-grabbing warning style',
+            primaryAction: FilledButton(
+              onPressed: close,
+              style: FilledButton.styleFrom(
+                backgroundColor: Colors.amber.shade700,
+              ),
+              child: const Text('Understood'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.warning_rounded,
+            label: 'Warning',
+            color: Colors.amber.shade100,
+            textColor: Colors.amber.shade900,
+          ),
+        ),
+
+        // Success Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          flyoutBackgroundColor: Colors.green.shade50,
+          beakColor: Colors.green.shade50,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.check_circle_rounded),
+            iconColor: Colors.green.shade700,
+            title: 'Success',
+            subtitle: 'Operation completed successfully',
+            primaryAction: FilledButton(
+              onPressed: close,
+              style: FilledButton.styleFrom(
+                backgroundColor: Colors.green.shade600,
+              ),
+              child: const Text('Great!'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.check_circle_rounded,
+            label: 'Success',
+            color: Colors.green.shade100,
+            textColor: Colors.green.shade900,
+          ),
+        ),
+
+        // Info Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          flyoutBackgroundColor: Colors.blue.shade50,
+          beakColor: Colors.blue.shade50,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.info_rounded),
+            iconColor: Colors.blue.shade700,
+            title: 'Information',
+            subtitle: 'Helpful information for users',
+            primaryAction: FilledButton(
+              onPressed: close,
+              child: const Text('Got it'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.info_rounded,
+            label: 'Info',
+            color: Colors.blue.shade100,
+            textColor: Colors.blue.shade900,
+          ),
+        ),
+
+        // Rounded Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          borderRadius: BorderRadius.circular(24),
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          elevation: 16,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.circle_rounded),
+            iconColor: colorScheme.primary,
+            title: 'Extra Rounded',
+            subtitle: 'Soft, friendly appearance',
+            primaryAction: FilledButton(
+              onPressed: close,
+              child: const Text('Love it!'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.circle_rounded,
+            label: 'Rounded',
+            color: colorScheme.surfaceContainerHighest,
+            textColor: colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooter(ColorScheme colorScheme) {
+    return Center(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            width: 60,
+            height: 3,
             decoration: BoxDecoration(
-              color: Theme.of(
-                context,
-              ).colorScheme.primaryContainer.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              title,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              color: colorScheme.outline.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(2),
             ),
           ),
           const SizedBox(height: 16),
-          ...children,
-        ],
-      ),
-    );
-  }
-
-  Widget _subsection(String title, List<Widget> children) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
           Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
+            'Built with Flutter',
+            style: TextStyle(
+              color: colorScheme.onSurface.withValues(alpha: 0.5),
+              fontSize: 13,
             ),
-          ),
-          const SizedBox(height: 8),
-          Wrap(spacing: 12, runSpacing: 8, children: children),
-        ],
-      ),
-    );
-  }
-
-  // Shared panel decoration wrapper (keeps spacing/buttons consistent)
-  Widget _panelShell({
-    String? title,
-    String? description,
-    Widget? child,
-    required VoidCallback onClose,
-  }) {
-    return Card(
-      elevation: 0,
-      shadowColor: Colors.transparent,
-      color: Colors.transparent,
-      margin: EdgeInsets.zero,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (title != null) ...[
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-            ),
-            const SizedBox(height: 6),
-          ],
-          if (description != null) ...[
-            Text(description, style: const TextStyle(fontSize: 13)),
-            const SizedBox(height: 12),
-          ],
-          if (child != null) ...[child, const SizedBox(height: 12)],
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton.icon(
-                onPressed: onClose,
-                icon: const Icon(Icons.close, size: 16),
-                label: const Text('Close'),
-              ),
-            ],
           ),
         ],
       ),
@@ -1495,266 +789,61 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
   }
 }
 
-// ---------------------------
-// Panels used by the demo
-// ---------------------------
-class _FilterPanel extends StatelessWidget {
-  const _FilterPanel();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('Date Range', style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(height: 8),
-        const Row(
-          children: [
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.calendar_month),
-                  labelText: 'From',
-                  isDense: true,
-                ),
-              ),
-            ),
-            SizedBox(width: 8),
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.calendar_month),
-                  labelText: 'To',
-                  isDense: true,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Text('Keyword', style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(height: 8),
-        const TextField(
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search),
-            hintText: 'Search...',
-            isDense: true,
-          ),
-        ),
-      ],
-    );
-  }
-}
+// Helper Widgets
 
-class _SortPanel extends StatelessWidget {
-  const _SortPanel();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text('Date'),
-        _radioRow(['Ascending', 'Descending']),
-        const SizedBox(height: 8),
-        const Text('Activity'),
-        _radioRow(['A‑Z', 'Z‑A']),
-        const SizedBox(height: 8),
-        const Text('Name'),
-        _radioRow(['A‑Z', 'Z‑A']),
-      ],
-    );
-  }
-}
+class _QuickActionCard extends StatelessWidget {
+  const _QuickActionCard({
+    required this.icon,
+    required this.label,
+    required this.publicState,
+    required this.placementSide,
+  });
 
-class _ExportPanel extends StatelessWidget {
-  const _ExportPanel();
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _MenuItem(icon: Icons.picture_as_pdf, label: 'Export as PDF'),
-        _MenuItem(icon: Icons.grid_on, label: 'Export as Excel'),
-        _MenuItem(icon: Icons.table_chart, label: 'Export as CSV'),
-      ],
-    );
-  }
-}
-
-class _SmallMenu extends StatelessWidget {
-  const _SmallMenu();
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _MenuItem(icon: Icons.settings, label: 'Settings'),
-        _MenuItem(icon: Icons.person, label: 'Profile'),
-        _MenuItem(icon: Icons.logout, label: 'Sign out'),
-      ],
-    );
-  }
-}
-
-class _ContextMenu extends StatelessWidget {
-  const _ContextMenu();
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _MenuItem(icon: Icons.copy, label: 'Copy'),
-        _MenuItem(icon: Icons.cut, label: 'Cut'),
-        _MenuItem(icon: Icons.paste, label: 'Paste'),
-        Divider(height: 1),
-        _MenuItem(icon: Icons.delete_outline, label: 'Delete'),
-      ],
-    );
-  }
-}
-
-class _PaletteMenu extends StatelessWidget {
-  const _PaletteMenu();
-  @override
-  Widget build(BuildContext context) {
-    final colors = [
-      Colors.indigo,
-      Colors.blue,
-      Colors.teal,
-      Colors.green,
-      Colors.amber,
-      Colors.orange,
-      Colors.red,
-      Colors.purple,
-    ];
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: [
-        for (final c in colors)
-          InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: c,
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.white, width: 2),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _VeryTallContent extends StatelessWidget {
-  const _VeryTallContent();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Intentionally tall content',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        const SizedBox(height: 8),
-        for (int i = 1; i <= 40; i++)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Row(
-              children: [
-                const Icon(Icons.label_outline, size: 16),
-                const SizedBox(width: 8),
-                Text('Item #$i'),
-                const Spacer(),
-                TextButton(onPressed: () {}, child: const Text('Action')),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _ConfirmPanel extends StatelessWidget {
-  const _ConfirmPanel();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Dangerous Operation',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Are you sure you want to continue? This action cannot be undone.',
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            OutlinedButton(onPressed: () {}, child: const Text('Cancel')),
-            const Spacer(),
-            FilledButton.tonal(onPressed: () {}, child: const Text('Review')),
-            const SizedBox(width: 8),
-            FilledButton(onPressed: () {}, child: const Text('Confirm')),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _StyledPanel extends StatelessWidget {
-  const _StyledPanel();
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          children: [
-            Icon(Icons.palette),
-            SizedBox(width: 8),
-            Text('Theme Settings'),
-          ],
-        ),
-        SizedBox(height: 12),
-        _LabeledSwitch(label: 'Use dynamic color'),
-        _LabeledSwitch(label: 'High contrast mode'),
-        _LabeledSwitch(label: 'Reduce animations'),
-      ],
-    );
-  }
-}
-
-class _MenuItem extends StatelessWidget {
-  const _MenuItem({required this.icon, required this.label});
   final IconData icon;
   final String label;
+  final TooltipCardPublicState publicState;
+  final TooltipCardPlacementSide placementSide;
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      borderRadius: BorderRadius.circular(4),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: placementSide,
+      beakEnabled: true,
+      builder: (ctx, close) => TooltipCardContent(
+        icon: Icon(icon),
+        iconColor: colorScheme.primary,
+        title: '$label Placement',
+        subtitle: 'Tooltip appears on the $label side of the trigger element.',
+        primaryAction: FilledButton(
+          onPressed: close,
+          child: const Text('Close'),
+        ),
+        onClose: close,
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: colorScheme.outline.withValues(alpha: 0.2),
+          ),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 18),
-            const SizedBox(width: 12),
-            Text(label),
+            Icon(icon, size: 20, color: colorScheme.primary),
+            const SizedBox(width: 10),
+            Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: colorScheme.onSurface,
+              ),
+            ),
           ],
         ),
       ),
@@ -1762,270 +851,243 @@ class _MenuItem extends StatelessWidget {
   }
 }
 
-class _LabeledSwitch extends StatefulWidget {
-  const _LabeledSwitch({required this.label});
+class _PlacementChip extends StatelessWidget {
+  const _PlacementChip({
+    required this.label,
+    required this.placement,
+    required this.publicState,
+  });
+
   final String label;
-  @override
-  State<_LabeledSwitch> createState() => _LabeledSwitchState();
-}
+  final TooltipCardPlacementSide placement;
+  final TooltipCardPublicState publicState;
 
-class _LabeledSwitchState extends State<_LabeledSwitch> {
-  bool v = false;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: Text(widget.label)),
-        Switch(value: v, onChanged: (x) => setState(() => v = x)),
-      ],
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: placement,
+      beakEnabled: true,
+      builder: (ctx, close) => TooltipCardContent(
+        title: label,
+        subtitle: 'This tooltip uses the $label placement option.',
+        primaryAction: FilledButton(
+          onPressed: close,
+          child: const Text('OK'),
+        ),
+        onClose: close,
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: colorScheme.primary.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: colorScheme.primary.withValues(alpha: 0.3),
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: colorScheme.primary,
+          ),
+        ),
+      ),
     );
   }
 }
 
-// Helper for radio groups in SortPanel
-Widget _radioRow(List<String> values) => _RadioRow(values: values);
+class _TriggerModeCard extends StatelessWidget {
+  const _TriggerModeCard({
+    required this.icon,
+    required this.title,
+    required this.description,
+    required this.publicState,
+    required this.whenVisible,
+  });
 
-class _RadioRow extends StatefulWidget {
-  const _RadioRow({required this.values});
-  final List<String> values;
-  @override
-  State<_RadioRow> createState() => _RadioRowState();
-}
-
-class _RadioRowState extends State<_RadioRow> {
-  int group = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (int i = 0; i < widget.values.length; i++) ...[
-          Radio<int>(
-            value: i,
-            groupValue: group,
-            onChanged: (v) => setState(() => group = v ?? 0),
-          ),
-          Text(widget.values[i]),
-          const SizedBox(width: 12),
-        ],
-      ],
-    );
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// TooltipCardContent Examples (TeachingTip Style)
-// ═══════════════════════════════════════════════════════════════════════════
-
-/// Example demonstrating TooltipCardContent usage
-Widget buildTooltipCardContentExamples() {
-  return Wrap(
-    spacing: 16,
-    runSpacing: 16,
-    children: [
-      // Example 1: Basic TeachingTip style
-      TooltipCard.builder(
-        beakEnabled: true,
-        placementSide: TooltipCardPlacementSide.bottom,
-        whenContentVisible: WhenContentVisible.pressButton,
-        builder: (context, close) => TooltipCardContent(
-          icon: const Icon(Icons.lightbulb_outline),
-          title: 'Pro Tip',
-          subtitle: 'This feature can save you time',
-          content: const Text(
-            'Click the settings icon to access advanced options and customize your experience.',
-          ),
-          primaryAction: FilledButton(
-            onPressed: close,
-            child: const Text('Got it'),
-          ),
-          onClose: close,
-        ),
-        child: const FilledButton(onPressed: null, child: Text('Show Pro Tip')),
-      ),
-
-      // Example 2: With multiple actions
-      TooltipCard.builder(
-        beakEnabled: true,
-        placementSide: TooltipCardPlacementSide.topEnd,
-        whenContentVisible: WhenContentVisible.pressButton,
-        builder: (context, close) => TooltipCardContent(
-          icon: const Icon(Icons.info_outline),
-          iconColor: Colors.blue,
-          title: 'New Feature Available',
-          subtitle: 'We\'ve added dark mode support',
-          content: const Text(
-            'Experience a more comfortable viewing experience in low-light environments.',
-          ),
-          primaryAction: FilledButton(
-            onPressed: () {
-              // Enable dark mode
-              close();
-            },
-            child: const Text('Enable Now'),
-          ),
-          secondaryAction: OutlinedButton(
-            onPressed: close,
-            child: const Text('Later'),
-          ),
-          onClose: close,
-        ),
-        child: const FilledButton(
-          onPressed: null,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.star, size: 16),
-              SizedBox(width: 8),
-              Text('New Feature'),
-            ],
-          ),
-        ),
-      ),
-
-      // Example 3: Warning style with tertiary action
-      TooltipCard.builder(
-        beakEnabled: true,
-        placementSide: TooltipCardPlacementSide.start,
-        whenContentVisible: WhenContentVisible.pressButton,
-        showDuration: const Duration(seconds: 10),
-        builder: (context, close) => TooltipCardContent(
-          icon: const Icon(Icons.warning_amber_outlined),
-          iconColor: Colors.orange,
-          title: 'Unsaved Changes',
-          subtitle: 'You have unsaved changes in your document',
-          content: const Text(
-            'Would you like to save your changes before continuing?',
-          ),
-          primaryAction: FilledButton(
-            onPressed: () {
-              // Save changes
-              close();
-            },
-            child: const Text('Save'),
-          ),
-          secondaryAction: OutlinedButton(
-            onPressed: close,
-            child: const Text('Discard'),
-          ),
-          tertiaryAction: TextButton(
-            onPressed: close,
-            child: const Text('Cancel'),
-          ),
-          onClose: close,
-        ),
-        child: const FilledButton(
-          onPressed: null,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.warning_amber, size: 16),
-              SizedBox(width: 8),
-              Text('Unsaved Warning'),
-            ],
-          ),
-        ),
-      ),
-
-      // Example 4: Success notification
-      TooltipCard.builder(
-        beakEnabled: true,
-        placementSide: TooltipCardPlacementSide.end,
-        whenContentVisible: WhenContentVisible.hoverButton,
-        dismissOnPointerMoveAway: true,
-        builder: (context, close) => TooltipCardContent(
-          icon: const Icon(Icons.check_circle_outline),
-          iconColor: Colors.green,
-          title: 'Changes Saved',
-          subtitle: 'All your changes have been saved successfully',
-          showCloseButton: false,
-          maxWidth: 280,
-          onClose: close,
-        ),
-        child: const Icon(Icons.save),
-      ),
-
-      // Example 5: Help tooltip with custom content
-      TooltipCard.builder(
-        beakEnabled: true,
-        placementSide: TooltipCardPlacementSide.bottomStart,
-        whenContentVisible: WhenContentVisible.pressButton,
-        builder: (context, close) => TooltipCardContent(
-          icon: const Icon(Icons.help_outline),
-          title: 'Keyboard Shortcuts',
-          content: const Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _ShortcutRow(keys: 'Ctrl + S', description: 'Save'),
-              _ShortcutRow(keys: 'Ctrl + Z', description: 'Undo'),
-              _ShortcutRow(keys: 'Ctrl + Y', description: 'Redo'),
-              _ShortcutRow(keys: 'Ctrl + F', description: 'Find'),
-            ],
-          ),
-          primaryAction: FilledButton(
-            onPressed: close,
-            child: const Text('Close'),
-          ),
-          onClose: close,
-        ),
-        child: const FilledButton(
-          onPressed: null,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.keyboard, size: 16),
-              SizedBox(width: 8),
-              Text('Shortcuts'),
-            ],
-          ),
-        ),
-      ),
-
-      // Example 6: Minimal style (title only)
-      TooltipCard.builder(
-        beakEnabled: true,
-        placementSide: TooltipCardPlacementSide.top,
-        whenContentVisible: WhenContentVisible.hoverButton,
-        builder: (context, close) => TooltipCardContent(
-          title: 'Quick Info',
-          subtitle: 'Hover for more details',
-          showCloseButton: false,
-          maxWidth: 200,
-          padding: const EdgeInsets.all(12),
-          onClose: close,
-        ),
-        child: const Icon(Icons.info),
-      ),
-    ],
-  );
-}
-
-// Helper widget for keyboard shortcuts
-class _ShortcutRow extends StatelessWidget {
-  const _ShortcutRow({required this.keys, required this.description});
-
-  final String keys;
+  final IconData icon;
+  final String title;
   final String description;
+  final TooltipCardPublicState publicState;
+  final WhenContentVisible whenVisible;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      whenContentVisible: whenVisible,
+      hoverOpenDelay: const Duration(milliseconds: 100),
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      builder: (ctx, close) => TooltipCardContent(
+        icon: Icon(icon),
+        iconColor: colorScheme.primary,
+        title: '$title Mode',
+        subtitle: '$description the trigger to activate this tooltip.',
+        primaryAction: FilledButton(
+          onPressed: close,
+          child: const Text('Close'),
+        ),
+        onClose: close,
+      ),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Icon(icon, size: 28, color: colorScheme.primary),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ModalButton extends StatelessWidget {
+  const _ModalButton({
+    required this.label,
+    required this.icon,
+    required this.color,
+  });
+
+  final String label;
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Colors.grey[400]!),
-            ),
-            child: Text(
-              keys,
-              style: const TextStyle(fontSize: 12, fontFamily: 'monospace'),
+          Icon(icon, size: 18, color: color),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: color,
             ),
           ),
-          const SizedBox(width: 12),
-          Text(description),
+        ],
+      ),
+    );
+  }
+}
+
+class _ControlButton extends StatelessWidget {
+  const _ControlButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+    required this.color,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color.withValues(alpha: 0.1),
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 16, color: color),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StyleCard extends StatelessWidget {
+  const _StyleCard({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.textColor,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.3),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: textColor),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: textColor,
+            ),
+          ),
         ],
       ),
     );
