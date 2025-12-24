@@ -1,4 +1,5 @@
-import '../tooltip_card.dart';
+import 'package:tooltip_card/tooltip_card.dart';
+
 // DemoTooltipCards — v5.0.0 Comprehensive Showcase
 // ------------------------------------------------
 // This screen demonstrates ALL features of TooltipCard (v5.0.0):
@@ -21,24 +22,14 @@ import '../tooltip_card.dart';
 
 import 'package:flutter/material.dart';
 
-class DemoTooltipCardApp extends StatelessWidget {
-  const DemoTooltipCardApp({super.key});
+class DemoPage extends StatelessWidget {
+  const DemoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.system,
-      home: const Scaffold(body: SafeArea(child: DemoTooltipCards())),
+    return Scaffold(
+      appBar: AppBar(title: const Text('TooltipCard Demo'), centerTitle: true),
+      body: const DemoTooltipCards(),
     );
   }
 }
@@ -67,7 +58,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Header
               Row(
@@ -80,7 +71,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'TooltipCard v5.0.0 — Full Showcase',
@@ -104,15 +95,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.topStart,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Top-Start Placement',
                       description:
                           'Positioned above with start alignment.\nNo need for placementAlign parameter!',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_upward),
                         SizedBox(width: 8),
                         Text('Top-Start'),
@@ -123,14 +114,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.topEnd,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Top-End Placement',
                       description: 'Positioned above with end alignment.',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_upward),
                         SizedBox(width: 8),
                         Text('Top-End'),
@@ -141,14 +132,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.bottomStart,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Bottom-Start Placement',
                       description: 'Positioned below with start alignment.',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_downward),
                         SizedBox(width: 8),
                         Text('Bottom-Start'),
@@ -159,14 +150,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.bottomEnd,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Bottom-End Placement',
                       description: 'Positioned below with end alignment.',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_downward),
                         SizedBox(width: 8),
                         Text('Bottom-End'),
@@ -179,14 +170,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.startTop,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Start-Top Placement',
                       description: 'Positioned at start with top alignment.',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_back),
                         SizedBox(width: 8),
                         Text('Start-Top'),
@@ -197,14 +188,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.startBottom,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Start-Bottom Placement',
                       description: 'Positioned at start with bottom alignment.',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_back),
                         SizedBox(width: 8),
                         Text('Start-Bottom'),
@@ -215,14 +206,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.endTop,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'End-Top Placement',
                       description: 'Positioned at end with top alignment.',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_forward),
                         SizedBox(width: 8),
                         Text('End-Top'),
@@ -235,7 +226,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     flyoutBackgroundColor: Colors.grey,
                     beakColor: Colors.grey,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => SizedBox(
+                    builder: (ctx, close) => SizedBox(
                       width: 100,
                       child: _panelShell(
                         title: 'End-Bottom Placement',
@@ -243,9 +234,9 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                         onClose: close,
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.arrow_forward),
                         SizedBox(width: 8),
                         Text('End-Bottom'),
@@ -262,13 +253,13 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.top,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       child: const _FilterPanel(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.filter_list),
                         SizedBox(width: 8),
                         Text('Top (Centered)'),
@@ -279,11 +270,11 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.bottom,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) =>
+                    builder: (ctx, close) =>
                         _panelShell(child: const _SortPanel(), onClose: close),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.sort),
                         SizedBox(width: 8),
                         Text('Bottom (Centered)'),
@@ -294,13 +285,13 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.bottom,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       child: const _ExportPanel(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.upload_file),
                         SizedBox(width: 8),
                         Text('Bottom (Centered)'),
@@ -313,11 +304,11 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.start,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) =>
+                    builder: (ctx, close) =>
                         _panelShell(child: const _SmallMenu(), onClose: close),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.menu),
                         SizedBox(width: 8),
                         Text('Start Side'),
@@ -328,11 +319,11 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.end,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) =>
+                    builder: (ctx, close) =>
                         _panelShell(child: const _SmallMenu(), onClose: close),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.info),
                         SizedBox(width: 8),
                         Text('End Side'),
@@ -347,17 +338,17 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                 _subsection('Press & Hover', [
                   TooltipCard.builder(
                     publicState: pub,
-                    whenContentVisable: WhenContentVisable.pressButton,
+                    whenContentVisible: WhenContentVisible.pressButton,
                     whenContentHide: WhenContentHide.goAway,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Press Mode',
                       description:
                           'Opens on click, closes on hover out or second click',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.touch_app),
                         SizedBox(width: 8),
                         Text('Press to Open'),
@@ -366,20 +357,20 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   ),
                   TooltipCard.builder(
                     publicState: pub,
-                    whenContentVisable: WhenContentVisable.hoverButton,
+                    whenContentVisible: WhenContentVisible.hoverButton,
                     hoverOpenDelay: const Duration(milliseconds: 90),
                     hoverCloseDelay: const Duration(milliseconds: 220),
                     placementSide: TooltipCardPlacementSide.top,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Hover Mode',
                       description: 'Opens on hover with 90ms delay',
                       child: const _PaletteMenu(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.mouse),
                         SizedBox(width: 8),
                         Text('Hover to Open'),
@@ -390,15 +381,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                 _subsection('Special Triggers', [
                   TooltipCard.builder(
                     publicState: pub,
-                    whenContentVisable: WhenContentVisable.doubleTapButton,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    whenContentVisible: WhenContentVisible.doubleTapButton,
+                    builder: (ctx, close) => _panelShell(
                       title: 'Double-Tap Mode',
                       description: 'Requires double-tap to open',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.double_arrow),
                         SizedBox(width: 8),
                         Text('Double-Tap'),
@@ -407,14 +398,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   ),
                   TooltipCard.builder(
                     publicState: pub,
-                    whenContentVisable: WhenContentVisable.secondaryTapButton,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    whenContentVisible: WhenContentVisible.secondaryTapButton,
+                    builder: (ctx, close) => _panelShell(
                       child: const _ContextMenu(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.more_horiz),
                         SizedBox(width: 8),
                         Text('Right-Click'),
@@ -429,15 +420,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                 TooltipCard.builder(
                   publicState: pub,
                   whenContentHide: WhenContentHide.goAway,
-                  flyoutContentBuilder: (ctx, close) => _panelShell(
+                  builder: (ctx, close) => _panelShell(
                     title: 'GoAway Hide',
                     description:
                         'Closes when hovering out from button and panel',
                     onClose: close,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.exit_to_app),
                       SizedBox(width: 8),
                       Text('GoAway Mode'),
@@ -447,14 +438,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                 TooltipCard.builder(
                   publicState: pub,
                   whenContentHide: WhenContentHide.pressOutSide,
-                  flyoutContentBuilder: (ctx, close) => _panelShell(
+                  builder: (ctx, close) => _panelShell(
                     title: 'PressOutside Hide',
                     description: 'Closes only when clicking outside',
                     onClose: close,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.logout),
                       SizedBox(width: 8),
                       Text('PressOutside Mode'),
@@ -471,14 +462,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     placementSide: TooltipCardPlacementSide.bottom,
                     beakEnabled: true,
                     beakSize: 10,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Default Beak',
                       description: 'Standard beak at center',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.info_outline),
                         SizedBox(width: 8),
                         Text('Beak • Center'),
@@ -490,14 +481,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     placementSide: TooltipCardPlacementSide.bottom,
                     beakEnabled: true,
                     beakSize: 16,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Large Beak',
                       description: 'Beak size: 16px',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.info),
                         SizedBox(width: 8),
                         Text('Large Beak'),
@@ -510,14 +501,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     beakEnabled: true,
                     beakColor: Colors.red,
                     flyoutBackgroundColor: Colors.red.shade50,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Custom Beak',
                       description: 'Beak with custom color',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.error_outline),
                         SizedBox(width: 8),
                         Text('Custom Color Beak'),
@@ -530,14 +521,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.bottom,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Without Beak',
                       description: 'Clean panel without arrow',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.block),
                         SizedBox(width: 8),
                         Text('No Beak'),
@@ -555,14 +546,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   placementSide: TooltipCardPlacementSide.bottom,
                   beakEnabled: true,
                   beakSize: 10,
-                  flyoutContentBuilder: (ctx, close) => DefaultTextStyle(
+                  builder: (ctx, close) => DefaultTextStyle(
                     style: const TextStyle(color: Colors.white),
                     child: _panelShell(
                       onClose: close,
-                      child: Column(
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                           Text(
                             'Fluent Dark Callout',
                             style: TextStyle(
@@ -579,9 +570,9 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                       ),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.dark_mode),
                       SizedBox(width: 8),
                       Text('Black Callout'),
@@ -593,14 +584,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   flyoutBackgroundColor: Colors.blue.shade700,
                   placementSide: TooltipCardPlacementSide.bottom,
                   beakEnabled: true,
-                  flyoutContentBuilder: (ctx, close) => DefaultTextStyle(
+                  builder: (ctx, close) => DefaultTextStyle(
                     style: const TextStyle(color: Colors.white),
                     child: _panelShell(
                       onClose: close,
-                      child: Column(
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                           Text(
                             'Information',
                             style: TextStyle(fontWeight: FontWeight.w600),
@@ -611,9 +602,9 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                       ),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.info),
                       SizedBox(width: 8),
                       Text('Blue Callout'),
@@ -626,7 +617,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   beakColor: Colors.orange.shade100,
                   placementSide: TooltipCardPlacementSide.top,
                   beakEnabled: true,
-                  flyoutContentBuilder: (ctx, close) => _panelShell(
+                  builder: (ctx, close) => _panelShell(
                     onClose: close,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -639,9 +630,9 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                       ],
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.warning_amber),
                       SizedBox(width: 8),
                       Text('Warning Callout'),
@@ -658,13 +649,13 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     modalBarrierEnabled: true,
                     barrierBlur: 8,
                     barrierColor: Colors.black.withValues(alpha: 0.35),
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       child: const _ConfirmPanel(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.security),
                         SizedBox(width: 8),
                         Text('Modal • Blur 8'),
@@ -676,14 +667,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     modalBarrierEnabled: true,
                     barrierBlur: 16,
                     barrierColor: Colors.black.withValues(alpha: 0.5),
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Heavy Blur',
                       description: 'Maximum blur for focus',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.blur_on),
                         SizedBox(width: 8),
                         Text('Heavy Blur'),
@@ -696,14 +687,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     modalBarrierEnabled: true,
                     barrierDismissible: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Dismissible Modal',
                       description: 'Click outside to close',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.touch_app),
                         SizedBox(width: 8),
                         Text('Dismissible'),
@@ -714,14 +705,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     modalBarrierEnabled: true,
                     barrierDismissible: false,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Non-Dismissible',
                       description: 'Must use close button',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.lock_outline),
                         SizedBox(width: 8),
                         Text('NOT Dismissible'),
@@ -736,15 +727,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                 _subsection('Simple Content', [
                   TooltipCard.builder(
                     publicState: pub,
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.text_fields),
                         SizedBox(width: 8),
                         Text('Simple Text'),
                       ],
                     ),
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Simple Content',
                       description: 'Just text, nothing fancy',
                       onClose: close,
@@ -752,15 +743,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   ),
                   TooltipCard.builder(
                     publicState: pub,
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.list),
                         SizedBox(width: 8),
                         Text('Menu List'),
                       ],
                     ),
-                    flyoutContentBuilder: (ctx, close) =>
+                    builder: (ctx, close) =>
                         _panelShell(child: const _SmallMenu(), onClose: close),
                   ),
                 ]),
@@ -769,13 +760,13 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.bottom,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       child: const _PaletteMenu(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.palette),
                         SizedBox(width: 8),
                         Text('Color Picker'),
@@ -784,15 +775,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   ),
                   TooltipCard.builder(
                     publicState: pub,
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.tune),
                         SizedBox(width: 8),
                         Text('Filter Panel'),
                       ],
                     ),
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       child: const _FilterPanel(),
                       onClose: close,
                     ),
@@ -803,13 +794,13 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     placementSide: TooltipCardPlacementSide.top,
                     viewportMargin: const EdgeInsetsDirectional.all(12),
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       child: const _VeryTallContent(),
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.view_agenda_outlined),
                         SizedBox(width: 8),
                         Text('Scrollable'),
@@ -830,11 +821,11 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   padding: const EdgeInsets.all(16),
                   elevation: 12,
                   constraints: const BoxConstraints(maxWidth: 420),
-                  flyoutContentBuilder: (ctx, close) =>
+                  builder: (ctx, close) =>
                       _panelShell(child: const _StyledPanel(), onClose: close),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.design_services),
                       SizedBox(width: 8),
                       Text('Custom Style'),
@@ -845,14 +836,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   publicState: pub,
                   borderRadius: BorderRadius.zero,
                   elevation: 4,
-                  flyoutContentBuilder: (ctx, close) => _panelShell(
+                  builder: (ctx, close) => _panelShell(
                     title: 'Square Design',
                     description: 'Sharp corners, minimal elevation',
                     onClose: close,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.square),
                       SizedBox(width: 8),
                       Text('Square Corners'),
@@ -864,14 +855,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                   borderRadius: const BorderRadius.all(Radius.circular(24)),
                   elevation: 16,
                   beakEnabled: true,
-                  flyoutContentBuilder: (ctx, close) => _panelShell(
+                  builder: (ctx, close) => _panelShell(
                     title: 'Very Rounded',
                     description: 'Maximum roundness with high elevation',
                     onClose: close,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.circle_outlined),
                       SizedBox(width: 8),
                       Text('Rounded'),
@@ -883,21 +874,21 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
               // Section 10: Programmatic Control
               _section('🎮 Programmatic Control', [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TooltipCard.builder(
                       publicState: pub,
                       controller: ctl,
-                      child: Row(
+                      child: const Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: const [
+                        children: [
                           Icon(Icons.play_circle),
                           SizedBox(width: 8),
                           Text('Controlled Tooltip'),
                         ],
                       ),
                       onOpenChanged: (v) => setState(() => isProgramOpen = v),
-                      flyoutContentBuilder: (ctx, close) => _panelShell(
+                      builder: (ctx, close) => _panelShell(
                         title: 'Programmatic Control',
                         description:
                             'Use buttons below to control this tooltip',
@@ -949,14 +940,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                         publicState: pub,
                         placementSide: TooltipCardPlacementSide.bottomStart,
                         beakEnabled: true,
-                        flyoutContentBuilder: (ctx, close) => _panelShell(
+                        builder: (ctx, close) => _panelShell(
                           title: 'محاذاة البداية',
                           description: 'في وضع RTL، البداية هي اليمين',
                           onClose: close,
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
+                          children: [
                             Icon(Icons.format_align_left),
                             SizedBox(width: 8),
                             Text('RTL • start'),
@@ -967,14 +958,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                         publicState: pub,
                         placementSide: TooltipCardPlacementSide.bottom,
                         beakEnabled: true,
-                        flyoutContentBuilder: (ctx, close) => _panelShell(
+                        builder: (ctx, close) => _panelShell(
                           title: 'محاذاة المركز',
                           description: 'المحاذاة في المركز',
                           onClose: close,
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
+                          children: [
                             Icon(Icons.format_align_center),
                             SizedBox(width: 8),
                             Text('RTL • center'),
@@ -985,14 +976,14 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                         publicState: pub,
                         placementSide: TooltipCardPlacementSide.bottomEnd,
                         beakEnabled: true,
-                        flyoutContentBuilder: (ctx, close) => _panelShell(
+                        builder: (ctx, close) => _panelShell(
                           title: 'محاذاة النهاية',
                           description: 'في وضع RTL، النهاية هي اليسار',
                           onClose: close,
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
+                          children: [
                             Icon(Icons.format_align_right),
                             SizedBox(width: 8),
                             Text('RTL • end'),
@@ -1014,9 +1005,9 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                       'Static widget content via legacy constructor.',
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(Icons.auto_awesome),
                       SizedBox(width: 8),
                       Text('Legacy API'),
@@ -1032,15 +1023,15 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                     publicState: pub,
                     // No flyoutBackgroundColor - uses theme automatically
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => _panelShell(
+                    builder: (ctx, close) => _panelShell(
                       title: 'Theme-Aware',
                       description:
                           'Automatically uses ${isDark ? 'dark' : 'light'} mode surface color',
                       onClose: close,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.brightness_auto),
                         SizedBox(width: 8),
                         Text('Auto Surface'),
@@ -1053,16 +1044,16 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                       context,
                     ).colorScheme.primaryContainer,
                     beakEnabled: true,
-                    flyoutContentBuilder: (ctx, close) => DefaultTextStyle(
+                    builder: (ctx, close) => DefaultTextStyle(
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       child: _panelShell(
                         onClose: close,
-                        child: Column(
+                        child: const Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
                             Text(
                               'Primary Container',
                               style: TextStyle(fontWeight: FontWeight.w600),
@@ -1073,13 +1064,315 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
                         ),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(Icons.color_lens),
                         SizedBox(width: 8),
                         Text('Primary Color'),
                       ],
+                    ),
+                  ),
+                ]),
+              ]),
+
+              // Section 14: TooltipCardThemeData Usage
+              _section('🎨 TooltipCardThemeData (v2.4.0)', [
+                _subsection('Using Theme Extension', [
+                  Builder(
+                    builder: (context) {
+                      // Access theme data via context extension
+                      final tooltipTheme = context.tooltipCardTheme;
+                      return TooltipCard.builder(
+                        publicState: pub,
+                        beakEnabled: true,
+                        placementSide: TooltipCardPlacementSide.bottom,
+                        builder: (ctx, close) => TooltipCardContent(
+                          icon: const Icon(Icons.palette),
+                          iconColor: tooltipTheme?.iconColor,
+                          title: 'Theme Extension',
+                          subtitle:
+                              'This tooltip uses TooltipCardThemeData from context',
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Icon Color: ${tooltipTheme?.iconColor}',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                'Elevation: ${tooltipTheme?.elevation}',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                'Beak Size: ${tooltipTheme?.beakSize}',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          primaryAction: FilledButton(
+                            onPressed: close,
+                            child: const Text('Got it'),
+                          ),
+                          onClose: close,
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.extension),
+                            SizedBox(width: 8),
+                            Text('Context Extension'),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  Builder(
+                    builder: (context) {
+                      final tooltipTheme = context.tooltipCardTheme;
+                      return TooltipCard.builder(
+                        publicState: pub,
+                        beakEnabled: tooltipTheme?.beakEnabled ?? true,
+                        beakSize: tooltipTheme?.beakSize ?? 10,
+                        elevation: tooltipTheme?.elevation ?? 8,
+                        borderRadius:
+                            tooltipTheme?.borderRadius ??
+                            BorderRadius.circular(8),
+                        placementSide: TooltipCardPlacementSide.bottom,
+                        builder: (ctx, close) => TooltipCardContent(
+                          icon: const Icon(Icons.style),
+                          iconColor: tooltipTheme?.iconColor,
+                          title: 'Themed Properties',
+                          subtitle: 'All properties from TooltipCardThemeData',
+                          primaryAction: FilledButton(
+                            onPressed: close,
+                            child: const Text('Nice!'),
+                          ),
+                          onClose: close,
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.brush),
+                            SizedBox(width: 8),
+                            Text('Themed Properties'),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ]),
+                _subsection('TooltipCardContent with Theme', [
+                  TooltipCard.builder(
+                    publicState: pub,
+                    beakEnabled: true,
+                    modalBarrierEnabled: true,
+                    placementSide: TooltipCardPlacementSide.bottom,
+                    builder: (ctx, close) {
+                      final theme = ctx.tooltipCardTheme;
+                      return TooltipCardContent(
+                        icon: const Icon(Icons.rocket_launch),
+                        iconColor:
+                            theme?.iconColor ??
+                            Theme.of(ctx).colorScheme.primary,
+                        iconSize: theme?.iconSize ?? 24,
+                        title: 'New Feature Discovery',
+                        subtitle:
+                            'Check out this amazing new feature that will boost your productivity!',
+                        content: const Text(
+                          'The TooltipCardThemeData allows you to define consistent styles for all tooltips in your app.',
+                        ),
+                        primaryAction: FilledButton(
+                          onPressed: close,
+                          child: const Text('Explore Now'),
+                        ),
+                        secondaryAction: OutlinedButton(
+                          onPressed: close,
+                          child: const Text('Later'),
+                        ),
+                        onClose: close,
+                        maxWidth: theme?.contentMaxWidth ?? 320,
+                        padding: const EdgeInsets.all(16),
+                        spacing: theme?.contentSpacing ?? 12,
+                      );
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.auto_awesome),
+                        SizedBox(width: 8),
+                        Text('Feature Discovery'),
+                      ],
+                    ),
+                  ),
+                  TooltipCard.builder(
+                    publicState: pub,
+                    beakEnabled: true,
+                    placementSide: TooltipCardPlacementSide.bottom,
+                    builder: (ctx, close) {
+                      final theme = ctx.tooltipCardTheme;
+                      return TooltipCardContent(
+                        icon: const Icon(Icons.school),
+                        iconColor: Colors.amber,
+                        title: 'Onboarding Tip',
+                        titleStyle: theme?.titleStyle,
+                        subtitle: 'Learn how to use this feature effectively',
+                        subtitleStyle: theme?.subtitleStyle,
+                        primaryAction: FilledButton(
+                          onPressed: close,
+                          child: const Text('Next'),
+                        ),
+                        tertiaryAction: TextButton(
+                          onPressed: close,
+                          child: const Text('Skip Tutorial'),
+                        ),
+                        onClose: close,
+                      );
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.lightbulb),
+                        SizedBox(width: 8),
+                        Text('Onboarding Style'),
+                      ],
+                    ),
+                  ),
+                ]),
+                _subsection('Theme Comparison', [
+                  // Light theme style
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      extensions: [
+                        TooltipCardThemeData.light(primaryColor: Colors.blue),
+                      ],
+                    ),
+                    child: Builder(
+                      builder: (ctx) {
+                        return TooltipCard.builder(
+                          publicState: pub,
+                          beakEnabled: true,
+                          flyoutBackgroundColor: Colors.white,
+                          beakColor: Colors.white,
+                          placementSide: TooltipCardPlacementSide.bottom,
+                          builder: (innerCtx, close) => TooltipCardContent(
+                            icon: const Icon(Icons.light_mode),
+                            iconColor: Colors.blue,
+                            title: 'Light Theme',
+                            subtitle: 'Using TooltipCardThemeData.light()',
+                            primaryAction: FilledButton(
+                              onPressed: close,
+                              child: const Text('OK'),
+                            ),
+                            onClose: close,
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.wb_sunny),
+                              SizedBox(width: 8),
+                              Text('Light Factory'),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  // Dark theme style
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      extensions: [
+                        TooltipCardThemeData.dark(
+                          primaryColor: Colors.lightBlueAccent,
+                        ),
+                      ],
+                    ),
+                    child: Builder(
+                      builder: (ctx) {
+                        return TooltipCard.builder(
+                          publicState: pub,
+                          beakEnabled: true,
+                          flyoutBackgroundColor: const Color(0xFF2D2D30),
+                          beakColor: const Color(0xFF2D2D30),
+                          placementSide: TooltipCardPlacementSide.bottom,
+                          builder: (innerCtx, close) => DefaultTextStyle(
+                            style: const TextStyle(color: Colors.white),
+                            child: TooltipCardContent(
+                              icon: const Icon(Icons.dark_mode),
+                              iconColor: Colors.lightBlueAccent,
+                              title: 'Dark Theme',
+                              titleStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              subtitle: 'Using TooltipCardThemeData.dark()',
+                              subtitleStyle: TextStyle(
+                                color: Colors.grey.shade400,
+                              ),
+                              primaryAction: FilledButton(
+                                onPressed: close,
+                                child: const Text('OK'),
+                              ),
+                              onClose: close,
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.nights_stay),
+                              SizedBox(width: 8),
+                              Text('Dark Factory'),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  // Fluent theme style
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      extensions: [
+                        TooltipCardThemeData.fluent(
+                          brightness: Theme.of(context).brightness,
+                          accentColor: Colors.deepPurple,
+                        ),
+                      ],
+                    ),
+                    child: Builder(
+                      builder: (ctx) {
+                        final fluentTheme = ctx.tooltipCardTheme;
+                        return TooltipCard.builder(
+                          publicState: pub,
+                          beakEnabled: true,
+                          beakSize: fluentTheme?.beakSize ?? 12,
+                          elevation: fluentTheme?.elevation ?? 16,
+                          placementSide: TooltipCardPlacementSide.bottom,
+                          modalBarrierEnabled: true,
+                          barrierBlur: fluentTheme?.barrierBlur ?? 2,
+                          builder: (innerCtx, close) => TooltipCardContent(
+                            icon: const Icon(Icons.window),
+                            iconColor: Colors.deepPurple,
+                            title: 'Fluent Theme',
+                            subtitle: 'Using TooltipCardThemeData.fluent()',
+                            content: const Text(
+                              'Inspired by Microsoft Fluent UI design system.',
+                            ),
+                            primaryAction: FilledButton(
+                              onPressed: close,
+                              child: const Text('Awesome!'),
+                            ),
+                            onClose: close,
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.apps),
+                              SizedBox(width: 8),
+                              Text('Fluent Factory'),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ]),
@@ -1115,7 +1408,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 28),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -1143,7 +1436,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             title,
@@ -1172,7 +1465,7 @@ class _DemoTooltipCardsState extends State<DemoTooltipCards> {
       margin: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (title != null) ...[
             Text(
@@ -1210,7 +1503,7 @@ class _FilterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text('Date Range', style: Theme.of(context).textTheme.titleSmall),
@@ -1259,7 +1552,7 @@ class _SortPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Text('Date'),
         _radioRow(['Ascending', 'Descending']),
@@ -1278,9 +1571,9 @@ class _ExportPanel extends StatelessWidget {
   const _ExportPanel();
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
-      children: const [
+      children: [
         _MenuItem(icon: Icons.picture_as_pdf, label: 'Export as PDF'),
         _MenuItem(icon: Icons.grid_on, label: 'Export as Excel'),
         _MenuItem(icon: Icons.table_chart, label: 'Export as CSV'),
@@ -1293,10 +1586,10 @@ class _SmallMenu extends StatelessWidget {
   const _SmallMenu();
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
         _MenuItem(icon: Icons.settings, label: 'Settings'),
         _MenuItem(icon: Icons.person, label: 'Profile'),
         _MenuItem(icon: Icons.logout, label: 'Sign out'),
@@ -1309,10 +1602,10 @@ class _ContextMenu extends StatelessWidget {
   const _ContextMenu();
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
         _MenuItem(icon: Icons.copy, label: 'Copy'),
         _MenuItem(icon: Icons.cut, label: 'Cut'),
         _MenuItem(icon: Icons.paste, label: 'Paste'),
@@ -1365,7 +1658,7 @@ class _VeryTallContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           'Intentionally tall content',
@@ -1396,7 +1689,7 @@ class _ConfirmPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           'Dangerous Operation',
@@ -1425,21 +1718,21 @@ class _StyledPanel extends StatelessWidget {
   const _StyledPanel();
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
-          children: const [
+          children: [
             Icon(Icons.palette),
             SizedBox(width: 8),
             Text('Theme Settings'),
           ],
         ),
-        const SizedBox(height: 12),
-        const _LabeledSwitch(label: 'Use dynamic color'),
-        const _LabeledSwitch(label: 'High contrast mode'),
-        const _LabeledSwitch(label: 'Reduce animations'),
+        SizedBox(height: 12),
+        _LabeledSwitch(label: 'Use dynamic color'),
+        _LabeledSwitch(label: 'High contrast mode'),
+        _LabeledSwitch(label: 'Reduce animations'),
       ],
     );
   }
@@ -1533,8 +1826,8 @@ Widget buildTooltipCardContentExamples() {
       TooltipCard.builder(
         beakEnabled: true,
         placementSide: TooltipCardPlacementSide.bottom,
-        whenContentVisable: WhenContentVisable.pressButton,
-        flyoutContentBuilder: (context, close) => TooltipCardContent(
+        whenContentVisible: WhenContentVisible.pressButton,
+        builder: (context, close) => TooltipCardContent(
           icon: const Icon(Icons.lightbulb_outline),
           title: 'Pro Tip',
           subtitle: 'This feature can save you time',
@@ -1554,8 +1847,8 @@ Widget buildTooltipCardContentExamples() {
       TooltipCard.builder(
         beakEnabled: true,
         placementSide: TooltipCardPlacementSide.topEnd,
-        whenContentVisable: WhenContentVisable.pressButton,
-        flyoutContentBuilder: (context, close) => TooltipCardContent(
+        whenContentVisible: WhenContentVisible.pressButton,
+        builder: (context, close) => TooltipCardContent(
           icon: const Icon(Icons.info_outline),
           iconColor: Colors.blue,
           title: 'New Feature Available',
@@ -1593,9 +1886,9 @@ Widget buildTooltipCardContentExamples() {
       TooltipCard.builder(
         beakEnabled: true,
         placementSide: TooltipCardPlacementSide.start,
-        whenContentVisable: WhenContentVisable.pressButton,
+        whenContentVisible: WhenContentVisible.pressButton,
         showDuration: const Duration(seconds: 10),
-        flyoutContentBuilder: (context, close) => TooltipCardContent(
+        builder: (context, close) => TooltipCardContent(
           icon: const Icon(Icons.warning_amber_outlined),
           iconColor: Colors.orange,
           title: 'Unsaved Changes',
@@ -1637,9 +1930,9 @@ Widget buildTooltipCardContentExamples() {
       TooltipCard.builder(
         beakEnabled: true,
         placementSide: TooltipCardPlacementSide.end,
-        whenContentVisable: WhenContentVisable.hoverButton,
+        whenContentVisible: WhenContentVisible.hoverButton,
         dismissOnPointerMoveAway: true,
-        flyoutContentBuilder: (context, close) => TooltipCardContent(
+        builder: (context, close) => TooltipCardContent(
           icon: const Icon(Icons.check_circle_outline),
           iconColor: Colors.green,
           title: 'Changes Saved',
@@ -1655,13 +1948,13 @@ Widget buildTooltipCardContentExamples() {
       TooltipCard.builder(
         beakEnabled: true,
         placementSide: TooltipCardPlacementSide.bottomStart,
-        whenContentVisable: WhenContentVisable.pressButton,
-        flyoutContentBuilder: (context, close) => TooltipCardContent(
+        whenContentVisible: WhenContentVisible.pressButton,
+        builder: (context, close) => TooltipCardContent(
           icon: const Icon(Icons.help_outline),
           title: 'Keyboard Shortcuts',
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+          content: const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
               _ShortcutRow(keys: 'Ctrl + S', description: 'Save'),
               _ShortcutRow(keys: 'Ctrl + Z', description: 'Undo'),
               _ShortcutRow(keys: 'Ctrl + Y', description: 'Redo'),
@@ -1691,8 +1984,8 @@ Widget buildTooltipCardContentExamples() {
       TooltipCard.builder(
         beakEnabled: true,
         placementSide: TooltipCardPlacementSide.top,
-        whenContentVisable: WhenContentVisable.hoverButton,
-        flyoutContentBuilder: (context, close) => TooltipCardContent(
+        whenContentVisible: WhenContentVisible.hoverButton,
+        builder: (context, close) => TooltipCardContent(
           title: 'Quick Info',
           subtitle: 'Hover for more details',
           showCloseButton: false,

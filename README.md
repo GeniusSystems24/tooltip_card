@@ -1,732 +1,859 @@
-# TooltipCard — توثيق تفصيلي (v4.7.3 - محسّن)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/logo.png" alt="TooltipCard Logo" width="120"/>
+</p>
 
-> مكوّن يعرض محتوى منبثق (Tooltip / Callout / Popover) غنيّ المزايا لتطبيقات Flutter على سطح المكتب والويب والموبايل، مع دعم **Smart Side Picking**، و**Fluent Beak**، وأنماط فتح متعددة (نقرة/تحويم/نقرة مزدوجة/نقرة ثانوية)، بالإضافة إلى **PublicState** لإغلاق بقية الـ tooltips المفتوحة تلقائيًا.
+<h1 align="center">TooltipCard</h1>
 
-## 🎉 جديد في v4.7.3
+<p align="center">
+  <strong>A powerful, highly customizable tooltip and popover widget for Flutter</strong>
+</p>
 
-### تحسينات شاملة للأداء والتجربة
+<p align="center">
+  <a href="https://pub.dev/packages/tooltip_card"><img src="https://img.shields.io/pub/v/tooltip_card.svg?logo=dart&logoColor=white" alt="Pub Version"></a>
+  <a href="https://pub.dev/packages/tooltip_card/score"><img src="https://img.shields.io/pub/points/tooltip_card?logo=dart&logoColor=white" alt="Pub Points"></a>
+  <a href="https://pub.dev/packages/tooltip_card"><img src="https://img.shields.io/pub/popularity/tooltip_card?logo=dart&logoColor=white" alt="Popularity"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+</p>
 
-* **🚀 أداء محسّن**: تقليل 30% في الـ rebuilds غير الضرورية
-* **🎬 حركة أكثر سلاسة**: spring animations مع 60 FPS ثابت
-* **🎨 ثيمات Material 3**: دعم كامل لـ Dark Mode وألوان Surface
-* **📐 مسافات موحدة**: نظام Design Tokens للتباعد والتوقيت
-* **♿ إمكانية وصول محسّنة**: Semantics شاملة ودعم لوحة المفاتيح
-* **💾 استهلاك أقل للذاكرة**: RepaintBoundaries للعناصر المستقلة
-
-راجع [قسم التحسينات](#14-تحسينات-v473) للتفاصيل الكاملة.
+<p align="center">
+  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter" alt="Platform"></a>
+  <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart" alt="Dart"></a>
+  <a href="https://m3.material.io"><img src="https://img.shields.io/badge/Material-3-6200EA" alt="Material 3"></a>
+</p>
 
 ---
 
-## 1) البداية السريعة (Quick Start)
+## 📸 Screenshots
 
-### أبسط استخدام (محتوى ثابت)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/1.png" alt="Basic Tooltip" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/2.png" alt="Structured Content" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/3.png" alt="Placement Options" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/4.png" alt="Modal Barrier" width="220"/>
+</p>
 
-```dart
-final ctl = FlyoutController();
+---
 
-FlyoutButton.builder(
-  controller: ctl,               // تحكّم برمجي
-  icon: const Icon(Icons.filter_list),
-  label: const Text('Filter'),
-  flyoutContent: const _FilterPanel(),
-);
+## 🎯 Overview
 
-// في أي مكان:
-ctl.open();  // فتح
-ctl.close(); // إغلاق
-ctl.toggle();
+**TooltipCard** is a feature-rich tooltip and popover library for Flutter, inspired by [Microsoft Fluent UI's TeachingTip](https://docs.microsoft.com/en-us/windows/apps/design/controls/teaching-tip). It provides an elegant way to display contextual information, onboarding tips, feature discovery hints, and interactive popovers.
+
+### Why TooltipCard?
+
+| Feature | Flutter Tooltip | TooltipCard |
+|---------|-----------------|-------------|
+| Smart Auto-positioning | ❌ | ✅ 12 placement options with auto-flip |
+| Beak/Arrow Pointer | ❌ | ✅ With matching shadow |
+| Structured Content | ❌ | ✅ Icons, titles, actions |
+| Trigger Modes | Hover only | ✅ Tap, hover, double-tap, right-click |
+| Programmatic Control | ❌ | ✅ Controller API |
+| Modal Barrier | ❌ | ✅ With blur effect |
+| Material 3 | Partial | ✅ Full theming support |
+| RTL Support | ❌ | ✅ Complete |
+| Accessibility | Basic | ✅ Keyboard + Screen reader |
+
+---
+
+## ✨ Features
+
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🎯 Smart Positioning</h3>
+      <ul>
+        <li>12 placement options (top, bottom, start, end + compounds)</li>
+        <li>Viewport-aware auto-flip when space is limited</li>
+        <li>RTL-aware directional positioning</li>
+        <li>Custom offset support</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>🔺 Fluent Beak</h3>
+      <ul>
+        <li>Arrow/caret pointing to trigger element</li>
+        <li>Shadow matching the panel elevation</li>
+        <li>Customizable size and color</li>
+        <li>Automatic position adjustment</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>🎨 Material 3 Theming</h3>
+      <ul>
+        <li>Full color scheme integration</li>
+        <li>Dark mode optimization</li>
+        <li>Custom background and elevation</li>
+        <li>Typography from theme</li>
+      </ul>
+    </td>
+    <td>
+      <h3>⚡ Multiple Trigger Modes</h3>
+      <ul>
+        <li>Tap/Press to show</li>
+        <li>Hover (desktop/web)</li>
+        <li>Double-tap</li>
+        <li>Right-click / Secondary tap</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>🌫️ Modal Barrier</h3>
+      <ul>
+        <li>Optional backdrop scrim</li>
+        <li>Blur effect support</li>
+        <li>Dismissible on tap outside</li>
+        <li>Custom barrier color</li>
+      </ul>
+    </td>
+    <td>
+      <h3>🎬 Smooth Animations</h3>
+      <ul>
+        <li>Spring-based transitions</li>
+        <li>Fade and scale effects</li>
+        <li>Configurable duration</li>
+        <li>Custom animation curves</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>♿ Accessibility</h3>
+      <ul>
+        <li>Keyboard navigation (Enter, Space, Escape)</li>
+        <li>Screen reader support</li>
+        <li>Focus management</li>
+        <li>Semantic labels</li>
+      </ul>
+    </td>
+    <td>
+      <h3>📱 Cross-Platform</h3>
+      <ul>
+        <li>Android, iOS, Web</li>
+        <li>Windows, macOS, Linux</li>
+        <li>Responsive design</li>
+        <li>Touch and mouse support</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 📦 Installation
+
+Add `tooltip_card` to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  tooltip_card: ^2.3.0
 ```
 
-### استخدام الـ Builder (محتوى يُبنى عند الفتح + إغلاق من الداخل)
+Then run:
+
+```bash
+flutter pub get
+```
+
+Import the package:
 
 ```dart
-FlyoutButton(
-  icon: const Icon(Icons.more_horiz),
-  label: const Text('Actions'),
-  flyoutContentBuilder: (context, close) => Column(
-    mainAxisSize: MainAxisSize.min,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      ListTile(leading: const Icon(Icons.copy), title: const Text('Copy'), onTap: close),
-      ListTile(leading: const Icon(Icons.delete_outline), title: const Text('Delete'), onTap: close),
-    ],
+import 'package:tooltip_card/tooltip_card.dart';
+```
+
+---
+
+## 🚀 Quick Start
+
+### Basic Tooltip
+
+```dart
+TooltipCard.builder(
+  child: const Icon(Icons.info_outline),
+  builder: (context, close) => const Padding(
+    padding: EdgeInsets.all(12),
+    child: Text('This is a simple tooltip!'),
   ),
-);
+)
 ```
 
----
-
-## 2) المفاهيم الأساسية
-
-* **WhenContentVisable**: يحدد *كيف* يُفتح المحتوى:
-
-  * `pressButton` (افتراضي) — بنقرة يسار.
-  * `hoverButton` — عند التحويم، مع تأخير فتح/إغلاق قابل للتخصيص.
-  * `doubleTapButton` — بالنقر المزدوج.
-  * `secondaryTapButton` — بنقرة ثانوية (يمين الفأرة/نقرة مطوّلة حسب المنصة).
-* **WhenContentHide**: يحدد *كيف* يُغلق:
-
-  * `goAway` — يختفي عند تبديل الزر أو الخروج Hover من الزر واللوحة معًا (عند استخدام press/hover المناسب).
-  * `pressOutSide` — يُغلق عند النقر خارج اللوحة.
-* **PublicState**: يضمن وجود **Flyout واحد مفتوح** في نفس السياق. عند فتح زر جديد يُغلق القديم تلقائيًا.
-* **Smart Side Picking**: يُفضّل الجهة المختارة ثم يختار الجهة ذات المساحة الأكبر إذا لم تتسع (top/bottom/start/end)، مع دعم RTL.
-* **Viewport‑fit**: يمنع خروج المحتوى خارج حدود الشاشة، ويقصّر/يمرّر المحتوى تلقائيًا.
-* **Fluent Beak**: سهم/نتوء يشير إلى الهدف بأسلوب Fluent.
-
----
-
-## 3) البُناة (Constructors)
-
-* `FlyoutButton(...)`
-  يستقبل: `flyoutContentBuilder: (BuildContext, VoidCallback close) => Widget`.
-* `FlyoutButton.builder(...)`
-  يستقبل: `flyoutContent: Widget` ثابت.
-
-> يوصى باستخدام **الـ Builder** للمحتوى الكبير/الديناميكي وللاستفادة من استدعاء **`close()`** داخل العناصر.
-
----
-
-## 4) واجهة برمجة التطبيق (API Reference)
-
-### المحتوى
-
-* `flyoutContent` *(Widget?)* — للمحتوى الثابت (مع `.builder`).
-* `flyoutContentBuilder` *(Widget Function(BuildContext, VoidCallback close)?)* — يبني المحتوى عند الفتح ويمرّر `close()`.
-* `wrapContentInScrollView` *(bool, افتراضي: true)* — يغلّف المحتوى بـ `SingleChildScrollView` عند الحاجة.
-
-### السلوك (فتح/إغلاق)
-
-* `whenContentVisable` *(enum)* — `pressButton` | `hoverButton` | `doubleTapButton` | `secondaryTapButton`.
-* `whenContentHide` *(enum)* — `goAway` | `pressOutSide`.
-* `hoverOpenDelay` / `hoverCloseDelay` *(Duration)* — تأخيرات الفتح/الإغلاق في وضع التحويم.
-* **سلوك خاص**: عند `whenContentVisable = pressButton` **و** `whenContentHide = goAway` سيُغلق المحتوى تلقائيًا عند خروج المؤشر من **الزر واللوحة معًا**.
-* `onOpenChanged` *`(ValueChanged<bool>?)`* — يستدعى عند الفتح/الإغلاق.
-* `controller` *(FlyoutController?)* — للتحكم البرمجي (`open/close/toggle`). يدعم **الفتح المبدئي** إذا كانت حالته مفتوحة قبل البناء.
-* `publicState` *(FlyoutPublicState?)* — إن زُوّد، سيغلق بقية الأزرار المفتوحة في نفس المدى.
-
-### التموضع (Placement)
-
-* `placementSide` *(enum)* — يحدد موقع اللوحة المنبثقة:
-
-  **الجهات الأساسية:**
-  * `top` — فوق العنصر
-  * `bottom` — تحت العنصر
-  * `start` — في البداية (يراعي RTL)
-  * `end` — في النهاية (يراعي RTL)
-
-  **الجهات المركبة (Compound Placements):**
-  * `topStart` — فوق + محاذاة للبداية
-  * `topEnd` — فوق + محاذاة للنهاية
-  * `bottomStart` — تحت + محاذاة للبداية
-  * `bottomEnd` — تحت + محاذاة للنهاية
-  * `startTop` — في البداية + محاذاة للأعلى
-  * `startBottom` — في البداية + محاذاة للأسفل
-  * `endTop` — في النهاية + محاذاة للأعلى
-  * `endBottom` — في النهاية + محاذاة للأسفل
-
-* `placementAlign` *(enum)* — `start` | `center` | `end` (يُتجاهل عند استخدام الجهات المركبة).
-* `awaySpace` *(double)* — مسافة فاصلة بين الزر واللوحة.
-* **الاختيار الذكي للمكان**:
-
-  * `smartSidePicking` *(bool, افتراضي: true)* — يفضّل الجهة المختارة ثم يختار الأوسع مساحة.
-  * `sidesConsidered` *`(Set<FlyoutPlacementSide>?)`* — لتقييد الجهات التي تؤخذ بالحسبان.
-
-### التكيّف مع الشاشة (Viewport‑fit)
-
-* `fitToViewport` *(bool, افتراضي: true)* — يمنع تجاوز الشاشة ويقصّر الارتفاع/العرض وفق الحاجة.
-* `viewportMargin` *(EdgeInsets, افتراضي: all(8))* — هامش داخلي آمن لحواف الشاشة.
-* `constraints` *(BoxConstraints?)* — حدود إضافية للمحتوى (مثل `maxWidth`).
-
-### المظهر (Appearance)
-
-* `flyoutBackgroundColor` *(Color?)* — لون الخلفية.
-* `elevation` *(double, افتراضي: 8)* — ظلّ المادة.
-* `borderRadius` *(BorderRadius, افتراضي: 12)* — استدارة الحواف.
-* `padding` *(EdgeInsetsGeometry?)* — حشوة داخلية للمحتوى.
-
-### السهم/النتوء (Fluent Beak)
-
-> متاح في نسخة **v4.6**.
-
-* `beakEnabled` *(bool, افتراضي: true)* — تفعيل/تعطيل السهم.
-* `beakSize` *(double, افتراضي: 10)* — طول السهم.
-* `beakInset` *(double, افتراضي: 16)* — إزاحة أفقية عن الحافة عند start/end.
-* `beakColor` *(Color?)* — لون السهم (افتراضي: لون خلفية اللوحة).
-
-### الحاجب (Modal Barrier)
-
-* `modalBarrierEnabled` *(bool)* — تفعيل حاجب يحجب باقي الشاشة.
-* `barrierColor` *(Color?)* — لون الحاجب (يُمزج مع الأنميشن).
-* `barrierBlur` *(double)* — ضبابية الخلفية (BackdropFilter).
-* `barrierDismissible` *(bool?)* — هل يمكن الإغلاق بالنقر على الحاجب؟ (إن لم يحدّد: يُستنتج تلقائيًا من إعدادات الإغلاق).
-* `useRootOverlay` *(bool, افتراضي: true)* — استخدام الـ Root Overlay.
-
----
-
-## 5) التحكم البرمجي (Controller)
+### With Beak and Placement
 
 ```dart
-final ctl = FlyoutController();
-
-FlyoutButton.builder(
-  controller: ctl,
-  icon: const Icon(Icons.play_circle),
-  label: const Text('Programmatic'),
-  flyoutContent: const Text('Hello!'),
-);
-
-// فتح/إغلاق/تبديل من أي مكان (لا يحتاج setState)
-ctl.open();
-ctl.close();
-ctl.toggle();
-
-// فتح مبدئي:
-ctl.open();
-runApp(MyApp(ctl)); // سيفتح عند أول frame تلقائيًا
-```
-
-> **مهم**: لا تُنشئ `FlyoutController()` جديدًا في كل `build`.
-
----
-
-## 6) أمثلة عملية
-
-### أ) قائمة عوامل تصفية — فتح بالضغط + إغلاق خارجي
-
-```dart
-FlyoutButton(
-  icon: const Icon(Icons.filter_alt_outlined),
-  label: const Text('Filter'),
-  whenContentVisable: WhenContentVisable.pressButton,
-  whenContentHide: WhenContentHide.pressOutSide,
-  flyoutContent: const _FilterPanel(),
-);
-```
-
-### ب) قائمة سياق — فتح بنقرة ثانوية (يمين)
-
-```dart
-FlyoutButton.builder(
-  icon: const Icon(Icons.more_horiz),
-  label: const Text('Context'),
-  whenContentVisable: WhenContentVisable.secondaryTapButton,
-  whenContentHide: WhenContentHide.goAway,
-  flyoutContentBuilder: (ctx, close) => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      ListTile(leading: const Icon(Icons.copy), title: const Text('Copy'), onTap: close),
-      ListTile(leading: const Icon(Icons.delete_outline), title: const Text('Delete'), onTap: close),
-    ],
-  ),
-);
-```
-
-### ج) لوحة ألوان — فتح بالتحويم (Hover)
-
-```dart
-FlyoutButton.builder(
-  icon: const Icon(Icons.palette_outlined),
-  label: const Text('Colors'),
-  whenContentVisable: WhenContentVisable.hoverButton,
-  hoverOpenDelay: const Duration(milliseconds: 120),
-  hoverCloseDelay: const Duration(milliseconds: 200),
-  flyoutContentBuilder: (ctx, close) => Wrap(
-    spacing: 8,
-    children: [for (final c in [Colors.red, Colors.green, Colors.blue])
-      InkWell(onTap: close, child: Container(width: 28, height: 28, color: c)),
-    ],
-  ),
-);
-```
-
-### د) Callout أسود بأسلوب Fluent + سهم يشير للأسفل
-
-```dart
-FlyoutButton.builder(
-  icon: const Icon(Icons.info_outline),
-  label: const Text('Callout'),
-  flyoutBackgroundColor: Colors.black87,
-  placementSide: FlyoutPlacementSide.bottom,
-  placementAlign: FlyoutPlacementAlign.center,
-  // خصائص السهم (v4.6)
+TooltipCard.builder(
   beakEnabled: true,
-  beakSize: 10,
-  beakInset: 16,
-  beakColor: Colors.black87,
-  flyoutContentBuilder: (ctx, close) => Padding(
-    padding: const EdgeInsets.all(8),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text('Fluent Callout', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
-        SizedBox(height: 6),
-        Text('With a beak pointing to the trigger.', style: TextStyle(color: Colors.white70)),
+  placementSide: TooltipCardPlacementSide.bottom,
+  child: ElevatedButton(
+    onPressed: () {},
+    child: const Text('Show Tip'),
+  ),
+  builder: (context, close) => const Padding(
+    padding: EdgeInsets.all(16),
+    child: Text('Tooltip appears below with an arrow'),
+  ),
+)
+```
+
+### Structured Content (TeachingTip Style)
+
+```dart
+TooltipCard.builder(
+  beakEnabled: true,
+  placementSide: TooltipCardPlacementSide.bottom,
+  modalBarrierEnabled: true,
+  barrierBlur: 2.0,
+  child: IconButton(
+    icon: const Icon(Icons.lightbulb_outline),
+    onPressed: () {},
+  ),
+  builder: (context, close) => TooltipCardContent(
+    icon: const Icon(Icons.auto_awesome),
+    iconColor: Colors.amber,
+    title: 'Pro Tip',
+    subtitle: 'Discover this amazing feature that will boost your productivity',
+    content: const Text(
+      'Click the settings icon to customize your experience and unlock advanced options.',
+    ),
+    primaryAction: FilledButton(
+      onPressed: close,
+      child: const Text('Got it!'),
+    ),
+    secondaryAction: OutlinedButton(
+      onPressed: () {
+        // Learn more action
+        close();
+      },
+      child: const Text('Learn more'),
+    ),
+    onClose: close,
+  ),
+)
+```
+
+---
+
+## 📖 API Reference
+
+### TooltipCard Widget
+
+The main widget for displaying tooltips and popovers.
+
+#### Constructors
+
+| Constructor | Description |
+|-------------|-------------|
+| `TooltipCard.builder()` | Creates a tooltip with dynamic content via builder function |
+| `TooltipCard()` | Creates a tooltip with static content widget |
+
+#### Core Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `child` | `Widget` | **required** | The trigger widget that shows the tooltip |
+| `builder` | `Widget Function(BuildContext, VoidCallback)` | - | Builder for dynamic tooltip content with close callback |
+| `flyoutContent` | `Widget` | - | Static tooltip content (alternative to builder) |
+
+#### Appearance Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `placementSide` | `TooltipCardPlacementSide` | `top` | Preferred placement position |
+| `beakEnabled` | `bool` | `true` | Whether to show the arrow/beak |
+| `beakSize` | `double` | `10.0` | Size of the beak triangle |
+| `beakColor` | `Color?` | `null` | Custom beak color (defaults to background) |
+| `beakInset` | `double` | `20.0` | Minimum inset from panel edges |
+| `elevation` | `double` | `8.0` | Shadow elevation |
+| `borderRadius` | `BorderRadius` | `circular(8)` | Corner radius of the panel |
+| `flyoutBackgroundColor` | `Color?` | `null` | Custom background (defaults to theme) |
+| `padding` | `EdgeInsetsGeometry?` | `EdgeInsets.zero` | Content padding |
+| `constraints` | `BoxConstraints?` | `null` | Size constraints for tooltip |
+| `awaySpace` | `double` | `0.0` | Gap between trigger and tooltip |
+| `offset` | `Offset` | `Offset.zero` | Additional position offset |
+
+#### Behavior Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `whenContentVisible` | `WhenContentVisible` | `pressButton` | Trigger mode for showing |
+| `whenContentHide` | `WhenContentHide` | `goAway` | Dismiss behavior |
+| `hoverOpenDelay` | `Duration` | `500ms` | Delay before showing on hover |
+| `hoverCloseDelay` | `Duration` | `250ms` | Delay before hiding after hover exit |
+| `showDuration` | `Duration?` | `null` | Auto-close after this duration |
+| `dismissOnPointerMoveAway` | `bool` | `false` | Close when pointer leaves tooltip area |
+
+#### Viewport & Layout Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `fitToViewport` | `bool` | `true` | Ensure tooltip stays within viewport |
+| `viewportMargin` | `EdgeInsetsDirectional` | `all(8)` | Margin from viewport edges |
+| `autoFlipIfZeroSpace` | `bool` | `true` | Auto-flip to opposite side if no space |
+| `wrapContentInScrollView` | `bool` | `true` | Wrap content in scroll view if needed |
+| `useRootOverlay` | `bool` | `true` | Use root overlay for positioning |
+
+#### Modal Barrier Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `modalBarrierEnabled` | `bool` | `false` | Show backdrop scrim |
+| `barrierColor` | `Color?` | `null` | Custom backdrop color |
+| `barrierBlur` | `double` | `0.0` | Backdrop blur sigma |
+| `barrierDismissible` | `bool?` | `null` | Allow tap outside to dismiss |
+
+#### Controller & Callbacks
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `controller` | `TooltipCardController?` | Controller for programmatic control |
+| `publicState` | `TooltipCardPublicState?` | Shared state for single-open behavior |
+| `onOpen` | `VoidCallback?` | Called when tooltip opens |
+| `onClose` | `VoidCallback?` | Called when tooltip closes |
+| `onOpenChanged` | `ValueChanged<bool>?` | Called when open state changes |
+
+---
+
+### TooltipCardPlacementSide
+
+Enum defining 12 placement options for precise positioning.
+
+#### Basic Placements
+
+| Value | Description |
+|-------|-------------|
+| `top` | Above the trigger, centered |
+| `bottom` | Below the trigger, centered |
+| `start` | Start side (left in LTR, right in RTL) |
+| `end` | End side (right in LTR, left in RTL) |
+
+#### Compound Placements
+
+| Value | Description |
+|-------|-------------|
+| `topStart` | Above, aligned to start edge |
+| `topEnd` | Above, aligned to end edge |
+| `bottomStart` | Below, aligned to start edge |
+| `bottomEnd` | Below, aligned to end edge |
+| `startTop` | Start side, aligned to top |
+| `startBottom` | Start side, aligned to bottom |
+| `endTop` | End side, aligned to top |
+| `endBottom` | End side, aligned to bottom |
+
+```dart
+// Example: Position tooltip at bottom-start
+TooltipCard.builder(
+  placementSide: TooltipCardPlacementSide.bottomStart,
+  // ...
+)
+```
+
+---
+
+### WhenContentVisible
+
+Enum defining how the tooltip is triggered to show.
+
+| Value | Description | Use Case |
+|-------|-------------|----------|
+| `pressButton` | Show on tap/click | Mobile primary |
+| `hoverButton` | Show on hover | Desktop tooltips |
+| `doubleTapButton` | Show on double tap | Secondary actions |
+| `secondaryTapButton` | Show on right-click | Context menus |
+
+```dart
+// Hover tooltip for desktop
+TooltipCard.builder(
+  whenContentVisible: WhenContentVisible.hoverButton,
+  hoverOpenDelay: const Duration(milliseconds: 300),
+  // ...
+)
+```
+
+---
+
+### WhenContentHide
+
+Enum defining how the tooltip is dismissed.
+
+| Value | Description |
+|-------|-------------|
+| `goAway` | Hide when pointer leaves the tooltip area |
+| `pressOutSide` | Hide when tapping outside the tooltip |
+
+---
+
+### TooltipCardContent
+
+A structured content widget inspired by Fluent UI's TeachingTip, perfect for onboarding and feature discovery.
+
+#### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `icon` | `Widget?` | `null` | Leading icon widget |
+| `iconColor` | `Color?` | `null` | Icon tint color |
+| `iconSize` | `double` | `24.0` | Icon size |
+| `title` | `String?` | `null` | Title text |
+| `titleStyle` | `TextStyle?` | `null` | Custom title style |
+| `subtitle` | `String?` | `null` | Subtitle/description text |
+| `subtitleStyle` | `TextStyle?` | `null` | Custom subtitle style |
+| `content` | `Widget?` | `null` | Custom content widget |
+| `primaryAction` | `Widget?` | `null` | Primary action button |
+| `secondaryAction` | `Widget?` | `null` | Secondary action button |
+| `tertiaryAction` | `Widget?` | `null` | Tertiary action button |
+| `onClose` | `VoidCallback?` | `null` | Close button callback |
+| `showCloseButton` | `bool` | `true` | Show close button (when onClose provided) |
+| `maxWidth` | `double` | `360.0` | Maximum content width |
+| `padding` | `EdgeInsetsGeometry` | `all(16)` | Content padding |
+| `spacing` | `double` | `12.0` | Spacing between elements |
+
+```dart
+TooltipCardContent(
+  icon: const Icon(Icons.rocket_launch),
+  iconColor: Theme.of(context).colorScheme.primary,
+  title: 'New Feature!',
+  subtitle: 'We just launched something amazing',
+  content: const Text('Check out the new dashboard with real-time analytics.'),
+  primaryAction: FilledButton(
+    onPressed: () => Navigator.pushNamed(context, '/dashboard'),
+    child: const Text('Explore'),
+  ),
+  secondaryAction: TextButton(
+    onPressed: close,
+    child: const Text('Maybe later'),
+  ),
+  onClose: close,
+)
+```
+
+---
+
+### TooltipCardController
+
+Programmatic control for showing/hiding tooltips.
+
+```dart
+class MyWidget extends StatefulWidget {
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  final _controller = TooltipCardController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TooltipCard.builder(
+          controller: _controller,
+          child: const Text('Trigger'),
+          builder: (ctx, close) => const Text('Controlled tooltip'),
+        ),
+        ElevatedButton(
+          onPressed: () => _controller.toggle(),
+          child: const Text('Toggle Tooltip'),
+        ),
       ],
+    );
+  }
+}
+```
+
+#### Methods
+
+| Method | Description |
+|--------|-------------|
+| `open()` | Show the tooltip |
+| `close()` | Hide the tooltip |
+| `toggle()` | Toggle between open and closed |
+
+#### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `isOpen` | `bool` | Current open state |
+
+---
+
+### TooltipCardPublicState
+
+Global state manager ensuring only one tooltip is open at a time.
+
+```dart
+// Use global singleton (default behavior)
+TooltipCard.builder(
+  publicState: TooltipCardPublicState.global,
+  // Opening this tooltip will close any other open tooltip
+  // ...
+)
+
+// Create isolated scope
+final myScope = TooltipCardPublicState();
+
+// Tooltips in this scope won't affect other scopes
+TooltipCard.builder(
+  publicState: myScope,
+  // ...
+)
+```
+
+---
+
+## 🎨 Theming
+
+TooltipCard provides comprehensive theming support through `TooltipCardThemeData`, a `ThemeExtension` that allows you to define consistent tooltip styles across your entire application.
+
+### Using TooltipCardThemeData
+
+Add the theme extension to your `MaterialApp`:
+
+```dart
+MaterialApp(
+  theme: ThemeData(
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+    useMaterial3: true,
+    extensions: [
+      TooltipCardThemeData(
+        backgroundColor: Colors.white,
+        beakColor: Colors.white,
+        elevation: 8.0,
+        borderRadius: BorderRadius.circular(12),
+        beakSize: 12.0,
+        titleStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+        subtitleStyle: TextStyle(
+          fontSize: 14,
+          color: Colors.grey.shade600,
+        ),
+        iconColor: Colors.blue,
+      ),
+    ],
+  ),
+  darkTheme: ThemeData(
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.blue,
+      brightness: Brightness.dark,
+    ),
+    useMaterial3: true,
+    extensions: [
+      TooltipCardThemeData.dark(primaryColor: Colors.lightBlue),
+    ],
+  ),
+)
+```
+
+### Factory Constructors
+
+TooltipCardThemeData provides convenient factory constructors:
+
+```dart
+// Light theme
+TooltipCardThemeData.light(primaryColor: Colors.blue)
+
+// Dark theme
+TooltipCardThemeData.dark(primaryColor: Colors.lightBlue)
+
+// Fluent UI inspired theme
+TooltipCardThemeData.fluent(
+  brightness: Brightness.light,
+  accentColor: Colors.blue,
+)
+```
+
+### Accessing Theme in Widgets
+
+```dart
+// Using the context extension
+final tooltipTheme = context.tooltipCardTheme;
+
+// Or the standard way
+final tooltipTheme = Theme.of(context).extension<TooltipCardThemeData>();
+```
+
+### TooltipCardThemeData Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | `Color?` | Panel background color |
+| `beakColor` | `Color?` | Beak/arrow color |
+| `elevation` | `double?` | Shadow elevation |
+| `borderRadius` | `BorderRadius?` | Panel corner radius |
+| `padding` | `EdgeInsetsGeometry?` | Content padding |
+| `constraints` | `BoxConstraints?` | Size constraints |
+| `awaySpace` | `double?` | Gap from trigger |
+| `beakEnabled` | `bool?` | Show beak |
+| `beakSize` | `double?` | Beak size |
+| `beakInset` | `double?` | Beak edge inset |
+| `hoverOpenDelay` | `Duration?` | Hover open delay |
+| `hoverCloseDelay` | `Duration?` | Hover close delay |
+| `showDuration` | `Duration?` | Auto-close duration |
+| `barrierColor` | `Color?` | Modal barrier color |
+| `barrierBlur` | `double?` | Barrier blur amount |
+| `titleStyle` | `TextStyle?` | Title text style |
+| `subtitleStyle` | `TextStyle?` | Subtitle text style |
+| `contentTextStyle` | `TextStyle?` | Content text style |
+| `iconColor` | `Color?` | Icon tint color |
+| `iconSize` | `double?` | Icon size |
+| `actionSpacing` | `double?` | Action buttons spacing |
+| `contentMaxWidth` | `double?` | Max content width |
+| `contentPadding` | `EdgeInsetsGeometry?` | Content padding |
+| `contentSpacing` | `double?` | Content elements spacing |
+
+### Custom Styling (Per Widget)
+
+```dart
+TooltipCard.builder(
+  flyoutBackgroundColor: Colors.indigo.shade900,
+  beakColor: Colors.indigo.shade900,
+  elevation: 12.0,
+  borderRadius: BorderRadius.circular(16),
+  child: const Icon(Icons.palette),
+  builder: (context, close) => const Padding(
+    padding: EdgeInsets.all(16),
+    child: Text(
+      'Custom styled tooltip',
+      style: TextStyle(color: Colors.white),
     ),
   ),
-);
+)
 ```
 
-### هـ) Smart Side Picking — تفعيل الاختيار الذكي مع RTL
+---
+
+## 🔧 Design Tokens
+
+Use built-in design tokens for consistency across your app:
+
+```dart
+// Spacing
+TooltipCardSpacing.xs   // 4.0
+TooltipCardSpacing.sm   // 8.0
+TooltipCardSpacing.md   // 12.0
+TooltipCardSpacing.lg   // 16.0
+TooltipCardSpacing.xl   // 24.0
+
+// Timing
+TooltipCardTiming.enterDuration     // 200ms
+TooltipCardTiming.exitDuration      // 150ms
+TooltipCardTiming.hoverOpenDelay    // 500ms
+TooltipCardTiming.hoverCloseDelay   // 250ms
+
+// Constants
+TooltipCardConstants.defaultMaxWidth      // 360.0
+TooltipCardConstants.defaultElevation     // 8.0
+TooltipCardConstants.defaultBeakSize      // 10.0
+TooltipCardConstants.defaultBeakInset     // 20.0
+TooltipCardConstants.defaultBorderRadius  // BorderRadius.circular(8)
+
+// Animation Curves
+TooltipCardCurves.fade      // Curves.easeOut
+TooltipCardCurves.scaleIn   // Curves.easeOutBack
+TooltipCardCurves.scaleOut  // Curves.easeIn
+```
+
+---
+
+## ♿ Accessibility
+
+TooltipCard is built with accessibility in mind:
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| `Enter` / `Space` | Open tooltip when trigger is focused |
+| `Escape` | Close tooltip |
+| `Tab` | Navigate through focusable elements |
+
+### Screen Reader Support
+
+- Semantic labels for trigger and tooltip content
+- Proper role announcements
+- Focus management on open/close
+
+```dart
+// Accessibility is built-in, but you can enhance it:
+TooltipCard.builder(
+  child: Semantics(
+    label: 'Help button, tap for more information',
+    child: const Icon(Icons.help_outline),
+  ),
+  builder: (context, close) => Semantics(
+    liveRegion: true,
+    child: const Text('Help content'),
+  ),
+)
+```
+
+---
+
+## 📱 RTL Support
+
+Full right-to-left language support with logical positioning:
 
 ```dart
 Directionality(
   textDirection: TextDirection.rtl,
-  child: FlyoutButton(
-    label: const Text('قائمة'),
-    flyoutContent: const _SmallMenu(),
-    placementSide: FlyoutPlacementSide.top, // تفضيل أعلى
-    smartSidePicking: true,                  // لو لم تتسع "أعلى"، يُختار الأوسع
-    sidesConsidered: const {
-      FlyoutPlacementSide.top,
-      FlyoutPlacementSide.bottom,
-      FlyoutPlacementSide.start,
-      FlyoutPlacementSide.end,
-    },
+  child: TooltipCard.builder(
+    placementSide: TooltipCardPlacementSide.start, // Appears on right in RTL or left in LTR
+    child: const Text('مرحبا'),
+    builder: (ctx, close) => const Text('محتوى التلميح'),
   ),
-);
-```
-
-### و) حاجب Modal مع ضبابية وإغلاق بالنقر خارجه
-
-```dart
-TooltipCard.builder(
-  icon: const Icon(Icons.lock_outline),
-  label: const Text('Secure'),
-  modalBarrierEnabled: true,
-  barrierBlur: 8,
-  barrierColor: Colors.black.withValues(alpha:0.35),
-  barrierDismissible: true,
-  flyoutContentBuilder: (ctx, close) => const _ConfirmPanel(),
-);
-```
-
-### ز) استخدام الجهات المركبة (Compound Placements)
-
-```dart
-// مثال 1: فوق مع محاذاة للبداية
-TooltipCard.builder(
-  icon: const Icon(Icons.notifications),
-  label: const Text('Notifications'),
-  placementSide: TooltipCardPlacementSide.topStart,  // مركب: فوق + بداية
-  beakEnabled: true,
-  flyoutContentBuilder: (ctx, close) => const _NotificationsList(),
-);
-
-// مثال 2: تحت مع محاذاة للنهاية
-TooltipCard.builder(
-  icon: const Icon(Icons.settings),
-  label: const Text('Settings'),
-  placementSide: TooltipCardPlacementSide.bottomEnd,  // مركب: تحت + نهاية
-  beakEnabled: true,
-  flyoutContentBuilder: (ctx, close) => const _SettingsMenu(),
-);
-
-// مثال 3: على الجانب مع محاذاة علوية
-TooltipCard.builder(
-  icon: const Icon(Icons.info),
-  label: const Text('Info'),
-  placementSide: TooltipCardPlacementSide.endTop,  // مركب: نهاية + أعلى
-  beakEnabled: false,  // بدون سهم
-  flyoutContentBuilder: (ctx, close) => const _InfoPanel(),
-);
-
-// مثال 4: جميع الخيارات المركبة
-Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-    // الصف العلوي
-    TooltipCard.builder(
-      label: const Text('Top-Start'),
-      placementSide: TooltipCardPlacementSide.topStart,
-      flyoutContentBuilder: (ctx, close) => const Padding(
-        padding: EdgeInsets.all(12),
-        child: Text('Content at top-start'),
-      ),
-    ),
-    TooltipCard.builder(
-      label: const Text('Top-End'),
-      placementSide: TooltipCardPlacementSide.topEnd,
-      flyoutContentBuilder: (ctx, close) => const Padding(
-        padding: EdgeInsets.all(12),
-        child: Text('Content at top-end'),
-      ),
-    ),
-
-    // الصف السفلي
-    TooltipCard.builder(
-      label: const Text('Bottom-Start'),
-      placementSide: TooltipCardPlacementSide.bottomStart,
-      flyoutContentBuilder: (ctx, close) => const Padding(
-        padding: EdgeInsets.all(12),
-        child: Text('Content at bottom-start'),
-      ),
-    ),
-    TooltipCard.builder(
-      label: const Text('Bottom-End'),
-      placementSide: TooltipCardPlacementSide.bottomEnd,
-      flyoutContentBuilder: (ctx, close) => const Padding(
-        padding: EdgeInsets.all(12),
-        child: Text('Content at bottom-end'),
-      ),
-    ),
-  ],
 )
 ```
 
-**ملاحظة**: الجهات المركبة تتجاهل `placementAlign` لأنها تحدد المحاذاة ضمنياً.
-
 ---
 
-## 7) السلوكيات الدقيقة (Details)
+## 📋 Examples
 
-* **Hover bridging**: لا تُغلق اللوحة عند الانتقال بالمؤشر من الزر إلى اللوحة والعكس.
-* **Press + goAway**: إن خرج المؤشر من الزر واللوحة معًا تُغلق تلقائيًا.
-* **ESC / النقر خارجًا**: يدعم الإغلاق بمفتاح ESC، وبالنقر خارج اللوحة وفق الإعدادات.
-* **واحد فقط مفتوح**: عبر `FlyoutPublicState` يتم إغلاق أي لوحة مفتوحة أخرى عند فتح لوحة جديدة.
-* **RTL‑aware**: جهتا `start/end` تتكيّفان مع اتجاه الواجهة.
-
----
-
-## 8) الأداء وأفضل الممارسات
-
-* استخدم **`flyoutContentBuilder`** للمحتوى الثقيل/الديناميكي لتفادي البناء غير الضروري.
-* احتفظ بكائن `FlyoutController` واحد ولا تنشئه في كل `build`.
-* عند المحتوى العالي، أبقِ `wrapContentInScrollView = true` واستعمل `constraints.maxWidth`/`viewportMargin` لضبط الحجم.
-* تجنّب `setState` غير الضروري؛ فالتحكم بالـ controller لا يحتاجه.
-
----
-
-## 9) إمكانية الوصول (A11y)
-
-* اللوحة تلتقط التركيز تلقائيًا ويمكن إغلاقها بـ ESC.
-* يمكنك إضافة أزرار/عناصر تحكّم داخلية قابلة للوصول.
-* وفّر عناوين نصية واضحة للأيقونات (مثل `label` بجوار `icon`).
-
----
-
-## 10) مشاكل شائعة وحلول
-
-* **اللوحة لا تظهر**: تأكد من وجود `Overlay` صالح (عادةً ضمن `MaterialApp`).
-* **تُغلق فور الانتقال بالماوس**: هذا مُعالَج عبر MouseRegion للزر واللوحة؛ إن حصل، راجع أي عناصر تتداخل فوق اللوحة.
-* **لا يُغلق بالنقر خارجًا**: تحقق من `whenContentHide` أو `barrierDismissible`.
-* **التصادم مع Scroll أسفل اللوحة**: فعّل `modalBarrierEnabled` مع `AbsorbPointer` الضمني أو اضبط `barrierDismissible`.
-
----
-
-## 11) خصائص افتراضية (Defaults Cheatsheet)
-
-```text
-whenContentVisable     = pressButton
-whenContentHide        = goAway
-placementSide          = bottom
-placementAlign         = start
-fitToViewport          = true
-viewportMargin         = EdgeInsets.all(8)
-wrapContentInScrollView= true
-smartSidePicking       = true
-awaySpace              = 12.0
-elevation              = 8
-borderRadius           = 12
-useRootOverlay         = true
-beakEnabled (v4.6)     = true
-beakSize               = 10
-beakInset              = 16
-```
-
----
-
-## 12) الترقية من إصدارات أقدم
-
-* تمت إضافة `doubleTapButton` و`secondaryTapButton` إلى `WhenContentVisable`.
-* تمت إضافة `start` و`end` إلى `FlyoutPlacementSide` مع دعم RTL.
-* تم تقديم **Smart Side Picking** وخيارات `sidesConsidered`.
-* تمت إضافة **Fluent Beak**: `beakEnabled`, `beakSize`, `beakInset`, `beakColor`.
-* تم إصلاح التحكّم البرمجي ليدعم **الفتح المبدئي** وتبديل الـ controller أثناء التشغيل.
-
----
-
-## 13) تجميعة أمثلة متقدمة
+### Onboarding Tour
 
 ```dart
-// مثال يدمج: Builder + Beak + SmartSidePicking + ModalBarrier + PublicState
-final pub = FlyoutPublicState.global;
-final ctl = FlyoutController()..open(); // فتح مبدئي
+class OnboardingTooltip extends StatelessWidget {
+  final TooltipCardController controller;
+  final String title;
+  final String description;
+  final VoidCallback onNext;
+  final VoidCallback onSkip;
+  final Widget child;
 
-FlyoutButton.builder(
-  publicState: pub,
-  controller: ctl,
-  icon: const Icon(Icons.info),
-  label: const Text('Advanced'),
-  placementSide: FlyoutPlacementSide.top,
-  placementAlign: FlyoutPlacementAlign.center,
-  smartSidePicking: true,
-  modalBarrierEnabled: true,
-  barrierBlur: 6,
-  flyoutBackgroundColor: Colors.black87,
-  beakEnabled: true,
-  flyoutContentBuilder: (ctx, close) => ConstrainedBox(
-    constraints: const BoxConstraints(maxWidth: 360),
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: const [
-        Text('Title', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        SizedBox(height: 6),
-        Text('Advanced callout with beak and smart picking.', style: TextStyle(color: Colors.white70)),
-      ]),
-    ),
-  ),
-);
-```
-
----
-
-## 14) تحسينات v4.7.3
-
-### 🚀 تحسينات الأداء
-
-#### Design Tokens System
-
-تم إدخال نظام موحد للقيم المستخدمة في المكوّن:
-
-```dart
-// Spacing tokens - مسافات موحدة
-_TooltipCardSpacing.xxs  // 2.0
-_TooltipCardSpacing.xs   // 4.0
-_TooltipCardSpacing.sm   // 8.0
-_TooltipCardSpacing.md   // 12.0
-_TooltipCardSpacing.lg   // 16.0
-_TooltipCardSpacing.xl   // 20.0
-_TooltipCardSpacing.xxl  // 24.0
-
-// Timing - توقيت محسّن
-_TooltipCardTiming.enterDuration    // 200ms
-_TooltipCardTiming.exitDuration     // 150ms
-
-// Curves - منحنيات محسّنة
-_TooltipCardCurves.scaleIn   // Curves.easeOutBack (spring effect)
-_TooltipCardCurves.fade      // Curves.easeOut
-```
-
-#### Rebuild Optimization
-
-* **RepaintBoundary** للعناصر المستقلة:
-  * Modal Barrier - لا يعاد رسمه مع Panel
-  * Panel Material - منفصل عن Beak
-  * Beak - رسم مستقل للأداء
-
-* **Constants مشتركة** تقلل الحسابات:
-
-  ```dart
-  _TooltipCardConstants.defaultMaxWidth      // 360.0
-  _TooltipCardConstants.defaultElevation     // 8.0
-  _TooltipCardConstants.positionEpsilon      // 0.5
-  _TooltipCardConstants.shadowOpacity        // 0.25
-  ```
-
-### 🎬 تحسينات الحركة
-
-#### Spring Animation
-
-```dart
-// القيم القديمة
-begin: 0.92, curve: Curves.easeOutCubic
-
-// القيم الجديدة - أكثر وضوحاً
-begin: 0.88, curve: Curves.easeOutBack  // spring effect
-```
-
-#### Scale Alignment الذكي
-
-الحركة الآن تنطلق من جهة الزر:
-
-```dart
-// مثال: عند placement من الأعلى
-alignment: Alignment.bottomCenter  // ينمو من الأسفل (جهة الزر)
-
-// عند placement من اليمين
-alignment: Alignment.centerLeft    // ينمو من اليسار (جهة الزر)
-```
-
-#### Blur Animation
-
-تطبيق الـ blur بشكل متدرج:
-
-```dart
-sigmaX: widget.barrierBlur * _fade.value,  // بدلاً من قيمة ثابتة
-sigmaY: widget.barrierBlur * _fade.value,
-tileMode: TileMode.clamp,                  // تحسين أداء
-```
-
-### 🎨 تحسينات الثيمات
-
-#### Material 3 Color Scheme
-
-```dart
-// اختيار ذكي للون الخلفية
-Color _getPanelBackgroundColor(ThemeData theme) {
-  if (widget.flyoutBackgroundColor != null) {
-    return widget.flyoutBackgroundColor!;
+  @override
+  Widget build(BuildContext context) {
+    return TooltipCard.builder(
+      controller: controller,
+      beakEnabled: true,
+      modalBarrierEnabled: true,
+      barrierBlur: 3.0,
+      child: child,
+      builder: (context, close) => TooltipCardContent(
+        icon: const Icon(Icons.school),
+        title: title,
+        subtitle: description,
+        primaryAction: FilledButton(
+          onPressed: () {
+            close();
+            onNext();
+          },
+          child: const Text('Next'),
+        ),
+        secondaryAction: TextButton(
+          onPressed: () {
+            close();
+            onSkip();
+          },
+          child: const Text('Skip'),
+        ),
+      ),
+    );
   }
-
-  // استخدام ألوان Surface المناسبة
-  return theme.brightness == Brightness.dark
-      ? colorScheme.surfaceContainerHigh  // للوضع الداكن
-      : colorScheme.surface;              // للوضع الفاتح
 }
 ```
 
-#### Scrim Opacity محسّن
+### Context Menu
 
 ```dart
-// تعديل الشفافية حسب السطوع
-final defaultScrim = colorScheme.scrim.withValues(
-  alpha: theme.brightness == Brightness.dark ? 0.5 : 0.45,
-);
-```
-
-#### Shadow من الثيم
-
-```dart
-Material(
-  shadowColor: Theme.of(context).shadowColor,  // بدلاً من قيمة ثابتة
-  elevation: elevation,
-  ...
+TooltipCard.builder(
+  whenContentVisible: WhenContentVisible.secondaryTapButton,
+  whenContentHide: WhenContentHide.pressOutSide,
+  placementSide: TooltipCardPlacementSide.bottomStart,
+  padding: const EdgeInsets.symmetric(vertical: 8),
+  child: const ListTile(
+    title: Text('Right-click me'),
+  ),
+  builder: (context, close) => Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      ListTile(
+        leading: const Icon(Icons.edit),
+        title: const Text('Edit'),
+        onTap: () { close(); /* edit action */ },
+      ),
+      ListTile(
+        leading: const Icon(Icons.delete),
+        title: const Text('Delete'),
+        onTap: () { close(); /* delete action */ },
+      ),
+    ],
+  ),
 )
 ```
 
-### 📐 تحسينات المسافات
-
-#### قبل التحسين
+### Hover Tooltip (Desktop)
 
 ```dart
-const EdgeInsets.all(0)           // غير واضح
-const SizedBox(width: 8)          // قيم ثابتة
-padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8)
-```
-
-#### بعد التحسين
-
-```dart
-EdgeInsets.zero                                    // أوضح
-SizedBox(width: _TooltipCardSpacing.sm)           // من النظام
-padding: EdgeInsets.symmetric(
-  horizontal: _TooltipCardSpacing.md,  // 12px
-  vertical: _TooltipCardSpacing.sm,    // 8px
+TooltipCard.builder(
+  whenContentVisible: WhenContentVisible.hoverButton,
+  whenContentHide: WhenContentHide.goAway,
+  hoverOpenDelay: const Duration(milliseconds: 400),
+  hoverCloseDelay: const Duration(milliseconds: 200),
+  beakEnabled: true,
+  child: const Icon(Icons.info_outline),
+  builder: (context, close) => const Padding(
+    padding: EdgeInsets.all(8),
+    child: Text('Hover tooltip content'),
+  ),
 )
 ```
-
-### ♿ تحسينات إمكانية الوصول
-
-#### Semantics Labels
-
-```dart
-// للزر المُحفّز
-Semantics(
-  button: true,
-  enabled: true,
-  expanded: _controller.isOpen,
-  label: 'Tooltip trigger, ${_controller.isOpen ? "expanded" : "collapsed"}',
-  ...
-)
-
-// للـ Modal Barrier
-Semantics(
-  label: widget.modalBarrierEnabled ? 'Modal barrier' : 'Dismissible overlay',
-  button: effectiveDismissible,
-  ...
-)
-
-// للوحة المنبثقة
-Semantics(
-  container: true,
-  label: 'Tooltip panel',
-  ...
-)
-```
-
-#### دعم لوحة المفاتيح
-
-```dart
-Focus(
-  onKeyEvent: (node, event) {
-    // إغلاق بـ ESC
-    if (_controller.isOpen && event.logicalKey == LogicalKeyboardKey.escape) {
-      _controller.close();
-      return KeyEventResult.handled;
-    }
-
-    // فتح بـ Enter أو Space
-    if (!_controller.isOpen &&
-        (event.logicalKey == LogicalKeyboardKey.enter ||
-         event.logicalKey == LogicalKeyboardKey.space)) {
-      _controller.open();
-      return KeyEventResult.handled;
-    }
-
-    return KeyEventResult.ignored;
-  },
-  ...
-)
-```
-
-### 💡 أفضل الممارسات الجديدة
-
-1. **الاعتماد على الثيم الافتراضي**:
-
-   ```dart
-   // لا حاجة لتحديد الألوان يدوياً
-   TooltipCard.builder(
-     // flyoutBackgroundColor: ... ← اتركها فارغة
-     icon: Icon(Icons.info),
-     ...
-   )
-   ```
-
-2. **استخدام الـ spacing الموحد**:
-
-   ```dart
-   // في المحتوى المخصص
-   Padding(
-     padding: EdgeInsets.all(_TooltipCardSpacing.md),
-     child: ...
-   )
-   ```
-
-3. **الاستفادة من Accessibility**:
-
-   ```dart
-   TooltipCard.builder(
-     icon: Icon(Icons.settings),
-     label: Text('Settings'),  // مهم لقارئات الشاشة
-     ...
-   )
-   ```
-
-### 📊 مقاييس الأداء
-
-| المقياس | قبل | بعد | التحسين |
-|---------|-----|-----|---------|
-| Rebuilds | 100% | 70% | ⬇️ 30% |
-| FPS (مع blur) | ~50 | ~60 | ⬆️ 20% |
-| Memory allocations | عالية | منخفضة | ⬇️ 25% |
-| Animation smoothness | جيدة | ممتازة | ⬆️ 40% |
-
-### 🔄 ترقية من v4.7.2
-
-**لا توجد تغييرات كاسرة!**
-
-* جميع الـ APIs القديمة تعمل كما هي
-* التحسينات تلقائية
-* لا حاجة لتعديل الكود الحالي
-
-**اختياري للاستفادة القصوى**:
-
-* إزالة `flyoutBackgroundColor` للاعتماد على الثيم
-* استخدام `label` بجانب `icon` للـ accessibility
-* الاعتماد على القيم الافتراضية المحسّنة
 
 ---
 
-### انتهى — راجع ملف [changelog.md](./changelog.md) للتفاصيل التقنية الكاملة
+## 🧪 Running the Example
+
+```bash
+cd example
+flutter pub get
+flutter run
+```
+
+---
+
+
+## 📄 License
+
+```
+MIT License
+
+Copyright (c) 2025 Genius Systems
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 🔗 Links
+
+- 📦 [pub.dev Package](https://pub.dev/packages/tooltip_card)
+- 📖 [API Documentation](https://pub.dev/documentation/tooltip_card/latest/)
+- 🐛 [Issue Tracker](https://github.com/geniussystems24/tooltip_card/issues)
+- 💻 [Source Code](https://github.com/geniussystems24/tooltip_card)
+
+---
+
+<p align="center">
+  Made with ❤️ by <a href="https://github.com/geniussystems24">Genius Systems</a>
+</p>

@@ -1,421 +1,251 @@
-# Change Log — TooltipCard (v4.x)
+# Changelog
 
-> **المنطقة الزمنية المعتمدة:** Asia/Aden (UTC+03:00)
->
-> يسجل هذا الملف كل التغييرات التي تمت على المكوّن أثناء جلسة التطوير الحالية، مع ترتيب زمني دقيق وملحوظات ترحيل (Migration) عند الحاجة. راجع أيضًا ملف "توثيق TooltipCard — الإصدار v4.x" لمرجع API وأمثلة متقدمة.
+All notable changes to this project will be documented in this file.
 
----
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.8.0] — 2025-11-01 (UTC+03:00)
-
-### Added - Compound Placement Sides
-
-#### 🎯 خيارات تموضع مركبة (Compound Placements)
-
-تمت إضافة 8 خيارات جديدة للتموضع الدقيق:
-
-**الجهات المركبة الجديدة:**
-* `topStart` — فوق + محاذاة للبداية
-* `topEnd` — فوق + محاذاة للنهاية
-* `bottomStart` — تحت + محاذاة للبداية
-* `bottomEnd` — تحت + محاذاة للنهاية
-* `startTop` — في البداية + محاذاة للأعلى
-* `startBottom` — في البداية + محاذاة للأسفل
-* `endTop` — في النهاية + محاذاة للأعلى
-* `endBottom` — في النهاية + محاذاة للأسفل
-
-#### 🔧 التحسينات التقنية
-
-* **Extension Methods جديدة**:
-  * `baseSide` — يُرجع الجهة الأساسية (top/bottom/start/end)
-  * `impliedAlign` — يُرجع المحاذاة الضمنية
-  * `isCompound` — يتحقق إذا كان التموضع مركب
-  * `isVertical` — يتحقق إذا كان التموضع عمودي
-  * `isHorizontal` — يتحقق إذا كان التموضع أفقي
-
-* **تحديث منطق التموضع**:
-  * `_resolveCompoundPlacement()` — يحلل التموضع المركب
-  * تحديث `_verticalSpaceFor()` لدعم الجهات المركبة
-  * تحديث `_horizontalSpaceFor()` لدعم الجهات المركبة
-  * تحديث `_computeOffset()` لحساب الموقع الدقيق
-  * تحديث `_resolve()` لاختيار أفضل موقع
-
-* **تحديث Scale Alignment**:
-  * محاذاة ذكية للحركة حسب التموضع المركب
-  * حركة أكثر طبيعية من نقطة الأصل الصحيحة
-  * دعم 9 نقاط محاذاة مختلفة
-
-* **تحديث Beak**:
-  * الـ beak يعمل تلقائياً مع الجهات المركبة
-  * محاذاة السهم حسب التموضع المركب
-  * دعم جميع أنواع التموضع
-
-#### 📖 التوثيق
-
-* إضافة documentation شامل للـ enum
-* أمثلة متعددة لكل نوع تموضع
-* شرح الفرق بين التموضع البسيط والمركب
-
-#### 💡 الاستخدام
-
-```dart
-// بسيط - يحتاج placementAlign منفصل
-TooltipCard.builder(
-  placementSide: TooltipCardPlacementSide.top,
-  placementAlign: TooltipCardPlacementAlign.start,
-  ...
-)
-
-// مركب - المحاذاة مدمجة
-TooltipCard.builder(
-  placementSide: TooltipCardPlacementSide.topStart,  // يتجاهل placementAlign
-  ...
-)
-```
-
-#### ⚙️ السلوك
-
-* الجهات المركبة تتجاهل `placementAlign`
-* المحاذاة محددة ضمنياً في اسم الجهة
-* التوافق الكامل مع الجهات الأساسية
-* Smart flipping يعمل تلقائياً
-* RTL awareness محفوظ
-
-### Migration Guide
-
-**لا توجد تغييرات كاسرة (Breaking Changes)**
-
-* الجهات الأساسية تعمل كما كانت
-* `placementAlign` لا يزال يعمل مع الجهات الأساسية
-* الجهات المركبة اختيارية تماماً
-
-**للاستفادة من الجهات المركبة**:
-
-```dart
-// القديم (لا يزال يعمل)
-placementSide: TooltipCardPlacementSide.top,
-placementAlign: TooltipCardPlacementAlign.start,
-
-// الجديد (أكثر وضوحاً)
-placementSide: TooltipCardPlacementSide.topStart,
-// لا حاجة لـ placementAlign
-```
-
----
-
-## [4.7.3] — 2025-11-01 (UTC+03:00)
-
-### Enhanced - تحسينات شاملة للأداء والتجربة
-
-#### 🚀 تحسينات الأداء (Performance)
-
-* **إضافة Design Tokens**: نظام موحد لقيم التباعد والتوقيت والثوابت
-  * `_TooltipCardSpacing`: قيم موحدة للهوامش والمسافات (xxs إلى xxl)
-  * `_TooltipCardTiming`: مدد زمنية محسّنة للحركات
-  * `_TooltipCardCurves`: منحنيات حركة محسّنة مع تأثير spring
-  * `_TooltipCardConstants`: ثوابت القياس والدقة
-
-* **تحسين الـ Rebuild Optimization**:
-  * إضافة `RepaintBoundary` للعناصر المستقلة (Barrier، Panel، Beak)
-  * تقليل الحسابات المكررة باستخدام constants مشتركة
-  * تحسين شروط `shouldRepaint` في الـ CustomPainters
-
-#### 🎬 تحسينات الحركة (Animations)
-
-* **منحنيات محسّنة**:
-  * استخدام `Curves.easeOutBack` للحركة الداخلية (spring effect)
-  * تحسين `scale` animation: من 0.88 إلى 1.0 (أكثر وضوحاً)
-  * مدد زمنية محسّنة: 200ms للدخول، 150ms للخروج
-
-* **محاذاة ذكية للـ Scale**:
-  * إضافة `_getScaleAlignment()` لتحديد نقطة الأصل للحركة
-  * الحركة تنطلق من جهة الزر المُحفّز (أكثر طبيعية)
-
-* **Blur Animation محسّن**:
-  * تطبيق الـ blur بشكل متدرج مع الـ fade
-  * إضافة `tileMode: TileMode.clamp` لتحسين الأداء
-
-#### 🎨 تحسينات الثيمات (Theming)
-
-* **دعم Material 3 الكامل**:
-  * استخدام `ColorScheme` بشكل صحيح
-  * دعم أفضل لـ Dark Mode
-  * ألوان Surface محسّنة:
-    * Dark: `surfaceContainerHigh`
-    * Light: `surface`
-
-* **Scrim ذكي**:
-  * تعديل شفافية الـ scrim حسب الـ brightness
-  * Dark: 0.5 alpha
-  * Light: 0.45 alpha
-
-* **Shadow محسّن**:
-  * استخدام `shadowColor` من الثيم
-  * تطبيق `_TooltipCardConstants.shadowOpacity` (0.25)
-
-#### 📐 تحسينات المسافات (Spacing & Padding)
-
-* **نظام مسافات موحد**:
-  * استبدال القيم الثابتة بـ spacing tokens
-  * `_TooltipCardSpacing.sm` (8px): بين الأيقونة والنص
-  * `_TooltipCardSpacing.md` (12px): horizontal padding للوحة
-  * `_TooltipCardSpacing.sm` (8px): vertical padding للوحة
-
-* **EdgeInsets محسّنة**:
-  * استبدال `const EdgeInsets.all(0)` بـ `EdgeInsets.zero`
-  * استخدام `EdgeInsets.symmetric` لوضوح أفضل
-
-#### ♿ تحسينات إمكانية الوصول (Accessibility)
-
-* **Semantics شاملة**:
-  * إضافة semantic labels للـ barrier
-  * إضافة semantic labels لزر التحفيز مع حالة (expanded/collapsed)
-  * إضافة semantic container للوحة المنبثقة
-
-* **دعم لوحة المفاتيح**:
-  * دعم Enter و Space لفتح الـ tooltip
-  * تحسين دعم Escape للإغلاق
-  * Focus management محسّن
-
-* **دالة `_getSemanticLabel()`**:
-  * توفير وصف واضح لقارئات الشاشة
-  * تضمين حالة الـ tooltip (open/closed)
-
-#### 🔧 تحسينات إضافية
-
-* **دالة `_getPanelBackgroundColor()`**:
-  * لون خلفية ذكي يراعي الثيم
-  * fallback محسّن لـ Material 3
-
-* **Beak محسّن**:
-  * `RepaintBoundary` منفصل للأداء
-  * استخدام constants للـ shadow opacity
-  * إضافة `style: PaintingStyle.fill` صراحةً
-
-* **Documentation محسّنة**:
-  * تعليقات توضيحية شاملة
-  * أمثلة محدّثة في الكود
-  * شرح للميزات الجديدة
-
-### Migration Guide
-
-**لا توجد تغييرات كاسرة (Breaking Changes)**
-
-جميع التحسينات متوافقة تماماً مع الكود الحالي:
-
-* القيم الافتراضية لم تتغير
-* جميع الـ APIs موجودة كما هي
-* التحسينات تلقائية ولا تحتاج تعديل
-
-**اختياري - للاستفادة القصوى**:
-
-```dart
-// يمكنك الآن الاعتماد على الألوان التلقائية المحسّنة
-TooltipCard.builder(
-  // لا حاجة لـ flyoutBackgroundColor - سيختار اللون المناسب تلقائياً
-  // flyoutBackgroundColor: Colors.black87, ← اختياري الآن
-  ...
-)
-```
-
-### Performance Metrics
-
-* **Rebuild تحسين**: ~30% تقليل في الـ rebuilds غير الضرورية
-* **Animation أكثر سلاسة**: 60 FPS ثابت حتى مع الـ blur
-* **Memory**: تقليل الـ allocations بفضل الـ RepaintBoundaries
-
----
-
-## [4.7.2] — 2025-10-07 14:15 (UTC+03:00)
+## [2.4.0] - 2025-12-24 (UTC+03:00)
 
 ### Added
 
-* إنشاء ملف **`changelog.md`** وتعبئته بكل الخطوات التفصيلية مع التوقيت.
+- **TooltipCardThemeData** - New `ThemeExtension` for app-wide tooltip theming
+  - Extends `ThemeExtension<TooltipCardThemeData>` for seamless Flutter integration
+  - Supports `copyWith()` for easy customization
+  - Implements `lerp()` for smooth theme transitions and animations
+  - **Appearance properties**: backgroundColor, beakColor, elevation, borderRadius, padding, constraints, awaySpace
+  - **Beak properties**: beakEnabled, beakSize, beakInset
+  - **Timing properties**: hoverOpenDelay, hoverCloseDelay, showDuration
+  - **Barrier properties**: barrierColor, barrierBlur
+  - **Content style properties**: titleStyle, subtitleStyle, contentTextStyle, iconColor, iconSize, actionSpacing, contentMaxWidth, contentPadding, contentSpacing
 
----
+- **Factory Constructors** for quick theme setup:
+  - `TooltipCardThemeData.light()` - Pre-configured light theme
+  - `TooltipCardThemeData.dark()` - Pre-configured dark theme
+  - `TooltipCardThemeData.fluent()` - Microsoft Fluent UI inspired theme
 
-## [4.7.1] — 2025-10-07 14:00 (UTC+03:00)
-
-### Added - Documentation
-
-* إنشاء وثيقة شاملة: **توثيق FlyoutButton — الإصدار v4.x** (Quick Start، مفاهيم، مرجع API، أمثلة، أداء/A11y، مشاكل شائعة، قيم افتراضية، ترقية من الإصدارات السابقة).
-
-**Notes:**
-
-* التوثيق يغطي الميزات حتى الإصدار **4.7.0**.
-
----
-
-## [4.7.0] — 2025-10-07 13:30 (UTC+03:00)
-
-### Added — Smart Side Picking
-
-* **اختيار ذكي للجهة** عند عدم اتساع الجهة المفضلة:
-
-  * أولوية للجهة المحددة في `placementSide`.
-  * إن لم تتسع، تتم مقارنة المساحات المتاحة في **top/bottom/start/end** واختيار الأوسع.
-* إضافة جهتين منطقيتين جديدتين: `start` و `end` (تراعي RTL).
-* خاصية **`smartSidePicking: true`** (افتراضي) + **`sidesConsidered`** لتقييد الجهات التي تُؤخذ بالحسبان.
+- **Context Extension** for easy theme access:
+  ```dart
+  final theme = context.tooltipCardTheme;
+  ```
 
 ### Changed
 
-* ملاءمة الأنميشن الانزلاقي حسب الجهة المختارة (علوي/سفلي/بداية/نهاية).
+- Enhanced pubspec.yaml description with comprehensive feature list
+- Updated README.md with professional documentation and screenshots
+- Improved theming section in documentation
 
-**Migration:**
+### Documentation
 
-* لا تغييرات كاسرة. إن كنت تستخدم جوانب "يسار/يمين" صراحةً، استبدلها بالمنطقيتين `start/end` عند الحاجة لدعم RTL.
+- Added complete TooltipCardThemeData API reference
+- Added theming examples with MaterialApp integration
+- Screenshots section added to README header
 
----
+## [2.3.0] - 2025-12-24
 
-## [4.6.1] — 2025-10-07 13:00 (UTC+03:00)
+### Added
+- **Package Restructuring**: Complete reorganization into modular structure
+  - `lib/src/core/` - Design tokens and constants
+  - `lib/src/controllers/` - Controller classes
+  - `lib/src/delegates/` - Position delegate
+  - `lib/src/enums/` - Enumeration types
+  - `lib/src/painters/` - Custom painters
+  - `lib/src/widgets/` - Widget components
+- **Example App**: Complete demo application in `example/` directory
+- **Documentation**: Comprehensive pub.dev style README
+- **API Rename**: `flyoutContentBuilder` → `builder` for cleaner API
+
+### Changed
+- **Enum Rename**: `WhenContentVisable` → `WhenContentVisible` (with deprecation alias)
+- **Public API**: Controllers now use `registerOpen`/`registerClose` instead of private methods
+
+### Fixed
+- Improved code organization and maintainability
+- Better separation of concerns
+
+## [2.2.0] - 2025-11-01 (UTC+03:00)
+
+### Added
+- **Fluent UI Inspired Features**
+  - `dismissOnPointerMoveAway` - Auto-close when pointer leaves
+  - `showDuration` - Auto-hide after specified duration
+  - `offset` - Custom positioning fine-tuning
+  - `onOpen`/`onClose` - Separate event callbacks
+
+## [2.1.0] - 2025-11-01 (UTC+03:00)
+
+### Added
+- **TooltipCardContent Widget** - Structured content layout inspired by Fluent UI TeachingTip
+  - Icon/image header support
+  - Title and subtitle sections
+  - Custom content area
+  - Multiple action buttons (primary, secondary, tertiary)
+  - Built-in close button
+
+## [1.8.0] - 2025-11-01 (UTC+03:00)
+
+### Added — Compound Placement Sides
+- **8 new precise positioning options**:
+  - `topStart`, `topEnd` - Above with alignment
+  - `bottomStart`, `bottomEnd` - Below with alignment
+  - `startTop`, `startBottom` - Start side with alignment
+  - `endTop`, `endBottom` - End side with alignment
+
+### Changed
+- **Extension methods for `TooltipCardPlacementSide`**:
+  - `baseSide` - Returns base side for compound placements
+  - `isCompound` - Checks if placement is compound
+  - `isVertical` / `isHorizontal` - Direction checks
+  - `horizontalAlign` / `verticalAlign` - Alignment getters
+- **Scale Alignment**: Smart alignment based on placement
+- **Beak**: Works automatically with compound placements
+
+## [1.7.3] - 2025-11-01 (UTC+03:00)
+
+### Enhanced — Performance and UX Improvements
+
+#### Performance
+- **Design Tokens System**: Unified values for spacing, timing, and constants
+- **Rebuild Optimization**: Added `RepaintBoundary` for independent widgets
+- **Reduced rebuilds**: ~30% improvement
+
+#### Animations
+- **Spring-based curves**: `Curves.easeOutBack` for smoother motion
+- **Scale animation**: From 0.88 to 1.0 for more pronounced effect
+- **Timing**: 200ms enter, 150ms exit
+
+#### Theming
+- **Material 3 support**: Full color scheme integration
+- **Dark mode**: Optimized scrim opacity (dark: 0.5, light: 0.45)
+- **Surface colors**: `surfaceContainerHigh` for dark, `surface` for light
+
+#### Accessibility
+- **Semantic labels**: For barrier, trigger, and panel
+- **Keyboard navigation**: Enter/Space to open, Escape to close
+
+## [1.7.2] - 2025-10-07 14:15 (UTC+03:00)
+
+### Added
+- Created `CHANGELOG.md` with detailed version history
+
+## [1.7.1] - 2025-10-07 14:00 (UTC+03:00)
+
+### Added
+- Comprehensive API documentation
+
+## [1.7.0] - 2025-10-07 13:30 (UTC+03:00)
+
+### Added — Smart Side Picking
+- **Intelligent side selection**: Prefers specified `placementSide`
+- **Auto-select**: Picks side with most available space
+- **Logical sides**: `start` and `end` placements (RTL aware)
+- **`smartSidePicking`**: Enabled by default
+- **`sidesConsidered`**: Limit considered sides
+
+### Changed
+- Animation adapts to selected side
+
+## [1.6.1] - 2025-10-07 13:00 (UTC+03:00)
 
 ### Fixed — Programmatic Control
+- **Initial open state**: Support for pre-opened controller
+- **Controller hot-swap**: Proper cleanup in `didUpdateWidget`
+- **Memory leak prevention**: Safe overlay cleanup
 
-* إصلاح التحكم البرمجي بالمحتوى (`FlyoutController`):
+## [1.6.0] - 2025-10-07 12:30 (UTC+03:00)
 
-  * **فتح مبدئي** إن كانت حالة المتحكم `isOpen == true` قبل تركيب الودجت.
-  * دعم **تبديل الـ controller** في `didUpdateWidget` (إزالة مستمع القديم، التخلص منه إن كان مملوكًا داخليًا، إرفاق المستمع بالجديد ومزامنة الحالة).
-  * إغلاق آمن للـ Overlay عند تبديل المتحكم لمنع التسريب.
+### Added — Fluent Beak/Callout
+- **`beakEnabled`**: Toggle arrow visibility (default: true)
+- **`beakSize`**: Arrow size (default: 10)
+- **`beakInset`**: Horizontal offset (default: 16)
+- **`beakColor`**: Custom color (defaults to panel color)
+- **Auto-direction**: Based on placement
 
-**Notes:**
+## [1.5.0] - 2025-10-07 12:05 (UTC+03:00)
 
-* لا حاجة لاستدعاء `setState` للتحكم بالفتح/الإغلاق.
+### Added — Additional Gesture Modes
+- **`doubleTapButton`**: Open on double tap
+- **`secondaryTapButton`**: Open on right-click/long press
+- Both modes work with `WhenContentHide.goAway`
 
----
-
-## [4.6.0] — 2025-10-07 12:30 (UTC+03:00)
-
-### Added — Fluent Beak / Callout
-
-* إضافة **سهم/نتوء (Beak/Caret)** بأسلوب Fluent يشير للزر:
-
-  * خصائص: `beakEnabled` (افتراضي: true), `beakSize`, `beakInset`, `beakColor`.
-  * السهم يتجه تلقائيًا وفق موضع اللوحة (أعلى/أسفل) ومحاذاتها.
-* الحفاظ على الظلال والملمس البصري المتناسق مع `Material`.
-
-**Migration:**
-
-* لا تغييرات كاسرة. مفعّل افتراضيًا ويمكن تعطيله عند الحاجة.
-
----
-
-## [4.5.0] — 2025-10-07 12:05 (UTC+03:00)
-
-### Added — Gesture Modes
-
-* توسيع `WhenContentVisable` ليشمل:
-
-  * `doubleTapButton` — فتح/إغلاق بالنقر المزدوج.
-  * `secondaryTapButton` — فتح/إغلاق بالنقرة الثانوية (يمين الفأرة/المكافئ على المنصة).
-
-**Behavior:**
-
-* يُعامَل كلا الوضعين كـ "ضغط" (Press-like)، وبالتالي يتفاعلان مع `WhenContentHide.goAway` في منطق الإغلاق التلقائي عند الخروج Hover من الزر واللوحة معًا.
-
----
-
-## [4.4.0] — 2025-10-07 11:40 (UTC+03:00)
+## [1.4.0] - 2025-10-07 11:40 (UTC+03:00)
 
 ### Added — Builder API
+- **`builder(BuildContext, VoidCallback close)`**: Build content on open
+- **`TooltipCard.builder()`**: Alternative constructor for static content
+- **`wrapContentInScrollView`**: Still works automatically
 
-* إضافة **`flyoutContentBuilder(BuildContext, VoidCallback close)`** لبناء المحتوى عند الفتح وتمرير دالة **`close()`** للإغلاق من الداخل.
-* إضافة باني بديل **`FlyoutButton.builder(...)`** للمحتوى الثابت مع `flyoutContent`.
+## [1.3.1] - 2025-10-07 11:25 (UTC+03:00)
 
-**Notes:**
+### Changed — Press + GoAway Behavior
+- **Auto-close**: When pointer leaves both trigger and tooltip
+- Updated demo to showcase this behavior
 
-* خاصية `wrapContentInScrollView` ما زالت تعمل تلقائيًا مع المحتوى الكبير.
-
----
-
-## [4.3.1] — 2025-10-07 11:25 (UTC+03:00)
-
-### Changed — Press + GoAway Rule
-
-* توضيح وتطبيق سلوك خاص عند:
-
-  * `whenContentVisable = pressButton` **و** `whenContentHide = goAway` ⇒ **إخفاء المحتوى عند خروج المؤشر من الزر واللوحة معًا**.
-
-### Added - Demo Update
-
-* تحديث شاشة **DemoFlyoutButtons** لإظهار هذا السيناريو بوضوح.
-
----
-
-## [4.3.0] — 2025-10-07 11:10 (UTC+03:00)
+## [1.3.0] - 2025-10-07 11:10 (UTC+03:00)
 
 ### Added — Modal Barrier
+- **`modalBarrierEnabled`**: Show backdrop
+- **`barrierColor`**: Backdrop color
+- **`barrierBlur`**: Backdrop blur (BackdropFilter)
+- **`barrierDismissible`**: Tap to dismiss
 
-* خصائص الحاجب (الخلفية) أثناء عرض المحتوى:
-
-  * `modalBarrierEnabled`, `barrierColor`, `barrierBlur`, `barrierDismissible`.
-  * دعم تعطيل تفاعل الخلفية (امتصاص المؤشر) عند الحاجة.
-
-### Added - DemoFlyoutButtons
-
-* إنشاء **DemoFlyoutButtons** أولية تعرض الاستعمالات الشائعة.
-
----
-
-## [4.2.1] — 2025-10-07 10:52 (UTC+03:00)
+## [1.2.1] - 2025-10-07 10:52 (UTC+03:00)
 
 ### Fixed — Hover Bridging
+- Tooltip stays open when moving between trigger and content
+- Added `MouseRegion` to panel with hover bridge logic
 
-* إصلاح اختفاء اللوحة عند الانتقال بالمؤشر من الزر إلى المحتوى:
+## [1.2.0] - 2025-10-07 10:40 (UTC+03:00)
 
-  * إضافة `MouseRegion` للوحة مع منطق "جسر التحويم" للحفاظ على الفتح ما دام المؤشر فوق الزر أو اللوحة.
+### Added — Viewport Fit
+- **Auto-constrain**: Fits content within viewport
+- **`viewportMargin`**: Safe margin from edges
+- **Auto-scroll**: `SingleChildScrollView` for overflow
+- **`autoFlipIfZeroSpace`**: Available (smart picking added in 1.7.0)
 
----
+## [1.1.0] - 2025-10-07 10:20 (UTC+03:00)
 
-## [4.2.0] — 2025-10-07 10:40 (UTC+03:00)
+### Added — Visibility Modes & Public State
+- **`WhenContentVisible`**: `pressButton`, `hoverButton`
+- **`TooltipCardPublicState`**: Auto-close other open tooltips
 
-### Added — Viewport-fit & Clamping
+## [1.0.0] - 2025-10-07 10:05 (UTC+03:00)
 
-* ضمان عدم خروج المحتوى عن حدود الشاشة:
-
-  * حساب المساحات المتاحة أعلى/أسفل/يمين/يسار بالنسبة للزر.
-  * قصّ الحجم تلقائيًا واستعمال `SingleChildScrollView` عند لزومه.
-  * إن زاد المحتوى عن الشاشة، يُضبط **أقصى حجم** إلى أبعاد الشاشة داخل `viewportMargin`.
-
-**Notes:**
-
-* خيار `autoFlipIfZeroSpace` متاح (إن كنت تستخدمه) لكن سلوك "الاختيار الذكي" أُضيف لاحقًا في 4.7.0.
-
----
-
-## [4.1.0] — 2025-10-07 10:20 (UTC+03:00)
-
-### Added — Visibility Modes & PublicState
-
-* إضافة **`WhenContentVisable`** بأنماط:
-
-  * `pressButton`, `hoverButton`.
-* إضافة **`FlyoutPublicState`** لإغلاق بقية الأزرار المفتوحة تلقائيًا عند فتح زر جديد.
-
-**Behavior:**
-
-* عند الضغط على زر آخر، يتم إخفاء القائمة الظاهرة حاليًا.
+### Initial Release
+- **`WhenContentHide`**: `goAway`, `pressOutSide`
+- **Basic trigger**: Icon/label support
+- **Overlay display**: Tooltip via Overlay
+- **Configurable**: Alignment, spacing, colors
 
 ---
 
-## [4.0.0] — 2025-10-07 10:05 (UTC+03:00)
+## Migration Notes
 
-### Initial
+### v1.x → v5.x
 
-* إنشاء **FlyoutButton** بالحد الأدنى:
+**No breaking changes!** All v1.x APIs continue to work.
 
-  * `WhenContentHide { goAway, pressOutSide }`.
-  * دعم أيقونة/تسمية وإظهار محتوى منبثق عبر `Overlay`.
-  * خصائص أساسية للمحاذاة والمسافات.
+**Optional improvements:**
+- Use `builder` instead of `flyoutContentBuilder`
+- Use new `WhenContentVisible` enum (old name is deprecated)
+- Use `TooltipCardContent` for structured content
+- Leverage compound placements for precise positioning
+
+### Upgrading Dependencies
+
+```yaml
+dependencies:
+  tooltip_card: ^5.3.0
+```
 
 ---
 
-## ملحوظات عامة
+## General Notes
 
-* كل الإصدارات ضمن **v4.x** متوافقة مع بعضها (لا تغييرات كاسرة) ما لم يُذكر خلاف ذلك.
-* عند استخدام `controller` خارجيًا: احتفظ بنفس الكائن ولا تنشئه في كل `build`.
-* عند تمكين `modalBarrierEnabled` مع `barrierDismissible: false`، يتم امتصاص التفاعل خارج اللوحة حتى الإغلاق.
+- All v1.x versions are backward compatible
+- Keep controller instances stable (don't create in `build`)
+- When using `modalBarrierEnabled` with `barrierDismissible: false`, interaction outside panel is absorbed
 
-## مراجع داخلية
+## Support
 
-* الوثيقة المرجعية: *توثيق FlyoutButton — الإصدار v4.x*.
-* شاشات العرض التجريبية: *DemoFlyoutButtons* (محدّثة حتى 4.3.x، ويمكن توسيعها لتغطي 4.5–4.7 عند الطلب).
+For issues and feature requests, please use the [GitHub issue tracker](https://github.com/geniussystems24/tooltip_card/issues).

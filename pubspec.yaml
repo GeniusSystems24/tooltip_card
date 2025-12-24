@@ -1,11 +1,48 @@
 name: tooltip_card
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
+description: >-
+  A powerful, highly customizable tooltip and popover widget for Flutter inspired by 
+  Microsoft Fluent UI TeachingTip. Features include: smart auto-positioning with 12 
+  placement options and viewport-aware auto-flip, beautiful beak/arrow pointer with 
+  shadow matching the panel, Material 3 theming with dark mode optimization, multiple 
+  trigger modes (tap, hover, double-tap, right-click), modal barrier with blur effect, 
+  programmatic control via TooltipCardController, RTL support, keyboard navigation, 
+  screen reader accessibility, spring-based animations, and structured content widget 
+  (TooltipCardContent) with icons, titles, actions, and close button. Perfect for 
+  onboarding tours, contextual help, feature discovery, and rich interactive popovers.
+version: 2.4.0
+homepage: https://github.com/geniussystems24/tooltip_card
+repository: https://github.com/geniussystems24/tooltip_card
+issue_tracker: https://github.com/geniussystems24/tooltip_card/issues
+documentation: https://pub.dev/packages/tooltip_card
+
+topics:
+  - tooltip
+  - popover
+  - callout
+  - flyout
+  - ui
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+screenshots:
+  - description: 'Basic TooltipCard with beak and placement options'
+    path: screenshots/1.png
+  - description: 'TooltipCardContent with structured layout'
+    path: screenshots/2.png
+  - description: 'Different placement sides'
+    path: screenshots/3.png
+  - description: 'Modal barrier with blur effect'
+    path: screenshots/4.png
 
 environment:
   sdk: ^3.10.3
-  flutter: ">=1.17.0"
+  flutter: ">=3.10.0"
 
 dependencies:
   flutter:
@@ -16,39 +53,4 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-
-  # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-  #
-  # For details regarding assets in packages, see
-  # https://flutter.dev/to/asset-from-package
-  #
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
-
-  # To add custom fonts to your package, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts in packages, see
-  # https://flutter.dev/to/font-from-package
