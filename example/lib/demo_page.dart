@@ -160,6 +160,12 @@ class _DemoContentState extends State<_DemoContent> {
               _buildSectionHeader('Style Variations', Icons.palette_rounded),
               const SizedBox(height: 16),
               _buildStyleVariationsSection(colorScheme, isDark),
+              const SizedBox(height: 40),
+
+              // Real World Examples Section
+              _buildSectionHeader('Real World Examples', Icons.cases_rounded),
+              const SizedBox(height: 16),
+              _RealWorldExamplesSection(publicState: _publicState),
               const SizedBox(height: 60),
 
               // Footer
@@ -1089,6 +1095,1333 @@ class _StyleCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// Real World Examples Section
+// ============================================================================
+
+class _RealWorldExamplesSection extends StatelessWidget {
+  const _RealWorldExamplesSection({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 1. Data Grid Example
+        _ExampleCard(
+          title: 'Data Grid',
+          subtitle: 'Employee management table with row actions',
+          icon: Icons.table_chart_rounded,
+          child: _DataGridExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 2. Invoice Example
+        _ExampleCard(
+          title: 'Invoice Details',
+          subtitle: 'Interactive invoice with item breakdown',
+          icon: Icons.receipt_long_rounded,
+          child: _InvoiceExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 3. User Profile Cards
+        _ExampleCard(
+          title: 'User Profiles',
+          subtitle: 'Team members with contact details',
+          icon: Icons.people_rounded,
+          child: _UserProfilesExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 4. Product Catalog
+        _ExampleCard(
+          title: 'Product Catalog',
+          subtitle: 'E-commerce product cards with quick view',
+          icon: Icons.shopping_bag_rounded,
+          child: _ProductCatalogExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 5. Notifications & Status
+        _ExampleCard(
+          title: 'Notifications & Status',
+          subtitle: 'System alerts and status indicators',
+          icon: Icons.notifications_rounded,
+          child: _NotificationsExample(publicState: publicState),
+        ),
+      ],
+    );
+  }
+}
+
+class _ExampleCard extends StatelessWidget {
+  const _ExampleCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.child,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, color: colorScheme.secondary, size: 20),
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            child,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 1. Data Grid Example
+// ============================================================================
+
+class _DataGridExample extends StatelessWidget {
+  const _DataGridExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final employees = [
+      _Employee('Ahmed Hassan', 'ahmed@company.com', 'Engineering', 'Senior Developer', 85000, 'Active', Colors.green),
+      _Employee('Sara Ali', 'sara@company.com', 'Design', 'UI/UX Lead', 75000, 'Active', Colors.green),
+      _Employee('Mohamed Khaled', 'mohamed@company.com', 'Marketing', 'Marketing Manager', 70000, 'On Leave', Colors.orange),
+      _Employee('Fatima Omar', 'fatima@company.com', 'HR', 'HR Specialist', 55000, 'Active', Colors.green),
+    ];
+
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          // Header
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHighest,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+            ),
+            child: Row(
+              children: [
+                Expanded(flex: 2, child: Text('Employee', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: colorScheme.onSurface))),
+                Expanded(flex: 2, child: Text('Department', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: colorScheme.onSurface))),
+                Expanded(flex: 1, child: Text('Status', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: colorScheme.onSurface))),
+                const SizedBox(width: 80, child: Text('Actions', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13))),
+              ],
+            ),
+          ),
+          // Rows
+          ...employees.map((emp) => _DataGridRow(employee: emp, publicState: publicState)),
+        ],
+      ),
+    );
+  }
+}
+
+class _Employee {
+  final String name;
+  final String email;
+  final String department;
+  final String position;
+  final double salary;
+  final String status;
+  final Color statusColor;
+
+  _Employee(this.name, this.email, this.department, this.position, this.salary, this.status, this.statusColor);
+}
+
+class _DataGridRow extends StatelessWidget {
+  const _DataGridRow({required this.employee, required this.publicState});
+
+  final _Employee employee;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1))),
+      ),
+      child: Row(
+        children: [
+          // Employee Name with Tooltip
+          Expanded(
+            flex: 2,
+            child: TooltipCard.builder(
+              publicState: publicState,
+              placementSide: TooltipCardPlacementSide.bottomStart,
+              beakEnabled: true,
+              whenContentVisible: WhenContentVisible.hoverButton,
+              hoverOpenDelay: const Duration(milliseconds: 300),
+              builder: (ctx, close) => _EmployeeDetailsTooltip(employee: employee, onClose: close),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: colorScheme.primaryContainer,
+                    child: Text(
+                      employee.name[0],
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: colorScheme.primary),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(employee.name, style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w500)),
+                ],
+              ),
+            ),
+          ),
+          Expanded(flex: 2, child: Text(employee.department, style: const TextStyle(fontSize: 13))),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: employee.statusColor.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                employee.status,
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: employee.statusColor),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          // Actions
+          SizedBox(
+            width: 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TooltipCard.builder(
+                  publicState: publicState,
+                  placementSide: TooltipCardPlacementSide.top,
+                  beakEnabled: true,
+                  whenContentVisible: WhenContentVisible.pressButton,
+                  modalBarrierEnabled: true,
+                  barrierBlur: 2,
+                  builder: (ctx, close) => _RowActionsMenu(onClose: close),
+                  child: Icon(Icons.more_vert_rounded, size: 20, color: colorScheme.onSurface.withValues(alpha: 0.6)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmployeeDetailsTooltip extends StatelessWidget {
+  const _EmployeeDetailsTooltip({required this.employee, required this.onClose});
+
+  final _Employee employee;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 280,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: colorScheme.primaryContainer,
+                  child: Text(employee.name[0], style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: colorScheme.primary)),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(employee.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                      Text(employee.position, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _DetailRow(icon: Icons.email_outlined, label: 'Email', value: employee.email),
+            _DetailRow(icon: Icons.business_outlined, label: 'Department', value: employee.department),
+            _DetailRow(icon: Icons.attach_money_rounded, label: 'Salary', value: '\$${employee.salary.toStringAsFixed(0)}/year'),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: onClose,
+                    icon: const Icon(Icons.email_outlined, size: 16),
+                    label: const Text('Email'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: FilledButton.icon(
+                    onPressed: onClose,
+                    icon: const Icon(Icons.person_outline, size: 16),
+                    label: const Text('Profile'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({required this.icon, required this.label, required this.value});
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: colorScheme.onSurface.withValues(alpha: 0.5)),
+          const SizedBox(width: 8),
+          Text('$label: ', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+          Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
+        ],
+      ),
+    );
+  }
+}
+
+class _RowActionsMenu extends StatelessWidget {
+  const _RowActionsMenu({required this.onClose});
+
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 160,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _ActionMenuItem(icon: Icons.edit_outlined, label: 'Edit', onTap: onClose),
+          _ActionMenuItem(icon: Icons.visibility_outlined, label: 'View Details', onTap: onClose),
+          _ActionMenuItem(icon: Icons.email_outlined, label: 'Send Email', onTap: onClose),
+          Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
+          _ActionMenuItem(icon: Icons.delete_outline, label: 'Delete', onTap: onClose, isDestructive: true),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionMenuItem extends StatelessWidget {
+  const _ActionMenuItem({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool isDestructive;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: color),
+            const SizedBox(width: 10),
+            Text(label, style: TextStyle(fontSize: 13, color: color)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 2. Invoice Example
+// ============================================================================
+
+class _InvoiceExample extends StatelessWidget {
+  const _InvoiceExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final items = [
+      _InvoiceItem('Website Development', 'Full-stack development with React & Node.js', 3, 1500, 'Development'),
+      _InvoiceItem('UI/UX Design', 'Complete design system & prototypes', 1, 2500, 'Design'),
+      _InvoiceItem('Cloud Hosting', 'AWS infrastructure setup & 1 year hosting', 12, 150, 'Infrastructure'),
+      _InvoiceItem('Maintenance', 'Monthly maintenance & support', 6, 300, 'Support'),
+    ];
+
+    final subtotal = items.fold<double>(0, (sum, item) => sum + item.total);
+    final tax = subtotal * 0.15;
+    final total = subtotal + tax;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          // Invoice Header
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Invoice #INV-2024-0042', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: colorScheme.onSurface)),
+                    const SizedBox(height: 4),
+                    Text('Dec 24, 2024', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                  ],
+                ),
+                TooltipCard.builder(
+                  publicState: publicState,
+                  placementSide: TooltipCardPlacementSide.bottomEnd,
+                  beakEnabled: true,
+                  modalBarrierEnabled: true,
+                  barrierBlur: 4,
+                  builder: (ctx, close) => _InvoiceStatusTooltip(onClose: close),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.shade100,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.schedule, size: 14, color: Colors.amber.shade800),
+                        const SizedBox(width: 6),
+                        Text('Pending', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.amber.shade800)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Items
+          ...items.map((item) => _InvoiceItemRow(item: item, publicState: publicState)),
+          // Totals
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(11)),
+            ),
+            child: Column(
+              children: [
+                _TotalRow(label: 'Subtotal', value: '\$${subtotal.toStringAsFixed(2)}'),
+                _TotalRow(label: 'Tax (15%)', value: '\$${tax.toStringAsFixed(2)}'),
+                const Divider(height: 16),
+                _TotalRow(label: 'Total', value: '\$${total.toStringAsFixed(2)}', isTotal: true),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InvoiceItem {
+  final String name;
+  final String description;
+  final int quantity;
+  final double unitPrice;
+  final String category;
+
+  _InvoiceItem(this.name, this.description, this.quantity, this.unitPrice, this.category);
+
+  double get total => quantity * unitPrice;
+}
+
+class _InvoiceItemRow extends StatelessWidget {
+  const _InvoiceItemRow({required this.item, required this.publicState});
+
+  final _InvoiceItem item;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1))),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: TooltipCard.builder(
+              publicState: publicState,
+              placementSide: TooltipCardPlacementSide.bottomStart,
+              beakEnabled: true,
+              whenContentVisible: WhenContentVisible.hoverButton,
+              hoverOpenDelay: const Duration(milliseconds: 200),
+              builder: (ctx, close) => _ItemDetailsTooltip(item: item, onClose: close),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.name, style: TextStyle(fontWeight: FontWeight.w500, color: colorScheme.primary)),
+                  Text(item.category, style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                ],
+              ),
+            ),
+          ),
+          Expanded(child: Text('${item.quantity}x', textAlign: TextAlign.center, style: const TextStyle(fontSize: 13))),
+          Expanded(child: Text('\$${item.unitPrice.toStringAsFixed(0)}', textAlign: TextAlign.center, style: const TextStyle(fontSize: 13))),
+          Expanded(
+            child: Text(
+              '\$${item.total.toStringAsFixed(2)}',
+              textAlign: TextAlign.end,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ItemDetailsTooltip extends StatelessWidget {
+  const _ItemDetailsTooltip({required this.item, required this.onClose});
+
+  final _InvoiceItem item;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 260,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(Icons.inventory_2_outlined, size: 20, color: colorScheme.primary),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      Container(
+                        margin: const EdgeInsets.only(top: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: colorScheme.secondaryContainer,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(item.category, style: TextStyle(fontSize: 10, color: colorScheme.secondary)),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(item.description, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _MiniStat(label: 'Qty', value: '${item.quantity}'),
+                  _MiniStat(label: 'Unit', value: '\$${item.unitPrice.toStringAsFixed(0)}'),
+                  _MiniStat(label: 'Total', value: '\$${item.total.toStringAsFixed(0)}', isPrimary: true),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MiniStat extends StatelessWidget {
+  const _MiniStat({required this.label, required this.value, this.isPrimary = false});
+
+  final String label;
+  final String value;
+  final bool isPrimary;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        Text(label, style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+        const SizedBox(height: 2),
+        Text(value, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: isPrimary ? colorScheme.primary : null)),
+      ],
+    );
+  }
+}
+
+class _InvoiceStatusTooltip extends StatelessWidget {
+  const _InvoiceStatusTooltip({required this.onClose});
+
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Invoice Status', style: TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          _StatusOption(icon: Icons.hourglass_empty, label: 'Pending', color: Colors.amber, isSelected: true),
+          _StatusOption(icon: Icons.check_circle_outline, label: 'Paid', color: Colors.green),
+          _StatusOption(icon: Icons.cancel_outlined, label: 'Cancelled', color: Colors.red),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(onPressed: onClose, child: const Text('Update Status')),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatusOption extends StatelessWidget {
+  const _StatusOption({required this.icon, required this.label, required this.color, this.isSelected = false});
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: isSelected ? color.withValues(alpha: 0.15) : Colors.transparent,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: isSelected ? color : Colors.transparent),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: color),
+          const SizedBox(width: 10),
+          Text(label, style: TextStyle(color: isSelected ? color : null, fontWeight: isSelected ? FontWeight.w600 : null)),
+          const Spacer(),
+          if (isSelected) Icon(Icons.check, size: 18, color: color),
+        ],
+      ),
+    );
+  }
+}
+
+class _TotalRow extends StatelessWidget {
+  const _TotalRow({required this.label, required this.value, this.isTotal = false});
+
+  final String label;
+  final String value;
+  final bool isTotal;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: TextStyle(
+            fontSize: isTotal ? 15 : 13,
+            fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
+            color: colorScheme.onSurface.withValues(alpha: isTotal ? 1 : 0.7),
+          )),
+          Text(value, style: TextStyle(
+            fontSize: isTotal ? 18 : 13,
+            fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
+            color: isTotal ? colorScheme.primary : null,
+          )),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 3. User Profiles Example
+// ============================================================================
+
+class _UserProfilesExample extends StatelessWidget {
+  const _UserProfilesExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final users = [
+      _User('Nour Ibrahim', 'CTO', 'nour@startup.io', '+971 50 123 4567', 'https://linkedin.com/in/nour', Colors.indigo),
+      _User('Layla Ahmed', 'Product Manager', 'layla@startup.io', '+971 50 234 5678', 'https://linkedin.com/in/layla', Colors.pink),
+      _User('Youssef Mahmoud', 'Lead Designer', 'youssef@startup.io', '+971 50 345 6789', 'https://linkedin.com/in/youssef', Colors.teal),
+      _User('Hana Kareem', 'DevOps Engineer', 'hana@startup.io', '+971 50 456 7890', 'https://linkedin.com/in/hana', Colors.purple),
+    ];
+
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: users.map((user) => _UserCard(user: user, publicState: publicState)).toList(),
+    );
+  }
+}
+
+class _User {
+  final String name;
+  final String role;
+  final String email;
+  final String phone;
+  final String linkedin;
+  final Color color;
+
+  _User(this.name, this.role, this.email, this.phone, this.linkedin, this.color);
+}
+
+class _UserCard extends StatelessWidget {
+  const _UserCard({required this.user, required this.publicState});
+
+  final _User user;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.pressButton,
+      modalBarrierEnabled: true,
+      barrierBlur: 6,
+      builder: (ctx, close) => _UserProfileTooltip(user: user, onClose: close),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: user.color.withValues(alpha: 0.2),
+              child: Text(user.name[0], style: TextStyle(color: user.color, fontWeight: FontWeight.w600)),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(user.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                Text(user.role, style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _UserProfileTooltip extends StatelessWidget {
+  const _UserProfileTooltip({required this.user, required this.onClose});
+
+  final _User user;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 280,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Header
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [user.color.withValues(alpha: 0.8), user.color],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            ),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 28,
+                  backgroundColor: Colors.white,
+                  child: Text(user.name[0], style: TextStyle(color: user.color, fontWeight: FontWeight.w700, fontSize: 22)),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(user.name, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16)),
+                      const SizedBox(height: 2),
+                      Text(user.role, style: TextStyle(color: Colors.white.withValues(alpha: 0.9), fontSize: 13)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Content
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                _ContactRow(icon: Icons.email_outlined, value: user.email),
+                _ContactRow(icon: Icons.phone_outlined, value: user.phone),
+                _ContactRow(icon: Icons.link_rounded, value: 'LinkedIn Profile'),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: onClose,
+                        icon: const Icon(Icons.chat_bubble_outline, size: 16),
+                        label: const Text('Message'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: onClose,
+                        icon: const Icon(Icons.video_call_outlined, size: 16),
+                        label: const Text('Call'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ContactRow extends StatelessWidget {
+  const _ContactRow({required this.icon, required this.value});
+
+  final IconData icon;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: colorScheme.primary),
+          const SizedBox(width: 12),
+          Expanded(child: Text(value, style: const TextStyle(fontSize: 13))),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 4. Product Catalog Example
+// ============================================================================
+
+class _ProductCatalogExample extends StatelessWidget {
+  const _ProductCatalogExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final products = [
+      _Product('MacBook Pro 16"', 'Apple M3 Pro, 18GB RAM, 512GB SSD', 2499, 4.9, 128, 'Electronics', Colors.grey.shade800),
+      _Product('iPhone 15 Pro', '256GB, Natural Titanium', 1199, 4.8, 256, 'Electronics', Colors.blue.shade700),
+      _Product('AirPods Pro 2', 'Active Noise Cancellation, USB-C', 249, 4.7, 512, 'Audio', Colors.teal),
+      _Product('Apple Watch Ultra 2', 'GPS + Cellular, 49mm', 799, 4.9, 89, 'Wearables', Colors.orange),
+    ];
+
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: products.map((product) => _ProductCard(product: product, publicState: publicState)).toList(),
+    );
+  }
+}
+
+class _Product {
+  final String name;
+  final String description;
+  final double price;
+  final double rating;
+  final int reviews;
+  final String category;
+  final Color color;
+
+  _Product(this.name, this.description, this.price, this.rating, this.reviews, this.category, this.color);
+}
+
+class _ProductCard extends StatelessWidget {
+  const _ProductCard({required this.product, required this.publicState});
+
+  final _Product product;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.hoverButton,
+      hoverOpenDelay: const Duration(milliseconds: 400),
+      builder: (ctx, close) => _ProductQuickView(product: product, onClose: close),
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Product Image Placeholder
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                color: product.color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Icon(Icons.devices_rounded, size: 40, color: product.color),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(product.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(Icons.star_rounded, size: 14, color: Colors.amber.shade600),
+                const SizedBox(width: 4),
+                Text('${product.rating}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+                Text(' (${product.reviews})', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text('\$${product.price.toStringAsFixed(0)}', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: colorScheme.primary)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProductQuickView extends StatelessWidget {
+  const _ProductQuickView({required this.product, required this.onClose});
+
+  final _Product product;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 300,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Product Image
+          Container(
+            height: 140,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [product.color.withValues(alpha: 0.1), product.color.withValues(alpha: 0.2)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            ),
+            child: Stack(
+              children: [
+                Center(child: Icon(Icons.devices_rounded, size: 60, color: product.color)),
+                Positioned(
+                  top: 12,
+                  right: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(product.category, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: colorScheme.secondary)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product.name, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                const SizedBox(height: 4),
+                Text(product.description, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Icon(Icons.star_rounded, size: 18, color: Colors.amber.shade600),
+                    const SizedBox(width: 4),
+                    Text('${product.rating}', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    Text(' (${product.reviews} reviews)', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                    const Spacer(),
+                    Text('\$${product.price.toStringAsFixed(0)}', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: colorScheme.primary)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: onClose,
+                        icon: const Icon(Icons.favorite_border_rounded, size: 16),
+                        label: const Text('Save'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      flex: 2,
+                      child: FilledButton.icon(
+                        onPressed: onClose,
+                        icon: const Icon(Icons.shopping_cart_outlined, size: 16),
+                        label: const Text('Add to Cart'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 5. Notifications Example
+// ============================================================================
+
+class _NotificationsExample extends StatelessWidget {
+  const _NotificationsExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: [
+        _NotificationBadge(
+          icon: Icons.cloud_done_rounded,
+          label: 'Synced',
+          color: Colors.green,
+          publicState: publicState,
+          tooltipTitle: 'All Changes Synced',
+          tooltipMessage: 'Your data was last synced 2 minutes ago. All changes are saved to the cloud.',
+        ),
+        _NotificationBadge(
+          icon: Icons.warning_rounded,
+          label: '3 Warnings',
+          color: Colors.orange,
+          publicState: publicState,
+          tooltipTitle: 'System Warnings',
+          tooltipMessage: 'There are 3 warnings that need your attention. Click to view details.',
+          hasAction: true,
+        ),
+        _NotificationBadge(
+          icon: Icons.error_rounded,
+          label: '1 Error',
+          color: Colors.red,
+          publicState: publicState,
+          tooltipTitle: 'Critical Error',
+          tooltipMessage: 'Database connection failed. Please check your network settings.',
+          hasAction: true,
+        ),
+        _NotificationBadge(
+          icon: Icons.update_rounded,
+          label: 'Update Available',
+          color: Colors.blue,
+          publicState: publicState,
+          tooltipTitle: 'Version 2.5.0 Available',
+          tooltipMessage: 'A new version is available with performance improvements and bug fixes.',
+          hasAction: true,
+        ),
+        _NotificationBadge(
+          icon: Icons.security_rounded,
+          label: 'Secured',
+          color: Colors.teal,
+          publicState: publicState,
+          tooltipTitle: 'Connection Secure',
+          tooltipMessage: 'Your connection is encrypted with TLS 1.3. All data transfers are secure.',
+        ),
+      ],
+    );
+  }
+}
+
+class _NotificationBadge extends StatelessWidget {
+  const _NotificationBadge({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.publicState,
+    required this.tooltipTitle,
+    required this.tooltipMessage,
+    this.hasAction = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final TooltipCardPublicState publicState;
+  final String tooltipTitle;
+  final String tooltipMessage;
+  final bool hasAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.hoverButton,
+      hoverOpenDelay: const Duration(milliseconds: 200),
+      flyoutBackgroundColor: color.withValues(alpha: 0.05),
+      beakColor: color.withValues(alpha: 0.05),
+      builder: (ctx, close) => _NotificationTooltip(
+        title: tooltipTitle,
+        message: tooltipMessage,
+        color: color,
+        hasAction: hasAction,
+        onClose: close,
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 16, color: color),
+            const SizedBox(width: 8),
+            Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NotificationTooltip extends StatelessWidget {
+  const _NotificationTooltip({
+    required this.title,
+    required this.message,
+    required this.color,
+    required this.hasAction,
+    required this.onClose,
+  });
+
+  final String title;
+  final String message;
+  final Color color;
+  final bool hasAction;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 260,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(Icons.notifications_active_rounded, size: 18, color: color),
+                ),
+                const SizedBox(width: 12),
+                Expanded(child: Text(title, style: TextStyle(fontWeight: FontWeight.w600, color: color))),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(message, style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8))),
+            if (hasAction) ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: onClose,
+                  style: FilledButton.styleFrom(backgroundColor: color),
+                  child: const Text('View Details'),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
