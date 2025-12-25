@@ -1,4 +1,4 @@
-import 'package:example/demo_page.dart';
+import 'package:example/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:tooltip_card/tooltip_card.dart';
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TooltipCard Demo',
+      title: 'TooltipCard Examples',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: ThemeData(
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             beakColor: Colors.white,
             elevation: 8.0,
             borderRadius: BorderRadius.circular(12),
-            beakSize: 12.0,
+            beakSize: 10.0,
             beakInset: 16.0,
             padding: const EdgeInsets.all(4),
             barrierColor: Colors.black38,
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             beakColor: const Color(0xFF2D2D30),
             elevation: 12.0,
             borderRadius: BorderRadius.circular(12),
-            beakSize: 12.0,
+            beakSize: 10.0,
             beakInset: 16.0,
             padding: const EdgeInsets.all(4),
             barrierColor: Colors.black54,
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
       ),
-      home: const DemoPage(),
+      home: const HomeScreen(),
     );
   }
 }
