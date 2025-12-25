@@ -312,12 +312,262 @@
         opacity: 0.8;
       }
     }
+
+    /* Interactive Game Styles */
+    .game-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+
+    /* Score Display */
+    .score-display {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 10;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .score-icon {
+      font-size: 20px;
+    }
+
+    .score-value {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffd700;
+      min-width: 30px;
+    }
+
+    /* Game Hint */
+    .game-hint {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      animation: hint-pulse 2s ease-in-out infinite;
+      z-index: 10;
+    }
+
+    @keyframes hint-pulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    /* Floating Stars */
+    .star {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      z-index: 5;
+      filter: drop-shadow(0 0 8px currentColor);
+      animation: starFloat 3s ease-in-out infinite;
+    }
+
+    .star:hover {
+      transform: scale(1.3);
+    }
+
+    .star svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .star.gold {
+      color: #ffd700;
+    }
+
+    .star.cyan {
+      color: #00d9ff;
+    }
+
+    .star.pink {
+      color: #e94560;
+    }
+
+    .star.purple {
+      color: #a855f7;
+    }
+
+    @keyframes starFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      25% {
+        transform: translateY(-15px) rotate(10deg);
+      }
+
+      50% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      75% {
+        transform: translateY(15px) rotate(-10deg);
+      }
+    }
+
+    /* Star Caught Animation */
+    .star.caught {
+      animation: starCaught 0.4s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes starCaught {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* Click Ripple Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(233, 69, 96, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+      animation: rippleExpand 0.6s ease-out forwards;
+    }
+
+    @keyframes rippleExpand {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+
+      100% {
+        width: 150px;
+        height: 150px;
+        opacity: 0;
+      }
+    }
+
+    /* Score Popup */
+    .score-popup {
+      position: absolute;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ffd700;
+      pointer-events: none;
+      animation: scoreFloat 0.8s ease-out forwards;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    @keyframes scoreFloat {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.2);
+      }
+    }
+
+    /* Combo Display */
+    .combo-display {
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      color: #a855f7;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .combo-display.active {
+      opacity: 1;
+      animation: comboPulse 0.3s ease;
+    }
+
+    @keyframes comboPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
   </style>
 </head>
 
 <body>
   <!-- Splash Screen -->
   <div id="splash-screen">
+    <!-- Interactive Game Area -->
+    <div class="game-container" id="game-container">
+      <!-- Score Display -->
+      <div class="score-display">
+        <span class="score-icon">⭐</span>
+        <span class="score-value" id="score-value">0</span>
+      </div>
+
+      <!-- Combo Display -->
+      <div class="combo-display" id="combo-display">Combo x1</div>
+
+      <!-- Game Hint -->
+      <div class="game-hint">✨ Catch the stars while waiting! ✨</div>
+    </div>
+
     <div class="particles">
       <div class="particle"></div>
       <div class="particle"></div>
@@ -353,28 +603,220 @@
   <script src="flutter_bootstrap.js" async></script>
 
   <script>
-    // Hide splash screen when Flutter app is ready
-    window.addEventListener('flutter-first-frame', function () {
+    // ==========================================
+    // Interactive Star Catching Game
+    // ==========================================
+
+    const gameState = {
+      score: 0,
+      combo: 0,
+      lastCatchTime: 0,
+      comboTimeout: null,
+      gameActive: true,
+      starSpawnInterval: null,
+      maxStars: 8
+    };
+
+    const starColors = ['gold', 'cyan', 'pink', 'purple'];
+    const starSVG = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+
+    // Create a star element
+    function createStar() {
+      if (!gameState.gameActive) return;
+
+      const gameContainer = document.getElementById('game-container');
+      if (!gameContainer) return;
+
+      const existingStars = gameContainer.querySelectorAll('.star:not(.caught)');
+      if (existingStars.length >= gameState.maxStars) return;
+
+      const star = document.createElement('div');
+      star.className = 'star ' + starColors[Math.floor(Math.random() * starColors.length)];
+      star.innerHTML = starSVG;
+
+      // Random position (avoid edges and center content area)
+      const padding = 60;
+      const centerZone = {
+        left: window.innerWidth * 0.3,
+        right: window.innerWidth * 0.7,
+        top: window.innerHeight * 0.25,
+        bottom: window.innerHeight * 0.75
+      };
+
+      let x, y;
+      do {
+        x = padding + Math.random() * (window.innerWidth - padding * 2 - 30);
+        y = padding + Math.random() * (window.innerHeight - padding * 2 - 30);
+      } while (
+        x > centerZone.left && x < centerZone.right &&
+        y > centerZone.top && y < centerZone.bottom
+      );
+
+      star.style.left = x + 'px';
+      star.style.top = y + 'px';
+      star.style.animationDelay = Math.random() * 2 + 's';
+
+      // Click/Touch handler
+      star.addEventListener('click', function (e) {
+        catchStar(star, e);
+      });
+      star.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        catchStar(star, e.touches[0]);
+      });
+
+      gameContainer.appendChild(star);
+
+      // Auto-remove after some time if not caught
+      setTimeout(() => {
+        if (star.parentNode && !star.classList.contains('caught')) {
+          star.style.opacity = '0';
+          star.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => star.remove(), 500);
+        }
+      }, 6000 + Math.random() * 4000);
+    }
+
+    // Handle catching a star
+    function catchStar(star, event) {
+      if (star.classList.contains('caught')) return;
+
+      star.classList.add('caught');
+
+      const now = Date.now();
+
+      // Combo system - if caught within 1.5 seconds of last catch
+      if (now - gameState.lastCatchTime < 1500 && gameState.combo > 0) {
+        gameState.combo = Math.min(gameState.combo + 1, 10);
+      } else {
+        gameState.combo = 1;
+      }
+      gameState.lastCatchTime = now;
+
+      // Calculate points based on star color and combo
+      let basePoints = 10;
+      if (star.classList.contains('gold')) basePoints = 15;
+      else if (star.classList.contains('purple')) basePoints = 20;
+
+      const points = basePoints * gameState.combo;
+      gameState.score += points;
+
+      // Update score display
+      const scoreDisplay = document.getElementById('score-value');
+      if (scoreDisplay) {
+        scoreDisplay.textContent = gameState.score;
+        scoreDisplay.style.transform = 'scale(1.3)';
+        setTimeout(() => {
+          scoreDisplay.style.transform = 'scale(1)';
+        }, 150);
+      }
+
+      // Show combo
+      const comboDisplay = document.getElementById('combo-display');
+      if (comboDisplay && gameState.combo > 1) {
+        comboDisplay.textContent = 'Combo x' + gameState.combo + '!';
+        comboDisplay.classList.add('active');
+
+        clearTimeout(gameState.comboTimeout);
+        gameState.comboTimeout = setTimeout(() => {
+          comboDisplay.classList.remove('active');
+          gameState.combo = 0;
+        }, 2000);
+      }
+
+      // Show floating score popup
+      showScorePopup(event.clientX || event.pageX, event.clientY || event.pageY, '+' + points);
+
+      // Remove star after animation
+      setTimeout(() => star.remove(), 400);
+
+      // Spawn a new star to replace
+      setTimeout(() => createStar(), 500 + Math.random() * 1000);
+    }
+
+    // Show score popup at position
+    function showScorePopup(x, y, text) {
+      const popup = document.createElement('div');
+      popup.className = 'score-popup';
+      popup.textContent = text;
+      popup.style.left = (x - 15) + 'px';
+      popup.style.top = (y - 10) + 'px';
+
+      const gameContainer = document.getElementById('game-container');
+      if (gameContainer) {
+        gameContainer.appendChild(popup);
+        setTimeout(() => popup.remove(), 800);
+      }
+    }
+
+    // Create ripple effect on click
+    function createRipple(x, y) {
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.left = (x - 75) + 'px';
+      ripple.style.top = (y - 75) + 'px';
+
+      const gameContainer = document.getElementById('game-container');
+      if (gameContainer) {
+        gameContainer.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      }
+    }
+
+    // Add ripple on background click
+    document.addEventListener('DOMContentLoaded', function () {
+      const gameContainer = document.getElementById('game-container');
+      if (gameContainer) {
+        gameContainer.addEventListener('click', function (e) {
+          if (e.target === gameContainer || e.target.classList.contains('particles') || e.target.classList.contains('particle')) {
+            createRipple(e.clientX, e.clientY);
+          }
+        });
+
+        // Touch support for ripples
+        gameContainer.addEventListener('touchstart', function (e) {
+          if (e.target === gameContainer || e.target.classList.contains('particles') || e.target.classList.contains('particle')) {
+            createRipple(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        });
+      }
+
+      // Initial stars
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => createStar(), i * 300);
+      }
+
+      // Spawn new stars periodically
+      gameState.starSpawnInterval = setInterval(() => {
+        if (gameState.gameActive) {
+          createStar();
+        }
+      }, 2000);
+    });
+
+    // ==========================================
+    // Splash Screen Management
+    // ==========================================
+
+    function hideSplashScreen() {
+      gameState.gameActive = false;
+      clearInterval(gameState.starSpawnInterval);
+
       const splashScreen = document.getElementById('splash-screen');
-      if (splashScreen) {
+      if (splashScreen && !splashScreen.classList.contains('hidden')) {
         splashScreen.classList.add('hidden');
         // Remove from DOM after animation completes
         setTimeout(function () {
           splashScreen.remove();
         }, 500);
       }
-    });
+    }
 
-    // Fallback: Hide splash after maximum wait time (10 seconds)
-    setTimeout(function () {
-      const splashScreen = document.getElementById('splash-screen');
-      if (splashScreen && !splashScreen.classList.contains('hidden')) {
-        splashScreen.classList.add('hidden');
-        setTimeout(function () {
-          splashScreen.remove();
-        }, 500);
-      }
-    }, 10000);
+    // Hide splash screen when Flutter app is ready
+    window.addEventListener('flutter-first-frame', hideSplashScreen);
+
+    // Fallback: Hide splash after maximum wait time (15 seconds)
+    setTimeout(hideSplashScreen, 15000);
   </script>
 </body>
 

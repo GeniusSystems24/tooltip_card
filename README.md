@@ -19,6 +19,11 @@
   <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter" alt="Platform"></a>
   <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart" alt="Dart"></a>
   <a href="https://m3.material.io"><img src="https://img.shields.io/badge/Material-3-6200EA" alt="Material 3"></a>
+  <a href="https://geniussystems24.github.io/tooltip_card/"><img src="https://img.shields.io/badge/🚀_Live_Demo-Try_Now-00C853?style=flat" alt="Live Demo"></a>
+</p>
+
+<p align="center">
+  <em>👉 <a href="https://geniussystems24.github.io/tooltip_card/">Try the interactive demo in your browser</a> — no installation required!</em>
 </p>
 
 ---
