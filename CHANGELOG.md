@@ -24,12 +24,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Interactive examples for all features
   - Real-world usage examples section
 
-- **Real-World Examples** - Practical use cases in demo
+- **Real-World Examples** - 10 practical use cases in demo
   - Data Grid - Employee management table with row actions
   - Invoice Details - Interactive invoice with line items
   - User Profiles - Team member cards with actions
   - Product Catalog - E-commerce product cards
   - Notifications & Status - System alerts and status indicators
+  - Calendar & Schedule - Event tooltips with details and join actions
+  - Analytics Dashboard - Interactive charts with sparklines and data insights
+  - File Manager - Context menu with file operations (right-click)
+  - Kanban Board - Task cards with priority, status, and assignees
+  - Chat & Messaging - Message actions with emoji reactions
 
 ### Fixed
 

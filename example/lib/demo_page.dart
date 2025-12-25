@@ -1216,6 +1216,51 @@ class _RealWorldExamplesSection extends StatelessWidget {
           icon: Icons.notifications_rounded,
           child: _NotificationsExample(publicState: publicState),
         ),
+        const SizedBox(height: 20),
+
+        // 6. Calendar/Schedule
+        _ExampleCard(
+          title: 'Calendar & Schedule',
+          subtitle: 'Event tooltips with details and actions',
+          icon: Icons.calendar_month_rounded,
+          child: _CalendarExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 7. Analytics Dashboard
+        _ExampleCard(
+          title: 'Analytics Dashboard',
+          subtitle: 'Interactive charts with data insights',
+          icon: Icons.analytics_rounded,
+          child: _AnalyticsExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 8. File Manager
+        _ExampleCard(
+          title: 'File Manager',
+          subtitle: 'File previews and quick actions',
+          icon: Icons.folder_rounded,
+          child: _FileManagerExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 9. Kanban Board
+        _ExampleCard(
+          title: 'Kanban Board',
+          subtitle: 'Task cards with details and assignees',
+          icon: Icons.view_kanban_rounded,
+          child: _KanbanExample(publicState: publicState),
+        ),
+        const SizedBox(height: 20),
+
+        // 10. Chat & Messaging
+        _ExampleCard(
+          title: 'Chat & Messaging',
+          subtitle: 'Message actions and reactions',
+          icon: Icons.chat_rounded,
+          child: _ChatExample(publicState: publicState),
+        ),
       ],
     );
   }
@@ -2479,6 +2524,1063 @@ class _NotificationTooltip extends StatelessWidget {
                 ),
               ),
             ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 6. Calendar/Schedule Example
+// ============================================================================
+
+class _CalendarExample extends StatelessWidget {
+  const _CalendarExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final events = [
+      _CalendarEvent('Team Standup', '9:00 AM - 9:30 AM', 'Daily sync with the team', 'Conference Room A', ['Ahmed', 'Sara', 'Mohamed'], Colors.blue),
+      _CalendarEvent('Design Review', '11:00 AM - 12:00 PM', 'Review new dashboard designs', 'Online - Zoom', ['Layla', 'Youssef'], Colors.purple),
+      _CalendarEvent('Client Meeting', '2:00 PM - 3:00 PM', 'Quarterly review with Acme Corp', 'Meeting Room 2', ['Nour', 'Ahmed'], Colors.green),
+      _CalendarEvent('Sprint Planning', '4:00 PM - 5:30 PM', 'Plan tasks for next sprint', 'Main Hall', ['All Team'], Colors.orange),
+    ];
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          // Calendar Header
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.calendar_today_rounded, color: colorScheme.primary, size: 20),
+                const SizedBox(width: 10),
+                Text('Today, December 25', style: TextStyle(fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
+                const Spacer(),
+                Text('4 events', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+              ],
+            ),
+          ),
+          // Events
+          ...events.map((event) => _CalendarEventRow(event: event, publicState: publicState)),
+        ],
+      ),
+    );
+  }
+}
+
+class _CalendarEvent {
+  final String title;
+  final String time;
+  final String description;
+  final String location;
+  final List<String> attendees;
+  final Color color;
+
+  _CalendarEvent(this.title, this.time, this.description, this.location, this.attendees, this.color);
+}
+
+class _CalendarEventRow extends StatelessWidget {
+  const _CalendarEventRow({required this.event, required this.publicState});
+
+  final _CalendarEvent event;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.end,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.pressButton,
+      modalBarrierEnabled: true,
+      barrierBlur: 4,
+      builder: (ctx, close) => _CalendarEventTooltip(event: event, onClose: close),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1))),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 4,
+              height: 40,
+              decoration: BoxDecoration(
+                color: event.color,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(event.title, style: const TextStyle(fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 2),
+                  Text(event.time, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                ...event.attendees.take(2).map((name) => Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: event.color.withValues(alpha: 0.2),
+                    child: Text(name[0], style: TextStyle(fontSize: 10, color: event.color, fontWeight: FontWeight.w600)),
+                  ),
+                )),
+                if (event.attendees.length > 2)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: CircleAvatar(
+                      radius: 12,
+                      backgroundColor: colorScheme.surfaceContainerHighest,
+                      child: Text('+${event.attendees.length - 2}', style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CalendarEventTooltip extends StatelessWidget {
+  const _CalendarEventTooltip({required this.event, required this.onClose});
+
+  final _CalendarEvent event;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 300,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: event.color.withValues(alpha: 0.1),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: event.color,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(Icons.event_rounded, color: Colors.white, size: 20),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(event.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                      Text(event.time, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(event.description, style: TextStyle(fontSize: 13, color: colorScheme.onSurface.withValues(alpha: 0.8))),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Icon(Icons.location_on_outlined, size: 16, color: colorScheme.primary),
+                    const SizedBox(width: 8),
+                    Text(event.location, style: const TextStyle(fontSize: 13)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.people_outline_rounded, size: 16, color: colorScheme.primary),
+                    const SizedBox(width: 8),
+                    Text(event.attendees.join(', '), style: const TextStyle(fontSize: 13)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: onClose,
+                        icon: const Icon(Icons.edit_outlined, size: 16),
+                        label: const Text('Edit'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: onClose,
+                        style: FilledButton.styleFrom(backgroundColor: event.color),
+                        icon: const Icon(Icons.video_call_outlined, size: 16),
+                        label: const Text('Join'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 7. Analytics Dashboard Example
+// ============================================================================
+
+class _AnalyticsExample extends StatelessWidget {
+  const _AnalyticsExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final metrics = [
+      _AnalyticsMetric('Revenue', '\$124,500', '+12.5%', true, Icons.trending_up_rounded, Colors.green, [65, 72, 80, 75, 90, 95, 100]),
+      _AnalyticsMetric('Users', '8,421', '+8.2%', true, Icons.people_rounded, Colors.blue, [40, 50, 55, 60, 58, 70, 75]),
+      _AnalyticsMetric('Orders', '1,284', '-3.1%', false, Icons.shopping_cart_rounded, Colors.orange, [80, 75, 70, 65, 68, 62, 60]),
+      _AnalyticsMetric('Conversion', '3.2%', '+0.5%', true, Icons.auto_graph_rounded, Colors.purple, [25, 28, 30, 32, 31, 34, 38]),
+    ];
+
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: metrics.map((metric) => _AnalyticsCard(metric: metric, publicState: publicState)).toList(),
+    );
+  }
+}
+
+class _AnalyticsMetric {
+  final String name;
+  final String value;
+  final String change;
+  final bool isPositive;
+  final IconData icon;
+  final Color color;
+  final List<int> sparkline;
+
+  _AnalyticsMetric(this.name, this.value, this.change, this.isPositive, this.icon, this.color, this.sparkline);
+}
+
+class _AnalyticsCard extends StatelessWidget {
+  const _AnalyticsCard({required this.metric, required this.publicState});
+
+  final _AnalyticsMetric metric;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.hoverButton,
+      hoverOpenDelay: const Duration(milliseconds: 300),
+      borderColor: metric.color.withValues(alpha: 0.3),
+      borderWidth: 1,
+      builder: (ctx, close) => _AnalyticsDetailTooltip(metric: metric, onClose: close),
+      child: Container(
+        width: 160,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(metric.icon, size: 20, color: metric.color),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: (metric.isPositive ? Colors.green : Colors.red).withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    metric.change,
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: metric.isPositive ? Colors.green : Colors.red,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(metric.value, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+            const SizedBox(height: 2),
+            Text(metric.name, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+            const SizedBox(height: 10),
+            // Mini Sparkline
+            SizedBox(
+              height: 24,
+              child: CustomPaint(
+                size: const Size(double.infinity, 24),
+                painter: _SparklinePainter(metric.sparkline, metric.color),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SparklinePainter extends CustomPainter {
+  final List<int> data;
+  final Color color;
+
+  _SparklinePainter(this.data, this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (data.isEmpty) return;
+
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    final maxVal = data.reduce((a, b) => a > b ? a : b).toDouble();
+    final minVal = data.reduce((a, b) => a < b ? a : b).toDouble();
+    final range = maxVal - minVal;
+
+    final path = Path();
+    for (int i = 0; i < data.length; i++) {
+      final x = (i / (data.length - 1)) * size.width;
+      final y = size.height - ((data[i] - minVal) / range) * size.height;
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _AnalyticsDetailTooltip extends StatelessWidget {
+  const _AnalyticsDetailTooltip({required this.metric, required this.onClose});
+
+  final _AnalyticsMetric metric;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 280,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: metric.color.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(metric.icon, color: metric.color, size: 22),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(metric.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                      Text('Last 7 days', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Current', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                    Text(metric.value, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: metric.color)),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text('Change', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                    Row(
+                      children: [
+                        Icon(
+                          metric.isPositive ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
+                          size: 16,
+                          color: metric.isPositive ? Colors.green : Colors.red,
+                        ),
+                        Text(
+                          metric.change,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: metric.isPositive ? Colors.green : Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              height: 60,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: CustomPaint(
+                size: const Size(double.infinity, 44),
+                painter: _SparklinePainter(metric.sparkline, metric.color),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: onClose,
+                style: FilledButton.styleFrom(backgroundColor: metric.color),
+                child: const Text('View Full Report'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 8. File Manager Example
+// ============================================================================
+
+class _FileManagerExample extends StatelessWidget {
+  const _FileManagerExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final files = [
+      _FileItem('Project Proposal.pdf', 'PDF Document', '2.4 MB', 'Dec 20, 2024', Icons.picture_as_pdf_rounded, Colors.red),
+      _FileItem('Design Assets.zip', 'Archive', '45.8 MB', 'Dec 22, 2024', Icons.folder_zip_rounded, Colors.amber),
+      _FileItem('Presentation.pptx', 'PowerPoint', '8.2 MB', 'Dec 23, 2024', Icons.slideshow_rounded, Colors.orange),
+      _FileItem('Budget 2025.xlsx', 'Excel Spreadsheet', '1.1 MB', 'Dec 24, 2024', Icons.table_chart_rounded, Colors.green),
+      _FileItem('Meeting Notes.docx', 'Word Document', '524 KB', 'Dec 25, 2024', Icons.description_rounded, Colors.blue),
+    ];
+
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: files.map((file) => _FileCard(file: file, publicState: publicState)).toList(),
+    );
+  }
+}
+
+class _FileItem {
+  final String name;
+  final String type;
+  final String size;
+  final String modified;
+  final IconData icon;
+  final Color color;
+
+  _FileItem(this.name, this.type, this.size, this.modified, this.icon, this.color);
+}
+
+class _FileCard extends StatelessWidget {
+  const _FileCard({required this.file, required this.publicState});
+
+  final _FileItem file;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.secondaryTapButton,
+      builder: (ctx, close) => _FileContextMenu(file: file, onClose: close),
+      child: Container(
+        width: 140,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+        ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: file.color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(file.icon, size: 32, color: file.color),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              file.name,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 2),
+            Text(file.size, style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FileContextMenu extends StatelessWidget {
+  const _FileContextMenu({required this.file, required this.onClose});
+
+  final _FileItem file;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 200,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Icon(file.icon, size: 20, color: file.color),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(file.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text('${file.size} • ${file.modified}', style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
+          _FileMenuItem(icon: Icons.open_in_new_rounded, label: 'Open', onTap: onClose),
+          _FileMenuItem(icon: Icons.download_rounded, label: 'Download', onTap: onClose),
+          _FileMenuItem(icon: Icons.share_rounded, label: 'Share', onTap: onClose),
+          _FileMenuItem(icon: Icons.drive_file_rename_outline_rounded, label: 'Rename', onTap: onClose),
+          Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
+          _FileMenuItem(icon: Icons.delete_outline_rounded, label: 'Delete', onTap: onClose, isDestructive: true),
+        ],
+      ),
+    );
+  }
+}
+
+class _FileMenuItem extends StatelessWidget {
+  const _FileMenuItem({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool isDestructive;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: color),
+            const SizedBox(width: 10),
+            Text(label, style: TextStyle(fontSize: 13, color: color)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 9. Kanban Board Example
+// ============================================================================
+
+class _KanbanExample extends StatelessWidget {
+  const _KanbanExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final tasks = [
+      _KanbanTask('Implement auth flow', 'High', Colors.red, 'In Progress', 'A', Colors.blue),
+      _KanbanTask('Design dashboard', 'Medium', Colors.orange, 'Review', 'L', Colors.pink),
+      _KanbanTask('Write API docs', 'Low', Colors.green, 'To Do', 'M', Colors.teal),
+      _KanbanTask('Fix login bug', 'High', Colors.red, 'Done', 'Y', Colors.purple),
+    ];
+
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: tasks.map((task) => _KanbanTaskCard(task: task, publicState: publicState)).toList(),
+    );
+  }
+}
+
+class _KanbanTask {
+  final String title;
+  final String priority;
+  final Color priorityColor;
+  final String status;
+  final String assigneeInitial;
+  final Color assigneeColor;
+
+  _KanbanTask(this.title, this.priority, this.priorityColor, this.status, this.assigneeInitial, this.assigneeColor);
+}
+
+class _KanbanTaskCard extends StatelessWidget {
+  const _KanbanTaskCard({required this.task, required this.publicState});
+
+  final _KanbanTask task;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TooltipCard.builder(
+      publicState: publicState,
+      placementSide: TooltipCardPlacementSide.bottom,
+      beakEnabled: true,
+      whenContentVisible: WhenContentVisible.pressButton,
+      modalBarrierEnabled: true,
+      barrierBlur: 3,
+      builder: (ctx, close) => _KanbanTaskDetail(task: task, onClose: close),
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(10),
+          border: Border(left: BorderSide(width: 3, color: task.priorityColor)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: _getStatusColor(task.status).withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    task.status,
+                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: _getStatusColor(task.status)),
+                  ),
+                ),
+                CircleAvatar(
+                  radius: 10,
+                  backgroundColor: task.assigneeColor.withValues(alpha: 0.2),
+                  child: Text(task.assigneeInitial, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: task.assigneeColor)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(task.title, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.flag_rounded, size: 12, color: task.priorityColor),
+                const SizedBox(width: 4),
+                Text(task.priority, style: TextStyle(fontSize: 10, color: task.priorityColor, fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'To Do': return Colors.grey;
+      case 'In Progress': return Colors.blue;
+      case 'Review': return Colors.orange;
+      case 'Done': return Colors.green;
+      default: return Colors.grey;
+    }
+  }
+}
+
+class _KanbanTaskDetail extends StatelessWidget {
+  const _KanbanTaskDetail({required this.task, required this.onClose});
+
+  final _KanbanTask task;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 280,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: task.priorityColor.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(Icons.task_alt_rounded, color: task.priorityColor, size: 20),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(task.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _TaskDetailRow(label: 'Status', value: task.status, color: _getStatusColor(task.status)),
+            _TaskDetailRow(label: 'Priority', value: task.priority, color: task.priorityColor),
+            _TaskDetailRow(label: 'Assignee', value: 'Team Member', color: task.assigneeColor),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: onClose,
+                    child: const Text('Edit'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: onClose,
+                    child: const Text('Move'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'To Do': return Colors.grey;
+      case 'In Progress': return Colors.blue;
+      case 'Review': return Colors.orange;
+      case 'Done': return Colors.green;
+      default: return Colors.grey;
+    }
+  }
+}
+
+class _TaskDetailRow extends StatelessWidget {
+  const _TaskDetailRow({required this.label, required this.value, required this.color});
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: color)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// 10. Chat & Messaging Example
+// ============================================================================
+
+class _ChatExample extends StatelessWidget {
+  const _ChatExample({required this.publicState});
+
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final messages = [
+      _ChatMessage('Hey team! The new feature is ready for testing.', 'Ahmed', '10:30 AM', true),
+      _ChatMessage('Great work! I will start testing it now.', 'Sara', '10:32 AM', false),
+      _ChatMessage('Let me know if you find any issues. I am available all day.', 'Ahmed', '10:33 AM', true),
+      _ChatMessage('Found a small bug in the login flow. Creating a ticket now.', 'Mohamed', '10:45 AM', false),
+    ];
+
+    return Column(
+      children: messages.map((msg) => _ChatMessageBubble(message: msg, publicState: publicState)).toList(),
+    );
+  }
+}
+
+class _ChatMessage {
+  final String text;
+  final String sender;
+  final String time;
+  final bool isMe;
+
+  _ChatMessage(this.text, this.sender, this.time, this.isMe);
+}
+
+class _ChatMessageBubble extends StatelessWidget {
+  const _ChatMessageBubble({required this.message, required this.publicState});
+
+  final _ChatMessage message;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (!message.isMe) ...[
+            CircleAvatar(
+              radius: 14,
+              backgroundColor: colorScheme.secondaryContainer,
+              child: Text(message.sender[0], style: TextStyle(fontSize: 11, color: colorScheme.secondary, fontWeight: FontWeight.w600)),
+            ),
+            const SizedBox(width: 8),
+          ],
+          TooltipCard.builder(
+            publicState: publicState,
+            placementSide: message.isMe ? TooltipCardPlacementSide.start : TooltipCardPlacementSide.end,
+            beakEnabled: true,
+            whenContentVisible: WhenContentVisible.secondaryTapButton,
+            builder: (ctx, close) => _MessageActionsMenu(message: message, onClose: close),
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 280),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: message.isMe ? colorScheme.primary : colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(16),
+                  topRight: const Radius.circular(16),
+                  bottomLeft: Radius.circular(message.isMe ? 16 : 4),
+                  bottomRight: Radius.circular(message.isMe ? 4 : 16),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (!message.isMe)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        message.sender,
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: colorScheme.primary),
+                      ),
+                    ),
+                  Text(
+                    message.text,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: message.isMe ? colorScheme.onPrimary : colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    message.time,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: message.isMe ? colorScheme.onPrimary.withValues(alpha: 0.7) : colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (message.isMe) const SizedBox(width: 8),
+        ],
+      ),
+    );
+  }
+}
+
+class _MessageActionsMenu extends StatelessWidget {
+  const _MessageActionsMenu({required this.message, required this.onClose});
+
+  final _ChatMessage message;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 180,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Reactions row
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: ['👍', '❤️', '😂', '😮', '😢'].map((emoji) =>
+                InkWell(
+                  onTap: onClose,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Text(emoji, style: const TextStyle(fontSize: 20)),
+                  ),
+                ),
+              ).toList(),
+            ),
+          ),
+          Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
+          _MessageAction(icon: Icons.reply_rounded, label: 'Reply', onTap: onClose),
+          _MessageAction(icon: Icons.forward_rounded, label: 'Forward', onTap: onClose),
+          _MessageAction(icon: Icons.copy_rounded, label: 'Copy', onTap: onClose),
+          if (message.isMe) ...[
+            Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
+            _MessageAction(icon: Icons.edit_rounded, label: 'Edit', onTap: onClose),
+            _MessageAction(icon: Icons.delete_outline_rounded, label: 'Delete', onTap: onClose, isDestructive: true),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _MessageAction extends StatelessWidget {
+  const _MessageAction({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool isDestructive;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: color),
+            const SizedBox(width: 10),
+            Text(label, style: TextStyle(fontSize: 13, color: color)),
           ],
         ),
       ),
