@@ -71,7 +71,8 @@
       <h3>🔺 Fluent Beak</h3>
       <ul>
         <li>Arrow/caret pointing to trigger element</li>
-        <li>Shadow matching the panel elevation</li>
+        <li>Directional shadow matching placement</li>
+        <li>Optional border support</li>
         <li>Customizable size and color</li>
         <li>Automatic position adjustment</li>
       </ul>
@@ -147,7 +148,7 @@ Add `tooltip_card` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  tooltip_card: ^2.3.0
+  tooltip_card: ^2.4.1
 ```
 
 Then run:
@@ -270,6 +271,8 @@ The main widget for displaying tooltips and popovers.
 | `constraints` | `BoxConstraints?` | `null` | Size constraints for tooltip |
 | `awaySpace` | `double` | `0.0` | Gap between trigger and tooltip |
 | `offset` | `Offset` | `Offset.zero` | Additional position offset |
+| `borderColor` | `Color?` | `null` | Border color for panel and beak |
+| `borderWidth` | `double` | `0.0` | Border stroke width |
 
 #### Behavior Properties
 
@@ -623,6 +626,22 @@ TooltipCard.builder(
       'Custom styled tooltip',
       style: TextStyle(color: Colors.white),
     ),
+  ),
+)
+```
+
+### Bordered Tooltip
+
+```dart
+TooltipCard.builder(
+  beakEnabled: true,
+  borderColor: Colors.blue.shade300,
+  borderWidth: 1.5,
+  elevation: 4.0,
+  child: const Icon(Icons.info_outline),
+  builder: (context, close) => const Padding(
+    padding: EdgeInsets.all(12),
+    child: Text('Tooltip with a subtle border'),
   ),
 )
 ```

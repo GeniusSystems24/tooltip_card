@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.1] - 2025-12-25 (UTC+03:00)
+
+### Added
+
+- **Border Support** - New customization options for tooltip panel and beak
+  - `borderColor` - Optional border color for panel and beak
+  - `borderWidth` - Border stroke width (default: 0)
+  - Borders render only on visible edges (not where beak connects to panel)
+
+- **Directional Shadows for Beak** - Enhanced visual depth
+  - Shadow direction matches beak placement (top, bottom, start, end)
+  - Multi-layer shadow rendering (3 layers) for realistic depth effect
+  - Consistent shadow behavior across all placement options
+
+- **Redesigned Demo Page** - Professional Material 3 showcase
+  - Modern hero section with gradient background
+  - Interactive examples for all features
+  - Real-world usage examples section
+
+- **Real-World Examples** - Practical use cases in demo
+  - Data Grid - Employee management table with row actions
+  - Invoice Details - Interactive invoice with line items
+  - User Profiles - Team member cards with actions
+  - Product Catalog - E-commerce product cards
+  - Notifications & Status - System alerts and status indicators
+
+### Fixed
+
+- **Modal Barrier Auto-Close Issue** - Tooltip no longer disappears immediately when `modalBarrierEnabled: true` with `WhenContentHide.goAway` mode. The tooltip now correctly stays open when pointer moves to the barrier area.
+
+### Changed
+
+- Enhanced `BeakPainter` with improved shadow rendering
+- Updated `PanelMaterial` to support border decorations
+- Optimized beak position calculations for better precision
+
 ## [2.4.0] - 2025-12-24 (UTC+03:00)
 
 ### Added
