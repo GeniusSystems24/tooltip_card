@@ -10,9 +10,7 @@ class DemoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: _buildModernTheme(context),
-      child: const Scaffold(
-        body: _DemoContent(),
-      ),
+      child: const Scaffold(body: _DemoContent()),
     );
   }
 
@@ -28,25 +26,31 @@ class DemoPage extends StatelessWidget {
         brightness: brightness,
       ),
       fontFamily: 'Inter',
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.06),
+            color: isDark
+                ? Colors.white10
+                : Colors.black.withValues(alpha: 0.06),
           ),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
     );
@@ -84,14 +88,15 @@ class _DemoContentState extends State<_DemoContent> {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
-                      colorScheme.primary,
-                      colorScheme.tertiary,
-                    ],
+                    colors: [colorScheme.primary, colorScheme.tertiary],
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.widgets_rounded, color: Colors.white, size: 24),
+                child: const Icon(
+                  Icons.widgets_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: 14),
               const Text('TooltipCard'),
@@ -191,20 +196,14 @@ class _DemoContentState extends State<_DemoContent> {
           ],
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.1),
-        ),
+        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                Icons.auto_awesome,
-                color: colorScheme.primary,
-                size: 28,
-              ),
+              Icon(Icons.auto_awesome, color: colorScheme.primary, size: 28),
               const SizedBox(width: 12),
               Text(
                 'Fluent-Inspired Tooltips',
@@ -236,7 +235,8 @@ class _DemoContentState extends State<_DemoContent> {
               icon: const Icon(Icons.celebration_rounded),
               iconColor: colorScheme.primary,
               title: 'Welcome!',
-              subtitle: 'This is a TooltipCard in action. It supports rich content, actions, and beautiful animations.',
+              subtitle:
+                  'This is a TooltipCard in action. It supports rich content, actions, and beautiful animations.',
               primaryAction: FilledButton(
                 onPressed: close,
                 child: const Text('Got it!'),
@@ -339,14 +339,46 @@ class _DemoContentState extends State<_DemoContent> {
               spacing: 10,
               runSpacing: 10,
               children: [
-                _PlacementChip(label: 'Top Start', placement: TooltipCardPlacementSide.topStart, publicState: _publicState),
-                _PlacementChip(label: 'Top End', placement: TooltipCardPlacementSide.topEnd, publicState: _publicState),
-                _PlacementChip(label: 'Bottom Start', placement: TooltipCardPlacementSide.bottomStart, publicState: _publicState),
-                _PlacementChip(label: 'Bottom End', placement: TooltipCardPlacementSide.bottomEnd, publicState: _publicState),
-                _PlacementChip(label: 'Start Top', placement: TooltipCardPlacementSide.startTop, publicState: _publicState),
-                _PlacementChip(label: 'Start Bottom', placement: TooltipCardPlacementSide.startBottom, publicState: _publicState),
-                _PlacementChip(label: 'End Top', placement: TooltipCardPlacementSide.endTop, publicState: _publicState),
-                _PlacementChip(label: 'End Bottom', placement: TooltipCardPlacementSide.endBottom, publicState: _publicState),
+                _PlacementChip(
+                  label: 'Top Start',
+                  placement: TooltipCardPlacementSide.topStart,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'Top End',
+                  placement: TooltipCardPlacementSide.topEnd,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'Bottom Start',
+                  placement: TooltipCardPlacementSide.bottomStart,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'Bottom End',
+                  placement: TooltipCardPlacementSide.bottomEnd,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'Start Top',
+                  placement: TooltipCardPlacementSide.startTop,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'Start Bottom',
+                  placement: TooltipCardPlacementSide.startBottom,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'End Top',
+                  placement: TooltipCardPlacementSide.endTop,
+                  publicState: _publicState,
+                ),
+                _PlacementChip(
+                  label: 'End Bottom',
+                  placement: TooltipCardPlacementSide.endBottom,
+                  publicState: _publicState,
+                ),
               ],
             ),
           ],
@@ -489,16 +521,18 @@ class _DemoContentState extends State<_DemoContent> {
     );
   }
 
-  Widget _buildModalContent(String title, String description, ColorScheme colorScheme, VoidCallback close) {
+  Widget _buildModalContent(
+    String title,
+    String description,
+    ColorScheme colorScheme,
+    VoidCallback close,
+  ) {
     return TooltipCardContent(
       icon: const Icon(Icons.layers_rounded),
       iconColor: colorScheme.primary,
       title: title,
       subtitle: description,
-      primaryAction: FilledButton(
-        onPressed: close,
-        child: const Text('Close'),
-      ),
+      primaryAction: FilledButton(onPressed: close, child: const Text('Close')),
       onClose: close,
     );
   }
@@ -517,12 +551,14 @@ class _DemoContentState extends State<_DemoContent> {
                   controller: _controller,
                   placementSide: TooltipCardPlacementSide.bottom,
                   beakEnabled: true,
-                  onOpenChanged: (isOpen) => setState(() => _isControlledOpen = isOpen),
+                  onOpenChanged: (isOpen) =>
+                      setState(() => _isControlledOpen = isOpen),
                   builder: (ctx, close) => TooltipCardContent(
                     icon: const Icon(Icons.smart_toy_rounded),
                     iconColor: colorScheme.primary,
                     title: 'Controlled Tooltip',
-                    subtitle: 'This tooltip is controlled programmatically using TooltipCardController.',
+                    subtitle:
+                        'This tooltip is controlled programmatically using TooltipCardController.',
                     primaryAction: FilledButton(
                       onPressed: close,
                       child: const Text('Dismiss'),
@@ -530,7 +566,10 @@ class _DemoContentState extends State<_DemoContent> {
                     onClose: close,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: _isControlledOpen
                           ? colorScheme.primary
@@ -541,7 +580,9 @@ class _DemoContentState extends State<_DemoContent> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          _isControlledOpen ? Icons.visibility : Icons.visibility_off,
+                          _isControlledOpen
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           size: 18,
                           color: _isControlledOpen
                               ? colorScheme.onPrimary
@@ -609,7 +650,10 @@ class _DemoContentState extends State<_DemoContent> {
               icon: const Icon(Icons.dark_mode_rounded),
               iconColor: Colors.blueAccent,
               title: 'Dark Theme',
-              titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              titleStyle: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
               subtitle: 'Elegant dark appearance',
               subtitleStyle: TextStyle(color: Colors.grey.shade400),
               primaryAction: FilledButton(
@@ -893,9 +937,7 @@ class _QuickActionCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: colorScheme.outline.withValues(alpha: 0.2),
-          ),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -938,10 +980,7 @@ class _PlacementChip extends StatelessWidget {
       builder: (ctx, close) => TooltipCardContent(
         title: label,
         subtitle: 'This tooltip uses the $label placement option.',
-        primaryAction: FilledButton(
-          onPressed: close,
-          child: const Text('OK'),
-        ),
+        primaryAction: FilledButton(onPressed: close, child: const Text('OK')),
         onClose: close,
       ),
       child: Container(
@@ -949,9 +988,7 @@ class _PlacementChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: colorScheme.primary.withValues(alpha: 0.3),
-          ),
+          border: Border.all(color: colorScheme.primary.withValues(alpha: 0.3)),
         ),
         child: Text(
           label,
@@ -1009,12 +1046,7 @@ class _TriggerModeCard extends StatelessWidget {
             children: [
               Icon(icon, size: 28, color: colorScheme.primary),
               const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
               const SizedBox(height: 4),
               Text(
                 description,
@@ -1058,10 +1090,7 @@ class _ModalButton extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             label,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: color,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w600, color: color),
           ),
         ],
       ),
@@ -1148,10 +1177,7 @@ class _StyleCard extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             label,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: textColor,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w600, color: textColor),
           ),
         ],
       ),
@@ -1342,10 +1368,42 @@ class _DataGridExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final employees = [
-      _Employee('Ahmed Hassan', 'ahmed@company.com', 'Engineering', 'Senior Developer', 85000, 'Active', Colors.green),
-      _Employee('Sara Ali', 'sara@company.com', 'Design', 'UI/UX Lead', 75000, 'Active', Colors.green),
-      _Employee('Mohamed Khaled', 'mohamed@company.com', 'Marketing', 'Marketing Manager', 70000, 'On Leave', Colors.orange),
-      _Employee('Fatima Omar', 'fatima@company.com', 'HR', 'HR Specialist', 55000, 'Active', Colors.green),
+      _Employee(
+        'Ahmed Hassan',
+        'ahmed@company.com',
+        'Engineering',
+        'Senior Developer',
+        85000,
+        'Active',
+        Colors.green,
+      ),
+      _Employee(
+        'Sara Ali',
+        'sara@company.com',
+        'Design',
+        'UI/UX Lead',
+        75000,
+        'Active',
+        Colors.green,
+      ),
+      _Employee(
+        'Mohamed Khaled',
+        'mohamed@company.com',
+        'Marketing',
+        'Marketing Manager',
+        70000,
+        'On Leave',
+        Colors.orange,
+      ),
+      _Employee(
+        'Fatima Omar',
+        'fatima@company.com',
+        'HR',
+        'HR Specialist',
+        55000,
+        'Active',
+        Colors.green,
+      ),
     ];
 
     final colorScheme = Theme.of(context).colorScheme;
@@ -1362,19 +1420,59 @@ class _DataGridExample extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerHighest,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(11),
+              ),
             ),
             child: Row(
               children: [
-                Expanded(flex: 2, child: Text('Employee', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: colorScheme.onSurface))),
-                Expanded(flex: 2, child: Text('Department', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: colorScheme.onSurface))),
-                Expanded(flex: 1, child: Text('Status', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: colorScheme.onSurface))),
-                const SizedBox(width: 80, child: Text('Actions', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13))),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Employee',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Department',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    'Status',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 80,
+                  child: Text(
+                    'Actions',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                  ),
+                ),
               ],
             ),
           ),
           // Rows
-          ...employees.map((emp) => _DataGridRow(employee: emp, publicState: publicState)),
+          ...employees.map(
+            (emp) => _DataGridRow(employee: emp, publicState: publicState),
+          ),
         ],
       ),
     );
@@ -1390,7 +1488,15 @@ class _Employee {
   final String status;
   final Color statusColor;
 
-  _Employee(this.name, this.email, this.department, this.position, this.salary, this.status, this.statusColor);
+  _Employee(
+    this.name,
+    this.email,
+    this.department,
+    this.position,
+    this.salary,
+    this.status,
+    this.statusColor,
+  );
 }
 
 class _DataGridRow extends StatelessWidget {
@@ -1406,7 +1512,9 @@ class _DataGridRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1))),
+        border: Border(
+          top: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1)),
+        ),
       ),
       child: Row(
         children: [
@@ -1419,7 +1527,8 @@ class _DataGridRow extends StatelessWidget {
               beakEnabled: true,
               whenContentVisible: WhenContentVisible.hoverButton,
               hoverOpenDelay: const Duration(milliseconds: 300),
-              builder: (ctx, close) => _EmployeeDetailsTooltip(employee: employee, onClose: close),
+              builder: (ctx, close) =>
+                  _EmployeeDetailsTooltip(employee: employee, onClose: close),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -1427,16 +1536,32 @@ class _DataGridRow extends StatelessWidget {
                     backgroundColor: colorScheme.primaryContainer,
                     child: Text(
                       employee.name[0],
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: colorScheme.primary),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.primary,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(employee.name, style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w500)),
+                  Text(
+                    employee.name,
+                    style: TextStyle(
+                      color: colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-          Expanded(flex: 2, child: Text(employee.department, style: const TextStyle(fontSize: 13))),
+          Expanded(
+            flex: 2,
+            child: Text(
+              employee.department,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
           Expanded(
             flex: 1,
             child: Container(
@@ -1447,7 +1572,11 @@ class _DataGridRow extends StatelessWidget {
               ),
               child: Text(
                 employee.status,
-                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: employee.statusColor),
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  color: employee.statusColor,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -1466,7 +1595,11 @@ class _DataGridRow extends StatelessWidget {
                   modalBarrierEnabled: true,
                   barrierBlur: 2,
                   builder: (ctx, close) => _RowActionsMenu(onClose: close),
-                  child: Icon(Icons.more_vert_rounded, size: 20, color: colorScheme.onSurface.withValues(alpha: 0.6)),
+                  child: Icon(
+                    Icons.more_vert_rounded,
+                    size: 20,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
                 ),
               ],
             ),
@@ -1478,7 +1611,10 @@ class _DataGridRow extends StatelessWidget {
 }
 
 class _EmployeeDetailsTooltip extends StatelessWidget {
-  const _EmployeeDetailsTooltip({required this.employee, required this.onClose});
+  const _EmployeeDetailsTooltip({
+    required this.employee,
+    required this.onClose,
+  });
 
   final _Employee employee;
   final VoidCallback onClose;
@@ -1500,24 +1636,55 @@ class _EmployeeDetailsTooltip extends StatelessWidget {
                 CircleAvatar(
                   radius: 24,
                   backgroundColor: colorScheme.primaryContainer,
-                  child: Text(employee.name[0], style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: colorScheme.primary)),
+                  child: Text(
+                    employee.name[0],
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.primary,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(employee.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                      Text(employee.position, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                      Text(
+                        employee.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        employee.position,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            _DetailRow(icon: Icons.email_outlined, label: 'Email', value: employee.email),
-            _DetailRow(icon: Icons.business_outlined, label: 'Department', value: employee.department),
-            _DetailRow(icon: Icons.attach_money_rounded, label: 'Salary', value: '\$${employee.salary.toStringAsFixed(0)}/year'),
+            _DetailRow(
+              icon: Icons.email_outlined,
+              label: 'Email',
+              value: employee.email,
+            ),
+            _DetailRow(
+              icon: Icons.business_outlined,
+              label: 'Department',
+              value: employee.department,
+            ),
+            _DetailRow(
+              icon: Icons.attach_money_rounded,
+              label: 'Salary',
+              value: '\$${employee.salary.toStringAsFixed(0)}/year',
+            ),
             const SizedBox(height: 12),
             Row(
               children: [
@@ -1546,7 +1713,11 @@ class _EmployeeDetailsTooltip extends StatelessWidget {
 }
 
 class _DetailRow extends StatelessWidget {
-  const _DetailRow({required this.icon, required this.label, required this.value});
+  const _DetailRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
 
   final IconData icon;
   final String label;
@@ -1560,10 +1731,25 @@ class _DetailRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: colorScheme.onSurface.withValues(alpha: 0.5)),
+          Icon(
+            icon,
+            size: 16,
+            color: colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
           const SizedBox(width: 8),
-          Text('$label: ', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
-          Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
+          Text(
+            '$label: ',
+            style: TextStyle(
+              fontSize: 12,
+              color: colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+            ),
+          ),
         ],
       ),
     );
@@ -1584,11 +1770,28 @@ class _RowActionsMenu extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _ActionMenuItem(icon: Icons.edit_outlined, label: 'Edit', onTap: onClose),
-          _ActionMenuItem(icon: Icons.visibility_outlined, label: 'View Details', onTap: onClose),
-          _ActionMenuItem(icon: Icons.email_outlined, label: 'Send Email', onTap: onClose),
+          _ActionMenuItem(
+            icon: Icons.edit_outlined,
+            label: 'Edit',
+            onTap: onClose,
+          ),
+          _ActionMenuItem(
+            icon: Icons.visibility_outlined,
+            label: 'View Details',
+            onTap: onClose,
+          ),
+          _ActionMenuItem(
+            icon: Icons.email_outlined,
+            label: 'Send Email',
+            onTap: onClose,
+          ),
           Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
-          _ActionMenuItem(icon: Icons.delete_outline, label: 'Delete', onTap: onClose, isDestructive: true),
+          _ActionMenuItem(
+            icon: Icons.delete_outline,
+            label: 'Delete',
+            onTap: onClose,
+            isDestructive: true,
+          ),
         ],
       ),
     );
@@ -1596,7 +1799,12 @@ class _RowActionsMenu extends StatelessWidget {
 }
 
 class _ActionMenuItem extends StatelessWidget {
-  const _ActionMenuItem({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+  const _ActionMenuItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.isDestructive = false,
+  });
 
   final IconData icon;
   final String label;
@@ -1605,7 +1813,9 @@ class _ActionMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+    final color = isDestructive
+        ? Colors.red
+        : Theme.of(context).colorScheme.onSurface;
 
     return InkWell(
       onTap: onTap,
@@ -1637,10 +1847,34 @@ class _InvoiceExample extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     final items = [
-      _InvoiceItem('Website Development', 'Full-stack development with React & Node.js', 3, 1500, 'Development'),
-      _InvoiceItem('UI/UX Design', 'Complete design system & prototypes', 1, 2500, 'Design'),
-      _InvoiceItem('Cloud Hosting', 'AWS infrastructure setup & 1 year hosting', 12, 150, 'Infrastructure'),
-      _InvoiceItem('Maintenance', 'Monthly maintenance & support', 6, 300, 'Support'),
+      _InvoiceItem(
+        'Website Development',
+        'Full-stack development with React & Node.js',
+        3,
+        1500,
+        'Development',
+      ),
+      _InvoiceItem(
+        'UI/UX Design',
+        'Complete design system & prototypes',
+        1,
+        2500,
+        'Design',
+      ),
+      _InvoiceItem(
+        'Cloud Hosting',
+        'AWS infrastructure setup & 1 year hosting',
+        12,
+        150,
+        'Infrastructure',
+      ),
+      _InvoiceItem(
+        'Maintenance',
+        'Monthly maintenance & support',
+        6,
+        300,
+        'Support',
+      ),
     ];
 
     final subtotal = items.fold<double>(0, (sum, item) => sum + item.total);
@@ -1659,7 +1893,9 @@ class _InvoiceExample extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(11),
+              ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1667,9 +1903,22 @@ class _InvoiceExample extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Invoice #INV-2024-0042', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: colorScheme.onSurface)),
+                    Text(
+                      'Invoice #INV-2024-0042',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text('Dec 24, 2024', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                    Text(
+                      'Dec 24, 2024',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                    ),
                   ],
                 ),
                 TooltipCard.builder(
@@ -1678,9 +1927,13 @@ class _InvoiceExample extends StatelessWidget {
                   beakEnabled: true,
                   modalBarrierEnabled: true,
                   barrierBlur: 4,
-                  builder: (ctx, close) => _InvoiceStatusTooltip(onClose: close),
+                  builder: (ctx, close) =>
+                      _InvoiceStatusTooltip(onClose: close),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.amber.shade100,
                       borderRadius: BorderRadius.circular(20),
@@ -1688,9 +1941,20 @@ class _InvoiceExample extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.schedule, size: 14, color: Colors.amber.shade800),
+                        Icon(
+                          Icons.schedule,
+                          size: 14,
+                          color: Colors.amber.shade800,
+                        ),
                         const SizedBox(width: 6),
-                        Text('Pending', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.amber.shade800)),
+                        Text(
+                          'Pending',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.amber.shade800,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -1699,20 +1963,34 @@ class _InvoiceExample extends StatelessWidget {
             ),
           ),
           // Items
-          ...items.map((item) => _InvoiceItemRow(item: item, publicState: publicState)),
+          ...items.map(
+            (item) => _InvoiceItemRow(item: item, publicState: publicState),
+          ),
           // Totals
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(11)),
+              borderRadius: const BorderRadius.vertical(
+                bottom: Radius.circular(11),
+              ),
             ),
             child: Column(
               children: [
-                _TotalRow(label: 'Subtotal', value: '\$${subtotal.toStringAsFixed(2)}'),
-                _TotalRow(label: 'Tax (15%)', value: '\$${tax.toStringAsFixed(2)}'),
+                _TotalRow(
+                  label: 'Subtotal',
+                  value: '\$${subtotal.toStringAsFixed(2)}',
+                ),
+                _TotalRow(
+                  label: 'Tax (15%)',
+                  value: '\$${tax.toStringAsFixed(2)}',
+                ),
                 const Divider(height: 16),
-                _TotalRow(label: 'Total', value: '\$${total.toStringAsFixed(2)}', isTotal: true),
+                _TotalRow(
+                  label: 'Total',
+                  value: '\$${total.toStringAsFixed(2)}',
+                  isTotal: true,
+                ),
               ],
             ),
           ),
@@ -1729,7 +2007,13 @@ class _InvoiceItem {
   final double unitPrice;
   final String category;
 
-  _InvoiceItem(this.name, this.description, this.quantity, this.unitPrice, this.category);
+  _InvoiceItem(
+    this.name,
+    this.description,
+    this.quantity,
+    this.unitPrice,
+    this.category,
+  );
 
   double get total => quantity * unitPrice;
 }
@@ -1747,7 +2031,9 @@ class _InvoiceItemRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1))),
+        border: Border(
+          bottom: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1)),
+        ),
       ),
       child: Row(
         children: [
@@ -1759,18 +2045,43 @@ class _InvoiceItemRow extends StatelessWidget {
               beakEnabled: true,
               whenContentVisible: WhenContentVisible.hoverButton,
               hoverOpenDelay: const Duration(milliseconds: 200),
-              builder: (ctx, close) => _ItemDetailsTooltip(item: item, onClose: close),
+              builder: (ctx, close) =>
+                  _ItemDetailsTooltip(item: item, onClose: close),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name, style: TextStyle(fontWeight: FontWeight.w500, color: colorScheme.primary)),
-                  Text(item.category, style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                  Text(
+                    item.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                  Text(
+                    item.category,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-          Expanded(child: Text('${item.quantity}x', textAlign: TextAlign.center, style: const TextStyle(fontSize: 13))),
-          Expanded(child: Text('\$${item.unitPrice.toStringAsFixed(0)}', textAlign: TextAlign.center, style: const TextStyle(fontSize: 13))),
+          Expanded(
+            child: Text(
+              '${item.quantity}x',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              '\$${item.unitPrice.toStringAsFixed(0)}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
           Expanded(
             child: Text(
               '\$${item.total.toStringAsFixed(2)}',
@@ -1810,22 +2121,38 @@ class _ItemDetailsTooltip extends StatelessWidget {
                     color: colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(Icons.inventory_2_outlined, size: 20, color: colorScheme.primary),
+                  child: Icon(
+                    Icons.inventory_2_outlined,
+                    size: 20,
+                    color: colorScheme.primary,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(item.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      Text(
+                        item.name,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       Container(
                         margin: const EdgeInsets.only(top: 4),
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: colorScheme.secondaryContainer,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text(item.category, style: TextStyle(fontSize: 10, color: colorScheme.secondary)),
+                        child: Text(
+                          item.category,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: colorScheme.secondary,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -1833,7 +2160,13 @@ class _ItemDetailsTooltip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Text(item.description, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+            Text(
+              item.description,
+              style: TextStyle(
+                fontSize: 12,
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
+            ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
@@ -1845,8 +2178,15 @@ class _ItemDetailsTooltip extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _MiniStat(label: 'Qty', value: '${item.quantity}'),
-                  _MiniStat(label: 'Unit', value: '\$${item.unitPrice.toStringAsFixed(0)}'),
-                  _MiniStat(label: 'Total', value: '\$${item.total.toStringAsFixed(0)}', isPrimary: true),
+                  _MiniStat(
+                    label: 'Unit',
+                    value: '\$${item.unitPrice.toStringAsFixed(0)}',
+                  ),
+                  _MiniStat(
+                    label: 'Total',
+                    value: '\$${item.total.toStringAsFixed(0)}',
+                    isPrimary: true,
+                  ),
                 ],
               ),
             ),
@@ -1858,7 +2198,11 @@ class _ItemDetailsTooltip extends StatelessWidget {
 }
 
 class _MiniStat extends StatelessWidget {
-  const _MiniStat({required this.label, required this.value, this.isPrimary = false});
+  const _MiniStat({
+    required this.label,
+    required this.value,
+    this.isPrimary = false,
+  });
 
   final String label;
   final String value;
@@ -1870,9 +2214,22 @@ class _MiniStat extends StatelessWidget {
 
     return Column(
       children: [
-        Text(label, style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 10,
+            color: colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
+        ),
         const SizedBox(height: 2),
-        Text(value, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: isPrimary ? colorScheme.primary : null)),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 13,
+            color: isPrimary ? colorScheme.primary : null,
+          ),
+        ),
       ],
     );
   }
@@ -1891,15 +2248,34 @@ class _InvoiceStatusTooltip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Invoice Status', style: TextStyle(fontWeight: FontWeight.w600)),
+          const Text(
+            'Invoice Status',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
           const SizedBox(height: 12),
-          _StatusOption(icon: Icons.hourglass_empty, label: 'Pending', color: Colors.amber, isSelected: true),
-          _StatusOption(icon: Icons.check_circle_outline, label: 'Paid', color: Colors.green),
-          _StatusOption(icon: Icons.cancel_outlined, label: 'Cancelled', color: Colors.red),
+          _StatusOption(
+            icon: Icons.hourglass_empty,
+            label: 'Pending',
+            color: Colors.amber,
+            isSelected: true,
+          ),
+          _StatusOption(
+            icon: Icons.check_circle_outline,
+            label: 'Paid',
+            color: Colors.green,
+          ),
+          _StatusOption(
+            icon: Icons.cancel_outlined,
+            label: 'Cancelled',
+            color: Colors.red,
+          ),
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
-            child: FilledButton(onPressed: onClose, child: const Text('Update Status')),
+            child: FilledButton(
+              onPressed: onClose,
+              child: const Text('Update Status'),
+            ),
           ),
         ],
       ),
@@ -1908,7 +2284,12 @@ class _InvoiceStatusTooltip extends StatelessWidget {
 }
 
 class _StatusOption extends StatelessWidget {
-  const _StatusOption({required this.icon, required this.label, required this.color, this.isSelected = false});
+  const _StatusOption({
+    required this.icon,
+    required this.label,
+    required this.color,
+    this.isSelected = false,
+  });
 
   final IconData icon;
   final String label;
@@ -1929,7 +2310,13 @@ class _StatusOption extends StatelessWidget {
         children: [
           Icon(icon, size: 18, color: color),
           const SizedBox(width: 10),
-          Text(label, style: TextStyle(color: isSelected ? color : null, fontWeight: isSelected ? FontWeight.w600 : null)),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? color : null,
+              fontWeight: isSelected ? FontWeight.w600 : null,
+            ),
+          ),
           const Spacer(),
           if (isSelected) Icon(Icons.check, size: 18, color: color),
         ],
@@ -1939,7 +2326,11 @@ class _StatusOption extends StatelessWidget {
 }
 
 class _TotalRow extends StatelessWidget {
-  const _TotalRow({required this.label, required this.value, this.isTotal = false});
+  const _TotalRow({
+    required this.label,
+    required this.value,
+    this.isTotal = false,
+  });
 
   final String label;
   final String value;
@@ -1954,16 +2345,22 @@ class _TotalRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(
-            fontSize: isTotal ? 15 : 13,
-            fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
-            color: colorScheme.onSurface.withValues(alpha: isTotal ? 1 : 0.7),
-          )),
-          Text(value, style: TextStyle(
-            fontSize: isTotal ? 18 : 13,
-            fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
-            color: isTotal ? colorScheme.primary : null,
-          )),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: isTotal ? 15 : 13,
+              fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
+              color: colorScheme.onSurface.withValues(alpha: isTotal ? 1 : 0.7),
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: isTotal ? 18 : 13,
+              fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
+              color: isTotal ? colorScheme.primary : null,
+            ),
+          ),
         ],
       ),
     );
@@ -1982,16 +2379,46 @@ class _UserProfilesExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final users = [
-      _User('Nour Ibrahim', 'CTO', 'nour@startup.io', '+971 50 123 4567', 'https://linkedin.com/in/nour', Colors.indigo),
-      _User('Layla Ahmed', 'Product Manager', 'layla@startup.io', '+971 50 234 5678', 'https://linkedin.com/in/layla', Colors.pink),
-      _User('Youssef Mahmoud', 'Lead Designer', 'youssef@startup.io', '+971 50 345 6789', 'https://linkedin.com/in/youssef', Colors.teal),
-      _User('Hana Kareem', 'DevOps Engineer', 'hana@startup.io', '+971 50 456 7890', 'https://linkedin.com/in/hana', Colors.purple),
+      _User(
+        'Nour Ibrahim',
+        'CTO',
+        'nour@startup.io',
+        '+971 50 123 4567',
+        'https://linkedin.com/in/nour',
+        Colors.indigo,
+      ),
+      _User(
+        'Layla Ahmed',
+        'Product Manager',
+        'layla@startup.io',
+        '+971 50 234 5678',
+        'https://linkedin.com/in/layla',
+        Colors.pink,
+      ),
+      _User(
+        'Youssef Mahmoud',
+        'Lead Designer',
+        'youssef@startup.io',
+        '+971 50 345 6789',
+        'https://linkedin.com/in/youssef',
+        Colors.teal,
+      ),
+      _User(
+        'Hana Kareem',
+        'DevOps Engineer',
+        'hana@startup.io',
+        '+971 50 456 7890',
+        'https://linkedin.com/in/hana',
+        Colors.purple,
+      ),
     ];
 
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: users.map((user) => _UserCard(user: user, publicState: publicState)).toList(),
+      children: users
+          .map((user) => _UserCard(user: user, publicState: publicState))
+          .toList(),
     );
   }
 }
@@ -2004,7 +2431,14 @@ class _User {
   final String linkedin;
   final Color color;
 
-  _User(this.name, this.role, this.email, this.phone, this.linkedin, this.color);
+  _User(
+    this.name,
+    this.role,
+    this.email,
+    this.phone,
+    this.linkedin,
+    this.color,
+  );
 }
 
 class _UserCard extends StatelessWidget {
@@ -2038,14 +2472,32 @@ class _UserCard extends StatelessWidget {
             CircleAvatar(
               radius: 20,
               backgroundColor: user.color.withValues(alpha: 0.2),
-              child: Text(user.name[0], style: TextStyle(color: user.color, fontWeight: FontWeight.w600)),
+              child: Text(
+                user.name[0],
+                style: TextStyle(
+                  color: user.color,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(user.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                Text(user.role, style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                Text(
+                  user.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+                Text(
+                  user.role,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
               ],
             ),
           ],
@@ -2079,23 +2531,45 @@ class _UserProfileTooltip extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
             ),
             child: Row(
               children: [
                 CircleAvatar(
                   radius: 28,
                   backgroundColor: Colors.white,
-                  child: Text(user.name[0], style: TextStyle(color: user.color, fontWeight: FontWeight.w700, fontSize: 22)),
+                  child: Text(
+                    user.name[0],
+                    style: TextStyle(
+                      color: user.color,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 22,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(user.name, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16)),
+                      Text(
+                        user.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
                       const SizedBox(height: 2),
-                      Text(user.role, style: TextStyle(color: Colors.white.withValues(alpha: 0.9), fontSize: 13)),
+                      Text(
+                        user.role,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 13,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -2109,7 +2583,10 @@ class _UserProfileTooltip extends StatelessWidget {
               children: [
                 _ContactRow(icon: Icons.email_outlined, value: user.email),
                 _ContactRow(icon: Icons.phone_outlined, value: user.phone),
-                _ContactRow(icon: Icons.link_rounded, value: 'LinkedIn Profile'),
+                _ContactRow(
+                  icon: Icons.link_rounded,
+                  value: 'LinkedIn Profile',
+                ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
@@ -2174,16 +2651,53 @@ class _ProductCatalogExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final products = [
-      _Product('MacBook Pro 16"', 'Apple M3 Pro, 18GB RAM, 512GB SSD', 2499, 4.9, 128, 'Electronics', Colors.grey.shade800),
-      _Product('iPhone 15 Pro', '256GB, Natural Titanium', 1199, 4.8, 256, 'Electronics', Colors.blue.shade700),
-      _Product('AirPods Pro 2', 'Active Noise Cancellation, USB-C', 249, 4.7, 512, 'Audio', Colors.teal),
-      _Product('Apple Watch Ultra 2', 'GPS + Cellular, 49mm', 799, 4.9, 89, 'Wearables', Colors.orange),
+      _Product(
+        'MacBook Pro 16"',
+        'Apple M3 Pro, 18GB RAM, 512GB SSD',
+        2499,
+        4.9,
+        128,
+        'Electronics',
+        Colors.grey.shade800,
+      ),
+      _Product(
+        'iPhone 15 Pro',
+        '256GB, Natural Titanium',
+        1199,
+        4.8,
+        256,
+        'Electronics',
+        Colors.blue.shade700,
+      ),
+      _Product(
+        'AirPods Pro 2',
+        'Active Noise Cancellation, USB-C',
+        249,
+        4.7,
+        512,
+        'Audio',
+        Colors.teal,
+      ),
+      _Product(
+        'Apple Watch Ultra 2',
+        'GPS + Cellular, 49mm',
+        799,
+        4.9,
+        89,
+        'Wearables',
+        Colors.orange,
+      ),
     ];
 
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: products.map((product) => _ProductCard(product: product, publicState: publicState)).toList(),
+      children: products
+          .map(
+            (product) =>
+                _ProductCard(product: product, publicState: publicState),
+          )
+          .toList(),
     );
   }
 }
@@ -2197,7 +2711,15 @@ class _Product {
   final String category;
   final Color color;
 
-  _Product(this.name, this.description, this.price, this.rating, this.reviews, this.category, this.color);
+  _Product(
+    this.name,
+    this.description,
+    this.price,
+    this.rating,
+    this.reviews,
+    this.category,
+    this.color,
+  );
 }
 
 class _ProductCard extends StatelessWidget {
@@ -2216,14 +2738,17 @@ class _ProductCard extends StatelessWidget {
       beakEnabled: true,
       whenContentVisible: WhenContentVisible.hoverButton,
       hoverOpenDelay: const Duration(milliseconds: 400),
-      builder: (ctx, close) => _ProductQuickView(product: product, onClose: close),
+      builder: (ctx, close) =>
+          _ProductQuickView(product: product, onClose: close),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+          border: Border.all(
+            color: colorScheme.outline.withValues(alpha: 0.15),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -2236,22 +2761,54 @@ class _ProductCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
-                child: Icon(Icons.devices_rounded, size: 40, color: product.color),
+                child: Icon(
+                  Icons.devices_rounded,
+                  size: 40,
+                  color: product.color,
+                ),
               ),
             ),
             const SizedBox(height: 10),
-            Text(product.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(
+              product.name,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.star_rounded, size: 14, color: Colors.amber.shade600),
+                Icon(
+                  Icons.star_rounded,
+                  size: 14,
+                  color: Colors.amber.shade600,
+                ),
                 const SizedBox(width: 4),
-                Text('${product.rating}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
-                Text(' (${product.reviews})', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                Text(
+                  '${product.rating}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  ' (${product.reviews})',
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 6),
-            Text('\$${product.price.toStringAsFixed(0)}', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: colorScheme.primary)),
+            Text(
+              '\$${product.price.toStringAsFixed(0)}',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                color: colorScheme.primary,
+              ),
+            ),
           ],
         ),
       ),
@@ -2280,25 +2837,46 @@ class _ProductQuickView extends StatelessWidget {
             height: 140,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [product.color.withValues(alpha: 0.1), product.color.withValues(alpha: 0.2)],
+                colors: [
+                  product.color.withValues(alpha: 0.1),
+                  product.color.withValues(alpha: 0.2),
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
             ),
             child: Stack(
               children: [
-                Center(child: Icon(Icons.devices_rounded, size: 60, color: product.color)),
+                Center(
+                  child: Icon(
+                    Icons.devices_rounded,
+                    size: 60,
+                    color: product.color,
+                  ),
+                ),
                 Positioned(
                   top: 12,
                   right: 12,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: colorScheme.secondaryContainer,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(product.category, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: colorScheme.secondary)),
+                    child: Text(
+                      product.category,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.secondary,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -2309,18 +2887,50 @@ class _ProductQuickView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.name, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                Text(
+                  product.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text(product.description, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+                Text(
+                  product.description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    Icon(Icons.star_rounded, size: 18, color: Colors.amber.shade600),
+                    Icon(
+                      Icons.star_rounded,
+                      size: 18,
+                      color: Colors.amber.shade600,
+                    ),
                     const SizedBox(width: 4),
-                    Text('${product.rating}', style: const TextStyle(fontWeight: FontWeight.w600)),
-                    Text(' (${product.reviews} reviews)', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                    Text(
+                      '${product.rating}',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      ' (${product.reviews} reviews)',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                    ),
                     const Spacer(),
-                    Text('\$${product.price.toStringAsFixed(0)}', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: colorScheme.primary)),
+                    Text(
+                      '\$${product.price.toStringAsFixed(0)}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        color: colorScheme.primary,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -2329,7 +2939,10 @@ class _ProductQuickView extends StatelessWidget {
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: onClose,
-                        icon: const Icon(Icons.favorite_border_rounded, size: 16),
+                        icon: const Icon(
+                          Icons.favorite_border_rounded,
+                          size: 16,
+                        ),
                         label: const Text('Save'),
                       ),
                     ),
@@ -2338,7 +2951,10 @@ class _ProductQuickView extends StatelessWidget {
                       flex: 2,
                       child: FilledButton.icon(
                         onPressed: onClose,
-                        icon: const Icon(Icons.shopping_cart_outlined, size: 16),
+                        icon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          size: 16,
+                        ),
                         label: const Text('Add to Cart'),
                       ),
                     ),
@@ -2374,7 +2990,8 @@ class _NotificationsExample extends StatelessWidget {
           color: Colors.green,
           publicState: publicState,
           tooltipTitle: 'All Changes Synced',
-          tooltipMessage: 'Your data was last synced 2 minutes ago. All changes are saved to the cloud.',
+          tooltipMessage:
+              'Your data was last synced 2 minutes ago. All changes are saved to the cloud.',
         ),
         _NotificationBadge(
           icon: Icons.warning_rounded,
@@ -2382,7 +2999,8 @@ class _NotificationsExample extends StatelessWidget {
           color: Colors.orange,
           publicState: publicState,
           tooltipTitle: 'System Warnings',
-          tooltipMessage: 'There are 3 warnings that need your attention. Click to view details.',
+          tooltipMessage:
+              'There are 3 warnings that need your attention. Click to view details.',
           hasAction: true,
         ),
         _NotificationBadge(
@@ -2391,7 +3009,8 @@ class _NotificationsExample extends StatelessWidget {
           color: Colors.red,
           publicState: publicState,
           tooltipTitle: 'Critical Error',
-          tooltipMessage: 'Database connection failed. Please check your network settings.',
+          tooltipMessage:
+              'Database connection failed. Please check your network settings.',
           hasAction: true,
         ),
         _NotificationBadge(
@@ -2400,7 +3019,8 @@ class _NotificationsExample extends StatelessWidget {
           color: Colors.blue,
           publicState: publicState,
           tooltipTitle: 'Version 2.5.0 Available',
-          tooltipMessage: 'A new version is available with performance improvements and bug fixes.',
+          tooltipMessage:
+              'A new version is available with performance improvements and bug fixes.',
           hasAction: true,
         ),
         _NotificationBadge(
@@ -2409,7 +3029,8 @@ class _NotificationsExample extends StatelessWidget {
           color: Colors.teal,
           publicState: publicState,
           tooltipTitle: 'Connection Secure',
-          tooltipMessage: 'Your connection is encrypted with TLS 1.3. All data transfers are secure.',
+          tooltipMessage:
+              'Your connection is encrypted with TLS 1.3. All data transfers are secure.',
         ),
       ],
     );
@@ -2464,7 +3085,14 @@ class _NotificationBadge extends StatelessWidget {
           children: [
             Icon(icon, size: 16, color: color),
             const SizedBox(width: 8),
-            Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: color,
+              ),
+            ),
           ],
         ),
       ),
@@ -2505,14 +3133,31 @@ class _NotificationTooltip extends StatelessWidget {
                     color: color.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(Icons.notifications_active_rounded, size: 18, color: color),
+                  child: Icon(
+                    Icons.notifications_active_rounded,
+                    size: 18,
+                    color: color,
+                  ),
                 ),
                 const SizedBox(width: 12),
-                Expanded(child: Text(title, style: TextStyle(fontWeight: FontWeight.w600, color: color))),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(fontWeight: FontWeight.w600, color: color),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 12),
-            Text(message, style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8))),
+            Text(
+              message,
+              style: TextStyle(
+                fontSize: 13,
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.8),
+              ),
+            ),
             if (hasAction) ...[
               const SizedBox(height: 12),
               SizedBox(
@@ -2545,10 +3190,38 @@ class _CalendarExample extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     final events = [
-      _CalendarEvent('Team Standup', '9:00 AM - 9:30 AM', 'Daily sync with the team', 'Conference Room A', ['Ahmed', 'Sara', 'Mohamed'], Colors.blue),
-      _CalendarEvent('Design Review', '11:00 AM - 12:00 PM', 'Review new dashboard designs', 'Online - Zoom', ['Layla', 'Youssef'], Colors.purple),
-      _CalendarEvent('Client Meeting', '2:00 PM - 3:00 PM', 'Quarterly review with Acme Corp', 'Meeting Room 2', ['Nour', 'Ahmed'], Colors.green),
-      _CalendarEvent('Sprint Planning', '4:00 PM - 5:30 PM', 'Plan tasks for next sprint', 'Main Hall', ['All Team'], Colors.orange),
+      _CalendarEvent(
+        'Team Standup',
+        '9:00 AM - 9:30 AM',
+        'Daily sync with the team',
+        'Conference Room A',
+        ['Ahmed', 'Sara', 'Mohamed'],
+        Colors.blue,
+      ),
+      _CalendarEvent(
+        'Design Review',
+        '11:00 AM - 12:00 PM',
+        'Review new dashboard designs',
+        'Online - Zoom',
+        ['Layla', 'Youssef'],
+        Colors.purple,
+      ),
+      _CalendarEvent(
+        'Client Meeting',
+        '2:00 PM - 3:00 PM',
+        'Quarterly review with Acme Corp',
+        'Meeting Room 2',
+        ['Nour', 'Ahmed'],
+        Colors.green,
+      ),
+      _CalendarEvent(
+        'Sprint Planning',
+        '4:00 PM - 5:30 PM',
+        'Plan tasks for next sprint',
+        'Main Hall',
+        ['All Team'],
+        Colors.orange,
+      ),
     ];
 
     return Container(
@@ -2563,20 +3236,41 @@ class _CalendarExample extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(11),
+              ),
             ),
             child: Row(
               children: [
-                Icon(Icons.calendar_today_rounded, color: colorScheme.primary, size: 20),
+                Icon(
+                  Icons.calendar_today_rounded,
+                  color: colorScheme.primary,
+                  size: 20,
+                ),
                 const SizedBox(width: 10),
-                Text('Today, December 25', style: TextStyle(fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
+                Text(
+                  'Today, December 25',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
                 const Spacer(),
-                Text('4 events', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                Text(
+                  '4 events',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
               ],
             ),
           ),
           // Events
-          ...events.map((event) => _CalendarEventRow(event: event, publicState: publicState)),
+          ...events.map(
+            (event) =>
+                _CalendarEventRow(event: event, publicState: publicState),
+          ),
         ],
       ),
     );
@@ -2591,7 +3285,14 @@ class _CalendarEvent {
   final List<String> attendees;
   final Color color;
 
-  _CalendarEvent(this.title, this.time, this.description, this.location, this.attendees, this.color);
+  _CalendarEvent(
+    this.title,
+    this.time,
+    this.description,
+    this.location,
+    this.attendees,
+    this.color,
+  );
 }
 
 class _CalendarEventRow extends StatelessWidget {
@@ -2611,11 +3312,16 @@ class _CalendarEventRow extends StatelessWidget {
       whenContentVisible: WhenContentVisible.pressButton,
       modalBarrierEnabled: true,
       barrierBlur: 4,
-      builder: (ctx, close) => _CalendarEventTooltip(event: event, onClose: close),
+      builder: (ctx, close) =>
+          _CalendarEventTooltip(event: event, onClose: close),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: colorScheme.outline.withValues(alpha: 0.1))),
+          border: Border(
+            bottom: BorderSide(
+              color: colorScheme.outline.withValues(alpha: 0.1),
+            ),
+          ),
         ),
         child: Row(
           children: [
@@ -2632,29 +3338,55 @@ class _CalendarEventRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(event.title, style: const TextStyle(fontWeight: FontWeight.w500)),
+                  Text(
+                    event.title,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
                   const SizedBox(height: 2),
-                  Text(event.time, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                  Text(
+                    event.time,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
                 ],
               ),
             ),
             Row(
               children: [
-                ...event.attendees.take(2).map((name) => Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: CircleAvatar(
-                    radius: 12,
-                    backgroundColor: event.color.withValues(alpha: 0.2),
-                    child: Text(name[0], style: TextStyle(fontSize: 10, color: event.color, fontWeight: FontWeight.w600)),
-                  ),
-                )),
+                ...event.attendees
+                    .take(2)
+                    .map(
+                      (name) => Padding(
+                        padding: const EdgeInsets.only(left: 4),
+                        child: CircleAvatar(
+                          radius: 12,
+                          backgroundColor: event.color.withValues(alpha: 0.2),
+                          child: Text(
+                            name[0],
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: event.color,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                 if (event.attendees.length > 2)
                   Padding(
                     padding: const EdgeInsets.only(left: 4),
                     child: CircleAvatar(
                       radius: 12,
                       backgroundColor: colorScheme.surfaceContainerHighest,
-                      child: Text('+${event.attendees.length - 2}', style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w600)),
+                      child: Text(
+                        '+${event.attendees.length - 2}',
+                        style: const TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
               ],
@@ -2687,7 +3419,9 @@ class _CalendarEventTooltip extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: event.color.withValues(alpha: 0.1),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
             ),
             child: Row(
               children: [
@@ -2697,15 +3431,31 @@ class _CalendarEventTooltip extends StatelessWidget {
                     color: event.color,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(Icons.event_rounded, color: Colors.white, size: 20),
+                  child: const Icon(
+                    Icons.event_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(event.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                      Text(event.time, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+                      Text(
+                        event.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        event.time,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -2717,11 +3467,21 @@ class _CalendarEventTooltip extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(event.description, style: TextStyle(fontSize: 13, color: colorScheme.onSurface.withValues(alpha: 0.8))),
+                Text(
+                  event.description,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: colorScheme.onSurface.withValues(alpha: 0.8),
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    Icon(Icons.location_on_outlined, size: 16, color: colorScheme.primary),
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: 16,
+                      color: colorScheme.primary,
+                    ),
                     const SizedBox(width: 8),
                     Text(event.location, style: const TextStyle(fontSize: 13)),
                   ],
@@ -2729,9 +3489,16 @@ class _CalendarEventTooltip extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(Icons.people_outline_rounded, size: 16, color: colorScheme.primary),
+                    Icon(
+                      Icons.people_outline_rounded,
+                      size: 16,
+                      color: colorScheme.primary,
+                    ),
                     const SizedBox(width: 8),
-                    Text(event.attendees.join(', '), style: const TextStyle(fontSize: 13)),
+                    Text(
+                      event.attendees.join(', '),
+                      style: const TextStyle(fontSize: 13),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -2748,7 +3515,9 @@ class _CalendarEventTooltip extends StatelessWidget {
                     Expanded(
                       child: FilledButton.icon(
                         onPressed: onClose,
-                        style: FilledButton.styleFrom(backgroundColor: event.color),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: event.color,
+                        ),
                         icon: const Icon(Icons.video_call_outlined, size: 16),
                         label: const Text('Join'),
                       ),
@@ -2778,16 +3547,53 @@ class _AnalyticsExample extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     final metrics = [
-      _AnalyticsMetric('Revenue', '\$124,500', '+12.5%', true, Icons.trending_up_rounded, Colors.green, [65, 72, 80, 75, 90, 95, 100]),
-      _AnalyticsMetric('Users', '8,421', '+8.2%', true, Icons.people_rounded, Colors.blue, [40, 50, 55, 60, 58, 70, 75]),
-      _AnalyticsMetric('Orders', '1,284', '-3.1%', false, Icons.shopping_cart_rounded, Colors.orange, [80, 75, 70, 65, 68, 62, 60]),
-      _AnalyticsMetric('Conversion', '3.2%', '+0.5%', true, Icons.auto_graph_rounded, Colors.purple, [25, 28, 30, 32, 31, 34, 38]),
+      _AnalyticsMetric(
+        'Revenue',
+        '\$124,500',
+        '+12.5%',
+        true,
+        Icons.trending_up_rounded,
+        Colors.green,
+        [65, 72, 80, 75, 90, 95, 100],
+      ),
+      _AnalyticsMetric(
+        'Users',
+        '8,421',
+        '+8.2%',
+        true,
+        Icons.people_rounded,
+        Colors.blue,
+        [40, 50, 55, 60, 58, 70, 75],
+      ),
+      _AnalyticsMetric(
+        'Orders',
+        '1,284',
+        '-3.1%',
+        false,
+        Icons.shopping_cart_rounded,
+        Colors.orange,
+        [80, 75, 70, 65, 68, 62, 60],
+      ),
+      _AnalyticsMetric(
+        'Conversion',
+        '3.2%',
+        '+0.5%',
+        true,
+        Icons.auto_graph_rounded,
+        Colors.purple,
+        [25, 28, 30, 32, 31, 34, 38],
+      ),
     ];
 
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: metrics.map((metric) => _AnalyticsCard(metric: metric, publicState: publicState)).toList(),
+      children: metrics
+          .map(
+            (metric) =>
+                _AnalyticsCard(metric: metric, publicState: publicState),
+          )
+          .toList(),
     );
   }
 }
@@ -2801,7 +3607,15 @@ class _AnalyticsMetric {
   final Color color;
   final List<int> sparkline;
 
-  _AnalyticsMetric(this.name, this.value, this.change, this.isPositive, this.icon, this.color, this.sparkline);
+  _AnalyticsMetric(
+    this.name,
+    this.value,
+    this.change,
+    this.isPositive,
+    this.icon,
+    this.color,
+    this.sparkline,
+  );
 }
 
 class _AnalyticsCard extends StatelessWidget {
@@ -2822,14 +3636,17 @@ class _AnalyticsCard extends StatelessWidget {
       hoverOpenDelay: const Duration(milliseconds: 300),
       borderColor: metric.color.withValues(alpha: 0.3),
       borderWidth: 1,
-      builder: (ctx, close) => _AnalyticsDetailTooltip(metric: metric, onClose: close),
+      builder: (ctx, close) =>
+          _AnalyticsDetailTooltip(metric: metric, onClose: close),
       child: Container(
         width: 160,
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+          border: Border.all(
+            color: colorScheme.outline.withValues(alpha: 0.15),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -2839,9 +3656,13 @@ class _AnalyticsCard extends StatelessWidget {
               children: [
                 Icon(metric.icon, size: 20, color: metric.color),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
-                    color: (metric.isPositive ? Colors.green : Colors.red).withValues(alpha: 0.1),
+                    color: (metric.isPositive ? Colors.green : Colors.red)
+                        .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -2856,9 +3677,18 @@ class _AnalyticsCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Text(metric.value, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+            Text(
+              metric.value,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            ),
             const SizedBox(height: 2),
-            Text(metric.name, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+            Text(
+              metric.name,
+              style: TextStyle(
+                fontSize: 12,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
             const SizedBox(height: 10),
             // Mini Sparkline
             SizedBox(
@@ -2946,8 +3776,20 @@ class _AnalyticsDetailTooltip extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(metric.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                      Text('Last 7 days', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                      Text(
+                        metric.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        'Last 7 days',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -2960,18 +3802,39 @@ class _AnalyticsDetailTooltip extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Current', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
-                    Text(metric.value, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: metric.color)),
+                    Text(
+                      'Current',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
+                    ),
+                    Text(
+                      metric.value,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: metric.color,
+                      ),
+                    ),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Change', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                    Text(
+                      'Change',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
+                    ),
                     Row(
                       children: [
                         Icon(
-                          metric.isPositive ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
+                          metric.isPositive
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
                           size: 16,
                           color: metric.isPositive ? Colors.green : Colors.red,
                         ),
@@ -2980,7 +3843,9 @@ class _AnalyticsDetailTooltip extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
-                            color: metric.isPositive ? Colors.green : Colors.red,
+                            color: metric.isPositive
+                                ? Colors.green
+                                : Colors.red,
                           ),
                         ),
                       ],
@@ -3030,17 +3895,54 @@ class _FileManagerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final files = [
-      _FileItem('Project Proposal.pdf', 'PDF Document', '2.4 MB', 'Dec 20, 2024', Icons.picture_as_pdf_rounded, Colors.red),
-      _FileItem('Design Assets.zip', 'Archive', '45.8 MB', 'Dec 22, 2024', Icons.folder_zip_rounded, Colors.amber),
-      _FileItem('Presentation.pptx', 'PowerPoint', '8.2 MB', 'Dec 23, 2024', Icons.slideshow_rounded, Colors.orange),
-      _FileItem('Budget 2025.xlsx', 'Excel Spreadsheet', '1.1 MB', 'Dec 24, 2024', Icons.table_chart_rounded, Colors.green),
-      _FileItem('Meeting Notes.docx', 'Word Document', '524 KB', 'Dec 25, 2024', Icons.description_rounded, Colors.blue),
+      _FileItem(
+        'Project Proposal.pdf',
+        'PDF Document',
+        '2.4 MB',
+        'Dec 20, 2024',
+        Icons.picture_as_pdf_rounded,
+        Colors.red,
+      ),
+      _FileItem(
+        'Design Assets.zip',
+        'Archive',
+        '45.8 MB',
+        'Dec 22, 2024',
+        Icons.folder_zip_rounded,
+        Colors.amber,
+      ),
+      _FileItem(
+        'Presentation.pptx',
+        'PowerPoint',
+        '8.2 MB',
+        'Dec 23, 2024',
+        Icons.slideshow_rounded,
+        Colors.orange,
+      ),
+      _FileItem(
+        'Budget 2025.xlsx',
+        'Excel Spreadsheet',
+        '1.1 MB',
+        'Dec 24, 2024',
+        Icons.table_chart_rounded,
+        Colors.green,
+      ),
+      _FileItem(
+        'Meeting Notes.docx',
+        'Word Document',
+        '524 KB',
+        'Dec 25, 2024',
+        Icons.description_rounded,
+        Colors.blue,
+      ),
     ];
 
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: files.map((file) => _FileCard(file: file, publicState: publicState)).toList(),
+      children: files
+          .map((file) => _FileCard(file: file, publicState: publicState))
+          .toList(),
     );
   }
 }
@@ -3053,7 +3955,14 @@ class _FileItem {
   final IconData icon;
   final Color color;
 
-  _FileItem(this.name, this.type, this.size, this.modified, this.icon, this.color);
+  _FileItem(
+    this.name,
+    this.type,
+    this.size,
+    this.modified,
+    this.icon,
+    this.color,
+  );
 }
 
 class _FileCard extends StatelessWidget {
@@ -3078,7 +3987,9 @@ class _FileCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+          border: Border.all(
+            color: colorScheme.outline.withValues(alpha: 0.15),
+          ),
         ),
         child: Column(
           children: [
@@ -3099,7 +4010,13 @@ class _FileCard extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 2),
-            Text(file.size, style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+            Text(
+              file.size,
+              style: TextStyle(
+                fontSize: 10,
+                color: colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ),
           ],
         ),
       ),
@@ -3132,8 +4049,22 @@ class _FileContextMenu extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(file.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
-                      Text('${file.size} • ${file.modified}', style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                      Text(
+                        file.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        '${file.size} • ${file.modified}',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: colorScheme.onSurface.withValues(alpha: 0.5),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -3141,12 +4072,33 @@ class _FileContextMenu extends StatelessWidget {
             ),
           ),
           Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
-          _FileMenuItem(icon: Icons.open_in_new_rounded, label: 'Open', onTap: onClose),
-          _FileMenuItem(icon: Icons.download_rounded, label: 'Download', onTap: onClose),
-          _FileMenuItem(icon: Icons.share_rounded, label: 'Share', onTap: onClose),
-          _FileMenuItem(icon: Icons.drive_file_rename_outline_rounded, label: 'Rename', onTap: onClose),
+          _FileMenuItem(
+            icon: Icons.open_in_new_rounded,
+            label: 'Open',
+            onTap: onClose,
+          ),
+          _FileMenuItem(
+            icon: Icons.download_rounded,
+            label: 'Download',
+            onTap: onClose,
+          ),
+          _FileMenuItem(
+            icon: Icons.share_rounded,
+            label: 'Share',
+            onTap: onClose,
+          ),
+          _FileMenuItem(
+            icon: Icons.drive_file_rename_outline_rounded,
+            label: 'Rename',
+            onTap: onClose,
+          ),
           Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
-          _FileMenuItem(icon: Icons.delete_outline_rounded, label: 'Delete', onTap: onClose, isDestructive: true),
+          _FileMenuItem(
+            icon: Icons.delete_outline_rounded,
+            label: 'Delete',
+            onTap: onClose,
+            isDestructive: true,
+          ),
         ],
       ),
     );
@@ -3154,7 +4106,12 @@ class _FileContextMenu extends StatelessWidget {
 }
 
 class _FileMenuItem extends StatelessWidget {
-  const _FileMenuItem({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+  const _FileMenuItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.isDestructive = false,
+  });
 
   final IconData icon;
   final String label;
@@ -3163,7 +4120,9 @@ class _FileMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+    final color = isDestructive
+        ? Colors.red
+        : Theme.of(context).colorScheme.onSurface;
 
     return InkWell(
       onTap: onTap,
@@ -3195,16 +4154,46 @@ class _KanbanExample extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     final tasks = [
-      _KanbanTask('Implement auth flow', 'High', Colors.red, 'In Progress', 'A', Colors.blue),
-      _KanbanTask('Design dashboard', 'Medium', Colors.orange, 'Review', 'L', Colors.pink),
-      _KanbanTask('Write API docs', 'Low', Colors.green, 'To Do', 'M', Colors.teal),
-      _KanbanTask('Fix login bug', 'High', Colors.red, 'Done', 'Y', Colors.purple),
+      _KanbanTask(
+        'Implement auth flow',
+        'High',
+        Colors.red,
+        'In Progress',
+        'A',
+        Colors.blue,
+      ),
+      _KanbanTask(
+        'Design dashboard',
+        'Medium',
+        Colors.orange,
+        'Review',
+        'L',
+        Colors.pink,
+      ),
+      _KanbanTask(
+        'Write API docs',
+        'Low',
+        Colors.green,
+        'To Do',
+        'M',
+        Colors.teal,
+      ),
+      _KanbanTask(
+        'Fix login bug',
+        'High',
+        Colors.red,
+        'Done',
+        'Y',
+        Colors.purple,
+      ),
     ];
 
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: tasks.map((task) => _KanbanTaskCard(task: task, publicState: publicState)).toList(),
+      children: tasks
+          .map((task) => _KanbanTaskCard(task: task, publicState: publicState))
+          .toList(),
     );
   }
 }
@@ -3217,7 +4206,14 @@ class _KanbanTask {
   final String assigneeInitial;
   final Color assigneeColor;
 
-  _KanbanTask(this.title, this.priority, this.priorityColor, this.status, this.assigneeInitial, this.assigneeColor);
+  _KanbanTask(
+    this.title,
+    this.priority,
+    this.priorityColor,
+    this.status,
+    this.assigneeInitial,
+    this.assigneeColor,
+  );
 }
 
 class _KanbanTaskCard extends StatelessWidget {
@@ -3253,31 +4249,55 @@ class _KanbanTaskCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: _getStatusColor(task.status).withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
                     task.status,
-                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: _getStatusColor(task.status)),
+                    style: TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w600,
+                      color: _getStatusColor(task.status),
+                    ),
                   ),
                 ),
                 CircleAvatar(
                   radius: 10,
                   backgroundColor: task.assigneeColor.withValues(alpha: 0.2),
-                  child: Text(task.assigneeInitial, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: task.assigneeColor)),
+                  child: Text(
+                    task.assigneeInitial,
+                    style: TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w600,
+                      color: task.assigneeColor,
+                    ),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 10),
-            Text(task.title, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+            Text(
+              task.title,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
                 Icon(Icons.flag_rounded, size: 12, color: task.priorityColor),
                 const SizedBox(width: 4),
-                Text(task.priority, style: TextStyle(fontSize: 10, color: task.priorityColor, fontWeight: FontWeight.w500)),
+                Text(
+                  task.priority,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: task.priorityColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
           ],
@@ -3288,11 +4308,16 @@ class _KanbanTaskCard extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'To Do': return Colors.grey;
-      case 'In Progress': return Colors.blue;
-      case 'Review': return Colors.orange;
-      case 'Done': return Colors.green;
-      default: return Colors.grey;
+      case 'To Do':
+        return Colors.grey;
+      case 'In Progress':
+        return Colors.blue;
+      case 'Review':
+        return Colors.orange;
+      case 'Done':
+        return Colors.green;
+      default:
+        return Colors.grey;
     }
   }
 }
@@ -3323,18 +4348,40 @@ class _KanbanTaskDetail extends StatelessWidget {
                     color: task.priorityColor.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(Icons.task_alt_rounded, color: task.priorityColor, size: 20),
+                  child: Icon(
+                    Icons.task_alt_rounded,
+                    color: task.priorityColor,
+                    size: 20,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text(task.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  child: Text(
+                    task.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            _TaskDetailRow(label: 'Status', value: task.status, color: _getStatusColor(task.status)),
-            _TaskDetailRow(label: 'Priority', value: task.priority, color: task.priorityColor),
-            _TaskDetailRow(label: 'Assignee', value: 'Team Member', color: task.assigneeColor),
+            _TaskDetailRow(
+              label: 'Status',
+              value: task.status,
+              color: _getStatusColor(task.status),
+            ),
+            _TaskDetailRow(
+              label: 'Priority',
+              value: task.priority,
+              color: task.priorityColor,
+            ),
+            _TaskDetailRow(
+              label: 'Assignee',
+              value: 'Team Member',
+              color: task.assigneeColor,
+            ),
             const SizedBox(height: 16),
             Row(
               children: [
@@ -3361,17 +4408,26 @@ class _KanbanTaskDetail extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'To Do': return Colors.grey;
-      case 'In Progress': return Colors.blue;
-      case 'Review': return Colors.orange;
-      case 'Done': return Colors.green;
-      default: return Colors.grey;
+      case 'To Do':
+        return Colors.grey;
+      case 'In Progress':
+        return Colors.blue;
+      case 'Review':
+        return Colors.orange;
+      case 'Done':
+        return Colors.green;
+      default:
+        return Colors.grey;
     }
   }
 }
 
 class _TaskDetailRow extends StatelessWidget {
-  const _TaskDetailRow({required this.label, required this.value, required this.color});
+  const _TaskDetailRow({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
 
   final String label;
   final String value;
@@ -3386,14 +4442,27 @@ class _TaskDetailRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
+          ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(4),
             ),
-            child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: color)),
+            child: Text(
+              value,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: color,
+              ),
+            ),
           ),
         ],
       ),
@@ -3413,14 +4482,38 @@ class _ChatExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final messages = [
-      _ChatMessage('Hey team! The new feature is ready for testing.', 'Ahmed', '10:30 AM', true),
-      _ChatMessage('Great work! I will start testing it now.', 'Sara', '10:32 AM', false),
-      _ChatMessage('Let me know if you find any issues. I am available all day.', 'Ahmed', '10:33 AM', true),
-      _ChatMessage('Found a small bug in the login flow. Creating a ticket now.', 'Mohamed', '10:45 AM', false),
+      _ChatMessage(
+        'Hey team! The new feature is ready for testing.',
+        'Ahmed',
+        '10:30 AM',
+        true,
+      ),
+      _ChatMessage(
+        'Great work! I will start testing it now.',
+        'Sara',
+        '10:32 AM',
+        false,
+      ),
+      _ChatMessage(
+        'Let me know if you find any issues. I am available all day.',
+        'Ahmed',
+        '10:33 AM',
+        true,
+      ),
+      _ChatMessage(
+        'Found a small bug in the login flow. Creating a ticket now.',
+        'Mohamed',
+        '10:45 AM',
+        false,
+      ),
     ];
 
     return Column(
-      children: messages.map((msg) => _ChatMessageBubble(message: msg, publicState: publicState)).toList(),
+      children: messages
+          .map(
+            (msg) => _ChatMessageBubble(message: msg, publicState: publicState),
+          )
+          .toList(),
     );
   }
 }
@@ -3447,28 +4540,42 @@ class _ChatMessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: message.isMe
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!message.isMe) ...[
             CircleAvatar(
               radius: 14,
               backgroundColor: colorScheme.secondaryContainer,
-              child: Text(message.sender[0], style: TextStyle(fontSize: 11, color: colorScheme.secondary, fontWeight: FontWeight.w600)),
+              child: Text(
+                message.sender[0],
+                style: TextStyle(
+                  fontSize: 11,
+                  color: colorScheme.secondary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
             const SizedBox(width: 8),
           ],
           TooltipCard.builder(
             publicState: publicState,
-            placementSide: message.isMe ? TooltipCardPlacementSide.start : TooltipCardPlacementSide.end,
+            placementSide: message.isMe
+                ? TooltipCardPlacementSide.start
+                : TooltipCardPlacementSide.end,
             beakEnabled: true,
             whenContentVisible: WhenContentVisible.secondaryTapButton,
-            builder: (ctx, close) => _MessageActionsMenu(message: message, onClose: close),
+            builder: (ctx, close) =>
+                _MessageActionsMenu(message: message, onClose: close),
             child: Container(
               constraints: const BoxConstraints(maxWidth: 280),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
-                color: message.isMe ? colorScheme.primary : colorScheme.surfaceContainerHighest,
+                color: message.isMe
+                    ? colorScheme.primary
+                    : colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(16),
                   topRight: const Radius.circular(16),
@@ -3484,14 +4591,20 @@ class _ChatMessageBubble extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Text(
                         message.sender,
-                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: colorScheme.primary),
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.primary,
+                        ),
                       ),
                     ),
                   Text(
                     message.text,
                     style: TextStyle(
                       fontSize: 13,
-                      color: message.isMe ? colorScheme.onPrimary : colorScheme.onSurface,
+                      color: message.isMe
+                          ? colorScheme.onPrimary
+                          : colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -3499,7 +4612,9 @@ class _ChatMessageBubble extends StatelessWidget {
                     message.time,
                     style: TextStyle(
                       fontSize: 10,
-                      color: message.isMe ? colorScheme.onPrimary.withValues(alpha: 0.7) : colorScheme.onSurface.withValues(alpha: 0.5),
+                      color: message.isMe
+                          ? colorScheme.onPrimary.withValues(alpha: 0.7)
+                          : colorScheme.onSurface.withValues(alpha: 0.5),
                     ),
                   ),
                 ],
@@ -3533,26 +4648,55 @@ class _MessageActionsMenu extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: ['👍', '❤️', '😂', '😮', '😢'].map((emoji) =>
-                InkWell(
-                  onTap: onClose,
-                  borderRadius: BorderRadius.circular(20),
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: Text(emoji, style: const TextStyle(fontSize: 20)),
-                  ),
-                ),
-              ).toList(),
+              children: ['👍', '❤️', '😂', '😮', '😢']
+                  .map(
+                    (emoji) => InkWell(
+                      onTap: onClose,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Text(
+                          emoji,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
-          _MessageAction(icon: Icons.reply_rounded, label: 'Reply', onTap: onClose),
-          _MessageAction(icon: Icons.forward_rounded, label: 'Forward', onTap: onClose),
-          _MessageAction(icon: Icons.copy_rounded, label: 'Copy', onTap: onClose),
+          _MessageAction(
+            icon: Icons.reply_rounded,
+            label: 'Reply',
+            onTap: onClose,
+          ),
+          _MessageAction(
+            icon: Icons.forward_rounded,
+            label: 'Forward',
+            onTap: onClose,
+          ),
+          _MessageAction(
+            icon: Icons.copy_rounded,
+            label: 'Copy',
+            onTap: onClose,
+          ),
           if (message.isMe) ...[
-            Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
-            _MessageAction(icon: Icons.edit_rounded, label: 'Edit', onTap: onClose),
-            _MessageAction(icon: Icons.delete_outline_rounded, label: 'Delete', onTap: onClose, isDestructive: true),
+            Divider(
+              height: 1,
+              color: colorScheme.outline.withValues(alpha: 0.2),
+            ),
+            _MessageAction(
+              icon: Icons.edit_rounded,
+              label: 'Edit',
+              onTap: onClose,
+            ),
+            _MessageAction(
+              icon: Icons.delete_outline_rounded,
+              label: 'Delete',
+              onTap: onClose,
+              isDestructive: true,
+            ),
           ],
         ],
       ),
@@ -3561,7 +4705,12 @@ class _MessageActionsMenu extends StatelessWidget {
 }
 
 class _MessageAction extends StatelessWidget {
-  const _MessageAction({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+  const _MessageAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.isDestructive = false,
+  });
 
   final IconData icon;
   final String label;
@@ -3570,7 +4719,9 @@ class _MessageAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+    final color = isDestructive
+        ? Colors.red
+        : Theme.of(context).colorScheme.onSurface;
 
     return InkWell(
       onTap: onTap,
