@@ -64,10 +64,7 @@ class HomeScreen extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    colorScheme.primary,
-                    colorScheme.tertiary,
-                  ],
+                  colors: [colorScheme.primary, colorScheme.tertiary],
                 ),
               ),
               child: SafeArea(
@@ -102,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'v2.4.1',
+                              'v2.4.2',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white.withValues(alpha: 0.8),
@@ -183,15 +180,12 @@ class HomeScreen extends StatelessWidget {
                 crossAxisSpacing: 16,
                 childAspectRatio: 0.85,
               ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  if (index < categories.length) {
-                    return _CategoryCard(category: categories[index]);
-                  }
-                  return null;
-                },
-                childCount: categories.length,
-              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                if (index < categories.length) {
+                  return _CategoryCard(category: categories[index]);
+                }
+                return null;
+              }, childCount: categories.length),
             ),
           ),
 
@@ -204,7 +198,11 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.star_rounded, color: colorScheme.primary, size: 20),
+                      Icon(
+                        Icons.star_rounded,
+                        color: colorScheme.primary,
+                        size: 20,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Key Features',
@@ -221,12 +219,30 @@ class HomeScreen extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      _FeatureChip(label: '12 Placements', icon: Icons.grid_view_rounded),
-                      _FeatureChip(label: 'Smart Positioning', icon: Icons.auto_fix_high_rounded),
-                      _FeatureChip(label: 'Modal Barrier', icon: Icons.blur_on_rounded),
-                      _FeatureChip(label: 'RTL Support', icon: Icons.format_textdirection_r_to_l_rounded),
-                      _FeatureChip(label: 'Accessibility', icon: Icons.accessibility_new_rounded),
-                      _FeatureChip(label: 'Material 3', icon: Icons.palette_rounded),
+                      _FeatureChip(
+                        label: '12 Placements',
+                        icon: Icons.grid_view_rounded,
+                      ),
+                      _FeatureChip(
+                        label: 'Smart Positioning',
+                        icon: Icons.auto_fix_high_rounded,
+                      ),
+                      _FeatureChip(
+                        label: 'Modal Barrier',
+                        icon: Icons.blur_on_rounded,
+                      ),
+                      _FeatureChip(
+                        label: 'RTL Support',
+                        icon: Icons.format_textdirection_r_to_l_rounded,
+                      ),
+                      _FeatureChip(
+                        label: 'Accessibility',
+                        icon: Icons.accessibility_new_rounded,
+                      ),
+                      _FeatureChip(
+                        label: 'Material 3',
+                        icon: Icons.palette_rounded,
+                      ),
                     ],
                   ),
                 ],
@@ -325,11 +341,7 @@ class _CategoryCard extends StatelessWidget {
                     color: category.color.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: Icon(
-                    category.icon,
-                    color: category.color,
-                    size: 28,
-                  ),
+                  child: Icon(category.icon, color: category.color, size: 28),
                 ),
                 const Spacer(),
                 Text(

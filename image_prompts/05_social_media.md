@@ -1,122 +1,94 @@
 # Social Media Images
 
-## 4:5 - Instagram/Facebook Post
+## 4:5 - Vertical Announcement Post
 
 ```
-An eye-catching social media post announcing TooltipCard for Flutter.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A high-impact social media vertical post. A massive, high-detail glass tooltip card enters the frame from the bottom, floating in a rich 3D void. The TooltipCard logo (abstract T shape) glows neon in the background.
 
 Composition:
-- Bold gradient background (purple to blue to cyan flow)
-- Large 3D tooltip card element floating in center with realistic shadow
-- The tooltip shows sample content with icon, title, and action button
-- Floating code snippets around the tooltip (partially visible, adding tech feel)
-- Flutter logo in corner
-
-Text overlay:
-- "TooltipCard" in bold modern font
-- "Beautiful Tooltips for Flutter" tagline
-- "pub.dev/packages/tooltip_card" URL
-- Version badge "v2.4.1"
+- Central Hero: The TooltipCard widget in aggressive perspective (looking up)
+- Background: Dynamic purple/blue liquid gradient
+- Foreground: Floating 3D "likes" (hearts) and "share" icons reacting to it
+- Text: "The New Standard" in bold kinetic typography
 
 Design elements:
-- Glassmorphism effect on UI elements
-- Subtle particle/dot pattern in background
-- Neon glow effect on tooltip edges
-- Clean, Instagram-worthy aesthetic
-- High contrast for mobile viewing
+- Heavy use of bloom and chromatic aberration
+- Glass refraction showing blurred background elements through the card
+- "v2.5" gold badge
+- "Flutter" logo integrated into the 3D space
 
-Style: Social media announcement, Tech product launch
-Mood: Exciting, Modern, Must-have
+Style: 3D Motion Graphics Still, Hype
+Mood: Exciting, Monumental, Fresh
 ```
 
 ---
 
-## 16:9 - Twitter/LinkedIn Banner
+## 4:5 - LinkedIn Mobile Showcase
 
 ```
-A professional banner image for Twitter/LinkedIn showcasing TooltipCard.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A professional vertical carousel card designed for LinkedIn mobile. It showcases 3 key value propositions stacked vertically in 3D panels.
 
-Composition:
-- Wide gradient background (deep purple to indigo)
-- Left side: Large tooltip card component with visible beak
-- Center: Feature highlights in icon+text format
-- Right side: Code snippet preview
-
-Feature highlights (3 items with icons):
-1. 🎯 12 Placement Options
-2. ⚡ Multiple Trigger Modes
-3. 🎨 Fully Customizable
+Panels from top to bottom:
+1. "Smart Positioning" (Icon of compass)
+2. "Rich Content" (Icon of image/text)
+3. "Modal Barrier" (Icon of shield/blur)
 
 Design elements:
-- Professional, not too flashy
-- Flutter bird logo subtly integrated
-- "TooltipCard" branding prominent
-- GitHub stars count badge (if applicable)
-- Clean typography (Inter or similar)
-- Subtle grid pattern in background
+- Deep Indigo background
+- Each panel is a frosted glass slab
+- Crisp white typography
+- "Trusted by Enteprises" subtle footer
+- Professional, clean lines but with depth
 
-Style: Professional banner, Open source project
-Mood: Trustworthy, Feature-rich, Community-driven
+Style: Corporate Tech, Slide Deck
+Mood: Professional, Reliable, High-Quality
 ```
 
 ---
 
-## 4:5 - Feature Highlight Story
+## 4:5 - Instagram Story Feature
 
 ```
-An Instagram/Facebook story format highlighting a single feature: Modal Barrier.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A dedicated 'Story' format focusing on a single interactive moment. A hand (or cursor) taps a button, and a glorious Modal Barrier effect ripples out, dimming the screen and spotlighting a tooltip.
 
 Composition:
-- Full-screen app mockup in background (slightly blurred)
-- Tooltip with modal barrier effect in focus
-- The barrier blur is visible on the background
-- "Swipe up to try" or similar CTA at bottom
-
-Text elements:
-- "NEW FEATURE" badge at top
-- "Modal Barrier" as main title
-- "Focus attention with background blur" subtitle
-- Blur intensity slider graphic (0-8px)
+- Full-screen mobile UI background
+- The visual "ripple" of the barrier activation
+- The tooltip is the clear hero in the center
+- "Swipe Up to Try" animated arrow at the bottom
 
 Design elements:
-- Story-native vertical format
-- Interactive feel with UI elements
-- Gradient overlay for text readability
-- Animated feel (motion lines)
-- TooltipCard logo at bottom
-- Tap indicators on edges
+- Interactive / "Moment" capture
+- Particle effects on the tap
+- High contrast between the active tooltip and the dimmed background
+- "New Feature Alert" sticker style text
 
-Style: Instagram Story, Feature announcement
-Mood: Exciting, Interactive, New
+Style: Social Story, Interactive Demo
+Mood: Engaging, Flashy, Instant
 ```
 
 ---
 
-## 16:9 - YouTube Thumbnail
+## 4:5 - Vertical Video Teaser Cover
 
 ```
-An attention-grabbing YouTube thumbnail for a TooltipCard tutorial.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A thumb-stopping cover image for a vertical video (Shorts/Reels). Split screen effect: Top half shows "Before" (ugly native tooltip), Bottom half shows "After" (Beautiful TooltipCard).
 
 Composition:
-- Split design: Code on left, Result on right
-- Large tooltip card prominently displayed
-- Person's face reaction (optional placeholder)
-- Big bold text overlay
-
-Text elements:
-- "Flutter TOOLTIPS" in large bold text
-- "Like You've Never Seen!" or "Made Easy!"
-- "TooltipCard" package name
-- "5 MIN TUTORIAL" badge
+- Top: Gray, boring tooltip with "Old Way" text in red
+- Bottom: Glowing, glassmorphic purple tooltip with "New Way" text in green
+- A 3D "Lightning Bolt" icon separates them
 
 Design elements:
-- High contrast colors (yellow accent on purple)
-- Expressive typography with outline/shadow
-- Arrow pointing to the tooltip
-- Play button overlay hint
-- Red/orange accent colors for YouTube
-- Clear at small sizes (thumbnail preview)
+- High saturation
+- Big, bold text overlays outline in black
+- "5 Minute Tutorial" badge
+- Expressive 3D emoji (Mind Blown) floating
 
-Style: YouTube thumbnail, Tutorial video
-Mood: Educational, Exciting, Click-worthy
+Style: Content Creator, Viral Thumbnail
+Mood: Loud, Comparative, Click-worthy
 ```

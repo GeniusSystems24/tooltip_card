@@ -239,7 +239,7 @@ class _MessageBubble extends StatelessWidget {
             publicState: publicState,
             placementSide: message.isMe ? TooltipCardPlacementSide.start : TooltipCardPlacementSide.end,
             beakEnabled: true,
-            whenContentVisible: WhenContentVisible.longPressButton,
+            // whenContentVisible: WhenContentVisible.longPressButton,
             builder: (ctx, close) => _MessageActionsMenu(message: message, onClose: close),
             child: Container(
               constraints: const BoxConstraints(maxWidth: 260),

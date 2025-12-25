@@ -43,9 +43,18 @@ class _FormsExamplesScreenState extends State<FormsExamplesScreen>
           unselectedLabelColor: colorScheme.onSurface.withValues(alpha: 0.6),
           indicatorColor: Colors.pink,
           tabs: const [
-            Tab(text: 'Input Help', icon: Icon(Icons.help_outline_rounded, size: 20)),
-            Tab(text: 'Validation', icon: Icon(Icons.check_circle_outline_rounded, size: 20)),
-            Tab(text: 'Wizard', icon: Icon(Icons.linear_scale_rounded, size: 20)),
+            Tab(
+              text: 'Input Help',
+              icon: Icon(Icons.help_outline_rounded, size: 20),
+            ),
+            Tab(
+              text: 'Validation',
+              icon: Icon(Icons.check_circle_outline_rounded, size: 20),
+            ),
+            Tab(
+              text: 'Wizard',
+              icon: Icon(Icons.linear_scale_rounded, size: 20),
+            ),
           ],
         ),
       ),
@@ -93,7 +102,8 @@ class _InputHelpTab extends StatelessWidget {
                   hint: 'Enter your email',
                   icon: Icons.email_rounded,
                   helpTitle: 'Email Format',
-                  helpContent: 'Enter a valid email address (e.g., user@example.com). This will be used for account verification and notifications.',
+                  helpContent:
+                      'Enter a valid email address (e.g., user@example.com). This will be used for account verification and notifications.',
                   publicState: publicState,
                 ),
                 const SizedBox(height: 20),
@@ -104,7 +114,8 @@ class _InputHelpTab extends StatelessWidget {
                   icon: Icons.lock_rounded,
                   isPassword: true,
                   helpTitle: 'Password Requirements',
-                  helpContent: '• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number\n• One special character (!@#\$%)',
+                  helpContent:
+                      '• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number\n• One special character (!@#\$%)',
                   publicState: publicState,
                 ),
                 const SizedBox(height: 20),
@@ -114,7 +125,8 @@ class _InputHelpTab extends StatelessWidget {
                   hint: '+1 (555) 000-0000',
                   icon: Icons.phone_rounded,
                   helpTitle: 'Phone Format',
-                  helpContent: 'Enter your phone number with country code. We may use this for two-factor authentication.',
+                  helpContent:
+                      'Enter your phone number with country code. We may use this for two-factor authentication.',
                   publicState: publicState,
                 ),
                 const SizedBox(height: 20),
@@ -124,7 +136,8 @@ class _InputHelpTab extends StatelessWidget {
                   hint: '0000 0000 0000 0000',
                   icon: Icons.credit_card_rounded,
                   helpTitle: 'Payment Security',
-                  helpContent: 'Your card information is encrypted and securely processed. We never store your full card number.',
+                  helpContent:
+                      'Your card information is encrypted and securely processed. We never store your full card number.',
                   publicState: publicState,
                   isSecure: true,
                 ),
@@ -175,15 +188,26 @@ class _FormFieldWithHelp extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+            Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+            ),
             const SizedBox(width: 8),
             TooltipCard.builder(
               publicState: publicState,
               placementSide: TooltipCardPlacementSide.topEnd,
               beakEnabled: true,
               whenContentVisible: WhenContentVisible.hoverButton,
-              builder: (ctx, close) => _HelpTooltip(title: helpTitle, content: helpContent, isSecure: isSecure),
-              child: Icon(Icons.info_outline_rounded, size: 16, color: colorScheme.primary),
+              builder: (ctx, close) => _HelpTooltip(
+                title: helpTitle,
+                content: helpContent,
+                isSecure: isSecure,
+              ),
+              child: Icon(
+                Icons.info_outline_rounded,
+                size: 16,
+                color: colorScheme.primary,
+              ),
             ),
           ],
         ),
@@ -192,13 +216,19 @@ class _FormFieldWithHelp extends StatelessWidget {
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+            border: Border.all(
+              color: colorScheme.outline.withValues(alpha: 0.2),
+            ),
           ),
           child: Row(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Icon(icon, size: 20, color: colorScheme.onSurface.withValues(alpha: 0.5)),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: colorScheme.onSurface.withValues(alpha: 0.5),
+                ),
               ),
               Expanded(
                 child: TextField(
@@ -223,13 +253,24 @@ class _FormFieldWithHelp extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.lock_rounded, size: 14, color: Colors.green),
+                          Icon(
+                            Icons.lock_rounded,
+                            size: 14,
+                            color: Colors.green,
+                          ),
                           SizedBox(width: 6),
-                          Text('Secure & Encrypted', style: TextStyle(fontSize: 11)),
+                          Text(
+                            'Secure & Encrypted',
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ],
                       ),
                     ),
-                    child: Icon(Icons.verified_user_rounded, size: 18, color: Colors.green),
+                    child: Icon(
+                      Icons.verified_user_rounded,
+                      size: 18,
+                      color: Colors.green,
+                    ),
                   ),
                 ),
             ],
@@ -241,7 +282,11 @@ class _FormFieldWithHelp extends StatelessWidget {
 }
 
 class _HelpTooltip extends StatelessWidget {
-  const _HelpTooltip({required this.title, required this.content, this.isSecure = false});
+  const _HelpTooltip({
+    required this.title,
+    required this.content,
+    this.isSecure = false,
+  });
   final String title, content;
   final bool isSecure;
 
@@ -261,11 +306,21 @@ class _HelpTooltip extends StatelessWidget {
               children: [
                 Icon(Icons.lightbulb_rounded, size: 18, color: Colors.amber),
                 const SizedBox(width: 8),
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
               ],
             ),
             const SizedBox(height: 10),
-            Text(content, style: TextStyle(fontSize: 13, height: 1.5, color: colorScheme.onSurface.withValues(alpha: 0.8))),
+            Text(
+              content,
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.5,
+                color: colorScheme.onSurface.withValues(alpha: 0.8),
+              ),
+            ),
             if (isSecure) ...[
               const SizedBox(height: 10),
               Container(
@@ -279,7 +334,10 @@ class _HelpTooltip extends StatelessWidget {
                     Icon(Icons.security_rounded, size: 16, color: Colors.green),
                     const SizedBox(width: 8),
                     const Expanded(
-                      child: Text('256-bit SSL encryption', style: TextStyle(fontSize: 11, color: Colors.green)),
+                      child: Text(
+                        '256-bit SSL encryption',
+                        style: TextStyle(fontSize: 11, color: Colors.green),
+                      ),
                     ),
                   ],
                 ),
@@ -348,12 +406,17 @@ class _ValidationTabState extends State<_ValidationTab> {
                   isValid: _usernameValid,
                   onChanged: (value) {
                     setState(() {
-                      _usernameValid = value.length >= 3 && RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value);
+                      _usernameValid =
+                          value.length >= 3 &&
+                          RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value);
                     });
                   },
                   validationRules: const [
                     _ValidationRule('At least 3 characters', true),
-                    _ValidationRule('Only letters, numbers, and underscores', true),
+                    _ValidationRule(
+                      'Only letters, numbers, and underscores',
+                      true,
+                    ),
                     _ValidationRule('No spaces allowed', true),
                   ],
                   publicState: widget.publicState,
@@ -368,7 +431,9 @@ class _ValidationTabState extends State<_ValidationTab> {
                   isValid: _emailValid,
                   onChanged: (value) {
                     setState(() {
-                      _emailValid = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value);
+                      _emailValid = RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value);
                     });
                   },
                   validationRules: const [
@@ -389,17 +454,30 @@ class _ValidationTabState extends State<_ValidationTab> {
                   isValid: _passwordValid,
                   onChanged: (value) {
                     setState(() {
-                      _passwordValid = value.length >= 8 &&
+                      _passwordValid =
+                          value.length >= 8 &&
                           RegExp(r'[A-Z]').hasMatch(value) &&
                           RegExp(r'[a-z]').hasMatch(value) &&
                           RegExp(r'[0-9]').hasMatch(value);
                     });
                   },
                   validationRules: [
-                    _ValidationRule('At least 8 characters', _passwordController.text.length >= 8),
-                    _ValidationRule('One uppercase letter', RegExp(r'[A-Z]').hasMatch(_passwordController.text)),
-                    _ValidationRule('One lowercase letter', RegExp(r'[a-z]').hasMatch(_passwordController.text)),
-                    _ValidationRule('One number', RegExp(r'[0-9]').hasMatch(_passwordController.text)),
+                    _ValidationRule(
+                      'At least 8 characters',
+                      _passwordController.text.length >= 8,
+                    ),
+                    _ValidationRule(
+                      'One uppercase letter',
+                      RegExp(r'[A-Z]').hasMatch(_passwordController.text),
+                    ),
+                    _ValidationRule(
+                      'One lowercase letter',
+                      RegExp(r'[a-z]').hasMatch(_passwordController.text),
+                    ),
+                    _ValidationRule(
+                      'One number',
+                      RegExp(r'[0-9]').hasMatch(_passwordController.text),
+                    ),
                   ],
                   publicState: widget.publicState,
                 ),
@@ -410,7 +488,9 @@ class _ValidationTabState extends State<_ValidationTab> {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    onPressed: (_usernameValid && _emailValid && _passwordValid) ? () {} : null,
+                    onPressed: (_usernameValid && _emailValid && _passwordValid)
+                        ? () {}
+                        : null,
                     style: FilledButton.styleFrom(
                       backgroundColor: Colors.green,
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -462,15 +542,19 @@ class _ValidationField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+        ),
         const SizedBox(height: 8),
         TooltipCard.builder(
           publicState: publicState,
           placementSide: TooltipCardPlacementSide.end,
           beakEnabled: true,
-          whenContentVisible: WhenContentVisible.manual,
-          visibleDeterminer: hasInput && !isValid,
-          builder: (ctx, close) => _ValidationRulesTooltip(rules: validationRules),
+          // whenContentVisible: WhenContentVisible.manual,
+          // visibleDeterminer: hasInput && !isValid,
+          builder: (ctx, close) =>
+              _ValidationRulesTooltip(rules: validationRules),
           child: Container(
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerHighest,
@@ -486,7 +570,11 @@ class _ValidationField extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Icon(icon, size: 20, color: colorScheme.onSurface.withValues(alpha: 0.5)),
+                  child: Icon(
+                    icon,
+                    size: 20,
+                    color: colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
                 ),
                 Expanded(
                   child: TextField(
@@ -504,7 +592,9 @@ class _ValidationField extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 12),
                     child: Icon(
-                      isValid ? Icons.check_circle_rounded : Icons.error_rounded,
+                      isValid
+                          ? Icons.check_circle_rounded
+                          : Icons.error_rounded,
                       size: 20,
                       color: isValid ? Colors.green : Colors.red,
                     ),
@@ -536,33 +626,46 @@ class _ValidationRulesTooltip extends StatelessWidget {
               children: [
                 Icon(Icons.rule_rounded, size: 16, color: Colors.orange),
                 SizedBox(width: 8),
-                Text('Requirements', style: TextStyle(fontWeight: FontWeight.w600)),
+                Text(
+                  'Requirements',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
               ],
             ),
             const SizedBox(height: 10),
-            ...rules.map((rule) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Row(
-                children: [
-                  Icon(
-                    rule.passed ? Icons.check_circle_rounded : Icons.circle_outlined,
-                    size: 14,
-                    color: rule.passed ? Colors.green : Colors.grey,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      rule.text,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: rule.passed ? Colors.green : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                        decoration: rule.passed ? TextDecoration.lineThrough : null,
+            ...rules.map(
+              (rule) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Row(
+                  children: [
+                    Icon(
+                      rule.passed
+                          ? Icons.check_circle_rounded
+                          : Icons.circle_outlined,
+                      size: 14,
+                      color: rule.passed ? Colors.green : Colors.grey,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        rule.text,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: rule.passed
+                              ? Colors.green
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
+                          decoration: rule.passed
+                              ? TextDecoration.lineThrough
+                              : null,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )),
+            ),
           ],
         ),
       ),
@@ -616,22 +719,37 @@ class _PasswordStrengthIndicator extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Password Strength', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
-            Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: color)),
+            const Text(
+              'Password Strength',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: color,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 8),
         Row(
-          children: List.generate(5, (i) => Expanded(
-            child: Container(
-              height: 4,
-              margin: EdgeInsets.only(right: i < 4 ? 4 : 0),
-              decoration: BoxDecoration(
-                color: i < strength ? color : colorScheme.outline.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(2),
+          children: List.generate(
+            5,
+            (i) => Expanded(
+              child: Container(
+                height: 4,
+                margin: EdgeInsets.only(right: i < 4 ? 4 : 0),
+                decoration: BoxDecoration(
+                  color: i < strength
+                      ? color
+                      : colorScheme.outline.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
             ),
-          )),
+          ),
         ),
       ],
     );
@@ -654,11 +772,36 @@ class _WizardTabState extends State<_WizardTab> {
   int _currentStep = 0;
 
   final steps = [
-    _WizardStep('Personal Info', 'Basic details', Icons.person_rounded, Colors.blue),
-    _WizardStep('Contact', 'Email & phone', Icons.contact_mail_rounded, Colors.green),
-    _WizardStep('Address', 'Shipping address', Icons.location_on_rounded, Colors.orange),
-    _WizardStep('Payment', 'Payment method', Icons.payment_rounded, Colors.purple),
-    _WizardStep('Review', 'Confirm order', Icons.check_circle_rounded, Colors.teal),
+    _WizardStep(
+      'Personal Info',
+      'Basic details',
+      Icons.person_rounded,
+      Colors.blue,
+    ),
+    _WizardStep(
+      'Contact',
+      'Email & phone',
+      Icons.contact_mail_rounded,
+      Colors.green,
+    ),
+    _WizardStep(
+      'Address',
+      'Shipping address',
+      Icons.location_on_rounded,
+      Colors.orange,
+    ),
+    _WizardStep(
+      'Payment',
+      'Payment method',
+      Icons.payment_rounded,
+      Colors.purple,
+    ),
+    _WizardStep(
+      'Review',
+      'Confirm order',
+      Icons.check_circle_rounded,
+      Colors.teal,
+    ),
   ];
 
   @override
@@ -701,30 +844,51 @@ class _WizardTabState extends State<_WizardTab> {
                             placementSide: TooltipCardPlacementSide.top,
                             beakEnabled: true,
                             whenContentVisible: WhenContentVisible.hoverButton,
-                            builder: (ctx, close) => _StepTooltip(step: step, stepNumber: i + 1, isCompleted: isCompleted, isActive: isActive),
+                            builder: (ctx, close) => _StepTooltip(
+                              step: step,
+                              stepNumber: i + 1,
+                              isCompleted: isCompleted,
+                              isActive: isActive,
+                            ),
                             child: GestureDetector(
-                              onTap: isCompleted ? () => setState(() => _currentStep = i) : null,
+                              onTap: isCompleted
+                                  ? () => setState(() => _currentStep = i)
+                                  : null,
                               child: Container(
                                 width: 36,
                                 height: 36,
                                 decoration: BoxDecoration(
                                   color: isCompleted
                                       ? step.color
-                                      : (isActive ? step.color.withValues(alpha: 0.2) : colorScheme.surfaceContainerHighest),
+                                      : (isActive
+                                            ? step.color.withValues(alpha: 0.2)
+                                            : colorScheme
+                                                  .surfaceContainerHighest),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: isActive || isCompleted ? step.color : colorScheme.outline.withValues(alpha: 0.3),
+                                    color: isActive || isCompleted
+                                        ? step.color
+                                        : colorScheme.outline.withValues(
+                                            alpha: 0.3,
+                                          ),
                                     width: 2,
                                   ),
                                 ),
                                 child: Center(
                                   child: isCompleted
-                                      ? const Icon(Icons.check_rounded, size: 18, color: Colors.white)
+                                      ? const Icon(
+                                          Icons.check_rounded,
+                                          size: 18,
+                                          color: Colors.white,
+                                        )
                                       : Text(
                                           '${i + 1}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            color: isActive ? step.color : colorScheme.onSurface.withValues(alpha: 0.5),
+                                            color: isActive
+                                                ? step.color
+                                                : colorScheme.onSurface
+                                                      .withValues(alpha: 0.5),
                                           ),
                                         ),
                                 ),
@@ -735,7 +899,11 @@ class _WizardTabState extends State<_WizardTab> {
                             Expanded(
                               child: Container(
                                 height: 2,
-                                color: isCompleted ? step.color : colorScheme.outline.withValues(alpha: 0.2),
+                                color: isCompleted
+                                    ? step.color
+                                    : colorScheme.outline.withValues(
+                                        alpha: 0.2,
+                                      ),
                               ),
                             ),
                         ],
@@ -757,8 +925,12 @@ class _WizardTabState extends State<_WizardTab> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
-                          color: isActive ? step.color : colorScheme.onSurface.withValues(alpha: 0.5),
+                          fontWeight: isActive
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                          color: isActive
+                              ? step.color
+                              : colorScheme.onSurface.withValues(alpha: 0.5),
                         ),
                       ),
                     );
@@ -781,14 +953,30 @@ class _WizardTabState extends State<_WizardTab> {
                         color: steps[_currentStep].color.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(steps[_currentStep].icon, color: steps[_currentStep].color, size: 22),
+                      child: Icon(
+                        steps[_currentStep].icon,
+                        color: steps[_currentStep].color,
+                        size: 22,
+                      ),
                     ),
                     const SizedBox(width: 14),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Step ${_currentStep + 1} of ${steps.length}', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.5))),
-                        Text(steps[_currentStep].title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+                        Text(
+                          'Step ${_currentStep + 1} of ${steps.length}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: colorScheme.onSurface.withValues(alpha: 0.5),
+                          ),
+                        ),
+                        Text(
+                          steps[_currentStep].title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -813,8 +1001,14 @@ class _WizardTabState extends State<_WizardTab> {
                             setState(() => _currentStep++);
                           }
                         },
-                        style: FilledButton.styleFrom(backgroundColor: steps[_currentStep].color),
-                        child: Text(_currentStep == steps.length - 1 ? 'Complete' : 'Continue'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: steps[_currentStep].color,
+                        ),
+                        child: Text(
+                          _currentStep == steps.length - 1
+                              ? 'Complete'
+                              : 'Continue',
+                        ),
                       ),
                     ),
                   ],
@@ -851,7 +1045,12 @@ class _WizardStep {
 }
 
 class _StepTooltip extends StatelessWidget {
-  const _StepTooltip({required this.step, required this.stepNumber, required this.isCompleted, required this.isActive});
+  const _StepTooltip({
+    required this.step,
+    required this.stepNumber,
+    required this.isCompleted,
+    required this.isActive,
+  });
   final _WizardStep step;
   final int stepNumber;
   final bool isCompleted, isActive;
@@ -869,26 +1068,43 @@ class _StepTooltip extends StatelessWidget {
             children: [
               Icon(step.icon, size: 16, color: step.color),
               const SizedBox(width: 8),
-              Text('Step $stepNumber: ${step.title}', style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text(
+                'Step $stepNumber: ${step.title}',
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ],
           ),
           const SizedBox(height: 6),
-          Text(step.subtitle, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
+          Text(
+            step.subtitle,
+            style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
+          ),
           const SizedBox(height: 6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               color: isCompleted
                   ? Colors.green.withValues(alpha: 0.1)
-                  : (isActive ? step.color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1)),
+                  : (isActive
+                        ? step.color.withValues(alpha: 0.1)
+                        : Colors.grey.withValues(alpha: 0.1)),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
-              isCompleted ? 'Completed' : (isActive ? 'Current Step' : 'Pending'),
+              isCompleted
+                  ? 'Completed'
+                  : (isActive ? 'Current Step' : 'Pending'),
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w600,
-                color: isCompleted ? Colors.green : (isActive ? step.color : Colors.grey),
+                color: isCompleted
+                    ? Colors.green
+                    : (isActive ? step.color : Colors.grey),
               ),
             ),
           ),
@@ -906,11 +1122,23 @@ class _PersonalInfoStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SimpleField(label: 'First Name', hint: 'Enter first name', icon: Icons.person_outline_rounded),
+        _SimpleField(
+          label: 'First Name',
+          hint: 'Enter first name',
+          icon: Icons.person_outline_rounded,
+        ),
         const SizedBox(height: 16),
-        _SimpleField(label: 'Last Name', hint: 'Enter last name', icon: Icons.person_outline_rounded),
+        _SimpleField(
+          label: 'Last Name',
+          hint: 'Enter last name',
+          icon: Icons.person_outline_rounded,
+        ),
         const SizedBox(height: 16),
-        _SimpleField(label: 'Date of Birth', hint: 'MM/DD/YYYY', icon: Icons.cake_rounded),
+        _SimpleField(
+          label: 'Date of Birth',
+          hint: 'MM/DD/YYYY',
+          icon: Icons.cake_rounded,
+        ),
       ],
     );
   }
@@ -924,9 +1152,17 @@ class _ContactStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SimpleField(label: 'Email', hint: 'Enter email', icon: Icons.email_rounded),
+        _SimpleField(
+          label: 'Email',
+          hint: 'Enter email',
+          icon: Icons.email_rounded,
+        ),
         const SizedBox(height: 16),
-        _SimpleField(label: 'Phone', hint: 'Enter phone number', icon: Icons.phone_rounded),
+        _SimpleField(
+          label: 'Phone',
+          hint: 'Enter phone number',
+          icon: Icons.phone_rounded,
+        ),
       ],
     );
   }
@@ -940,13 +1176,29 @@ class _AddressStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SimpleField(label: 'Street Address', hint: 'Enter street address', icon: Icons.home_rounded),
+        _SimpleField(
+          label: 'Street Address',
+          hint: 'Enter street address',
+          icon: Icons.home_rounded,
+        ),
         const SizedBox(height: 16),
         Row(
           children: [
-            Expanded(child: _SimpleField(label: 'City', hint: 'City', icon: Icons.location_city_rounded)),
+            Expanded(
+              child: _SimpleField(
+                label: 'City',
+                hint: 'City',
+                icon: Icons.location_city_rounded,
+              ),
+            ),
             const SizedBox(width: 12),
-            Expanded(child: _SimpleField(label: 'ZIP', hint: 'ZIP Code', icon: Icons.pin_drop_rounded)),
+            Expanded(
+              child: _SimpleField(
+                label: 'ZIP',
+                hint: 'ZIP Code',
+                icon: Icons.pin_drop_rounded,
+              ),
+            ),
           ],
         ),
       ],
@@ -962,13 +1214,29 @@ class _PaymentStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SimpleField(label: 'Card Number', hint: '0000 0000 0000 0000', icon: Icons.credit_card_rounded),
+        _SimpleField(
+          label: 'Card Number',
+          hint: '0000 0000 0000 0000',
+          icon: Icons.credit_card_rounded,
+        ),
         const SizedBox(height: 16),
         Row(
           children: [
-            Expanded(child: _SimpleField(label: 'Expiry', hint: 'MM/YY', icon: Icons.date_range_rounded)),
+            Expanded(
+              child: _SimpleField(
+                label: 'Expiry',
+                hint: 'MM/YY',
+                icon: Icons.date_range_rounded,
+              ),
+            ),
             const SizedBox(width: 12),
-            Expanded(child: _SimpleField(label: 'CVV', hint: '123', icon: Icons.lock_rounded)),
+            Expanded(
+              child: _SimpleField(
+                label: 'CVV',
+                hint: '123',
+                icon: Icons.lock_rounded,
+              ),
+            ),
           ],
         ),
       ],
@@ -1000,16 +1268,29 @@ class _ReviewStep extends StatelessWidget {
                   color: Colors.green,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check_rounded, color: Colors.white, size: 24),
+                child: const Icon(
+                  Icons.check_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: 16),
               const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Ready to Complete', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                    Text(
+                      'Ready to Complete',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                    ),
                     SizedBox(height: 4),
-                    Text('All steps have been completed. Review your information and click Complete to finish.', style: TextStyle(fontSize: 12)),
+                    Text(
+                      'All steps have been completed. Review your information and click Complete to finish.',
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
               ),
@@ -1022,7 +1303,11 @@ class _ReviewStep extends StatelessWidget {
 }
 
 class _SimpleField extends StatelessWidget {
-  const _SimpleField({required this.label, required this.hint, required this.icon});
+  const _SimpleField({
+    required this.label,
+    required this.hint,
+    required this.icon,
+  });
   final String label, hint;
   final IconData icon;
 
@@ -1033,19 +1318,28 @@ class _SimpleField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12)),
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+        ),
         const SizedBox(height: 6),
         Container(
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+            border: Border.all(
+              color: colorScheme.outline.withValues(alpha: 0.2),
+            ),
           ),
           child: Row(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Icon(icon, size: 18, color: colorScheme.onSurface.withValues(alpha: 0.5)),
+                child: Icon(
+                  icon,
+                  size: 18,
+                  color: colorScheme.onSurface.withValues(alpha: 0.5),
+                ),
               ),
               Expanded(
                 child: TextField(
@@ -1070,7 +1364,12 @@ class _SimpleField extends StatelessWidget {
 // =============================================================================
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.title, required this.subtitle, required this.icon, required this.color});
+  const _SectionHeader({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.color,
+  });
   final String title, subtitle;
   final IconData icon;
   final Color color;
@@ -1093,8 +1392,20 @@ class _SectionHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
-              Text(subtitle, style: TextStyle(fontSize: 13, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
+              ),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
             ],
           ),
         ),

@@ -1,126 +1,99 @@
 # App Store / Marketplace Images
 
-## 4:5 - Pub.dev Package Card
+## 4:5 - Pub.dev Package Highlight
 
 ```
-A polished package showcase image for pub.dev listing.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A pristine, official-looking vertical card for the package listing. A perfectly rendered 3D tooltip component sits in the center of a clean, light-mode void, surrounded by floating "feature orbs".
 
 Composition:
-- Clean white/light background
-- Central tooltip card component with perfect shadow
-- Surrounding code snippet showing basic usage
-- Feature badges arranged around the main element
-
-Feature badges:
-- "Null Safety" ✓
-- "Flutter 3+" ✓
-- "Web Ready" ✓
-- "RTL Support" ✓
+- Center: The "Hero" tooltip with exemplary shadow and blur
+- Orbiting Orbs: "Null Safety", "Web Support", "Dart 3.0" glass spheres
+- Bottom: A sleek terminal bar showing `flutter pub add tooltip_card`
 
 Design elements:
-- Pub.dev blue (#0175C2) accent color
-- Dart/Flutter official styling
-- Package name and version prominently shown
-- GitHub and pub.dev icons
-- Clean, official package aesthetic
-- "flutter pub add tooltip_card" command shown
+- Official Dart/Flutter blue and teal accents
+- Ultra-clean white background with soft ambient occlusion
+- "Official" and "Verified" badge aesthetics
+- Subtly reflective floor
 
-Style: Package listing, Official Dart/Flutter aesthetic
-Mood: Trustworthy, Production-ready, Well-maintained
+Style: Official Marketplace, Clean 3D Product
+Mood: Trustworthy, Premium, Standard-setting
 ```
 
 ---
 
-## 16:9 - GitHub Repository Banner
+## 4:5 - Mobile Repository Header
 
 ```
-A professional GitHub repository banner/social preview image.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical header image designed for mobile readme viewing. It features the TooltipCard branding in neon typography, floating above a chaotic but beautiful array of UI elements that are being "organized" by the tooltip logic.
 
 Composition:
-- Left: Package logo/icon (tooltip shape with Flutter colors)
-- Center: Package name "TooltipCard" with description
-- Right: Feature preview (tooltip component)
-
-Text content:
-- "TooltipCard"
-- "Fluent UI-inspired tooltip cards for Flutter"
-- "Smart positioning • Modal barrier • RTL support"
+- Title "TooltipCard" in large 3D letters at the top
+- Subtitle "The Missing Trigger Widget"
+- Visual: A stream of UI widgets flowing upwards, with tooltips attaching to them elegantly
+- Deep, dark void background to save battery (OLED friendly aesthetic)
 
 Design elements:
-- GitHub-appropriate dark theme (#0D1117)
-- Subtle gradient accents
-- Flutter logo integration
-- Star/Fork/Issue count badges (placeholder)
-- Clean, minimal GitHub aesthetic
-- Repository-ready sizing (1280×640)
+- GitHub Dark Mode compatible background (#0D1117)
+- Neon accent lines connecting elements
+- "Star This Repo" visual hint
+- 3D depth of field to focus on the title
 
-Style: GitHub social preview, Open source project
-Mood: Professional, Open source, Community
+Style: Open Source Brand, Cyber-minimalism
+Mood: Cool, Modern, Community-driven
 ```
 
 ---
 
-## 4:5 - Package Comparison
+## 4:5 - Feature Comparison Vertical
 
 ```
-A comparison image showing TooltipCard vs standard Flutter Tooltip.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical "Vs" battle card. The top half is gray and desaturated (Standard Tooltip), the bottom half is vibrant and glass-morphic (TooltipCard).
 
-Split layout:
-Top half: "Standard Tooltip" with basic Flutter tooltip
-Bottom half: "TooltipCard" with enhanced tooltip
+Top Half (Standard):
+- Flat, black box tooltip
+- Text: "Boring", "Limited", "Basic"
+- Sad/Neutral 3D emoji
 
-Comparison points (checkmarks/X marks):
-Standard Tooltip:
-- ✓ Basic text display
-- ✗ No rich content
-- ✗ No modal barrier
-- ✗ Limited positioning
-- ✗ No beak/arrow
-
-TooltipCard:
-- ✓ Rich content support
-- ✓ Icons, buttons, any widget
-- ✓ Modal barrier with blur
-- ✓ 12 placement options
-- ✓ Customizable beak
-- ✓ Multiple trigger modes
+Bottom Half (TooltipCard):
+- Rich gradient glass tooltip with an image inside
+- Text: "Stunning", "Flexible", "Powerful"
+- Star-struck 3D emoji
+- Glowing aura
 
 Design elements:
-- Clear visual distinction between halves
-- Red (X) and green (✓) indicators
-- Subtle "upgrade arrow" between sections
-- "Level Up Your Tooltips" tagline
-- Before/after aesthetic
+- Sharp diagonal cut separating the worlds
+- High contrast colors (Gray vs Rainbow/Purple)
+- "Upgrade Your UI" floating text
+- Checkmark lists floating in 3D space
 
-Style: Feature comparison, Upgrade prompt
-Mood: Persuasive, Clear advantage, Professional
+Style: Comparative Advertising, High Energy
+Mood: Persuasive, Obvious Choice
 ```
 
 ---
 
-## 16:9 - Demo App Showcase
+## 4:5 - Vertical App Stack
 
 ```
-A showcase of the TooltipCard demo application with multiple screens.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A towering stack of mobile screens, each showcasing a different use case of the library. Three phones are stacked vertically in a dynamic perspective, like a totempole of UI excellence.
 
-Composition:
-- 5 phone mockups arranged in a perspective row
-- Each phone shows a different demo screen:
-  1. Business & Enterprise (data grid)
-  2. Social & Communication (chat)
-  3. E-Commerce (product cards)
-  4. Dashboard & Analytics (KPIs)
-  5. Forms & Validation (wizard)
+Stack content:
+- Top Phone: Social App (Chat tooltips)
+- Middle Phone: Analytics App (Data tooltips)
+- Bottom Phone: E-Commerce (Product tooltips)
 
 Design elements:
-- Modern phone frames (iPhone-style)
-- Screens at slight angles creating depth
-- Gradient background flowing behind phones
-- Screen labels below each phone
-- "Explore Real-World Examples" header
-- "Try the Demo App" CTA button
-- Play Store / App Store badges (if applicable)
+- "Infinite Scroll" illusion
+- Glass sheets between phones
+- Unified purple/indigo lighting tying them together
+- "One Widget, Any App" tagline floating vertically
+- Device frames are sleek, metallic, and bezel-less
 
-Style: App showcase, Product demo
-Mood: Comprehensive, Real-world, Feature-rich
+Style: Portfolio Showcase, Device Stack
+Mood: Comprehensive, Versatile, High-end
 ```

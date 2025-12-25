@@ -1,113 +1,99 @@
 # Use Cases Images
 
-## 16:9 - Business Dashboard Use Case
+## 4:5 - Mobile Analytics Dashboard
 
 ```
-A professional business dashboard interface showcasing TooltipCard in action. The dashboard displays analytics with multiple data visualization elements, and a tooltip is prominently shown revealing detailed metrics for a chart data point.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical dashboard interface floating in 3D, designed for a high-end mobile analytics app. A prominent tooltip card hovers over a sparkline graph, revealing detailed financial metrics. The dark-themed UI uses glass textures for cards and vibrant gradients for data lines.
 
 Scene composition:
-- Modern analytics dashboard with cards, charts, and KPI widgets
-- A line chart with one data point highlighted
-- Tooltip appearing from the data point showing:
-  - Metric name and value
-  - Percentage change with arrow indicator
-  - Mini sparkline graph
-  - "View Details" action button
-- Other subtle tooltips visible on hover states
+- Vertical mobile screen floating in abstract purple space
+- "Revenue" chart with a glowing data point
+- Glass tooltip showing "$12,450 (+15%)" with a mini trend arrow
+- Background elements: Floating 3D coins or pie charts in low opacity
+- Rich shadowing giving depth to the floating layers
 
 Design elements:
-- Professional color scheme (white background, purple accents)
-- Realistic dashboard layout with sidebar navigation
-- Data visualization (bar charts, line graphs, pie charts)
-- The tooltip has proper elevation shadow
-- "Enterprise Analytics" or similar branding visible
-- Material Design 3 components throughout
+- Deep Purple/Indigo palette with Neon Green data accents
+- Frosted glass effect on the tooltip background
+- Clean, futuristic typography (Inter/Roboto)
+- Soft bloom/glow on the chart lines
 
-Style: Dashboard UI, Enterprise software aesthetic
-Mood: Professional, Data-driven, Sophisticated
+Style: Mobile UI, Fintech aesthetic, Premium
+Mood: Professional, Insightful, Sophisticated
 ```
 
 ---
 
-## 4:5 - E-Commerce Product Card
+## 4:5 - Quick Commerce Card
 
 ```
-A mobile e-commerce app interface showing a product grid with TooltipCard providing quick actions on product cards.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical product showcase card for a next-gen e-commerce app. A sleek sneaker floats in the center, and a "Quick Action" tooltip points to it, offering immediate purchase options. The style is hyper-modern and clean.
 
 Scene composition:
-- Product grid (2 columns) showing items like electronics or fashion
-- One product card has an active tooltip showing:
-  - Quick action buttons (Add to Cart, Wishlist, Compare)
-  - Product quick info (price, rating, availability)
-  - Thumbnail preview
-- The tooltip appears from a "more options" button on the product card
-- Shopping cart icon in the header with item count
+- High-quality 3D render of a product (modern sneaker) on a vertical card
+- "More Options" button triggered, spawning a glass tooltip
+- Tooltip actions: "Add to Cart" icon, "Size Guide", "Share"
+- Ethereal lighting focusing on the product and tooltip
 
 Design elements:
-- Clean e-commerce UI with product images as placeholders
-- Price tags, star ratings, discount badges visible
-- The tooltip has a modern card design with action icons
-- Subtle animation feel (slight motion blur on appearing tooltip)
-- Brand colors (orange for e-commerce feel)
-- "Quick Actions" label on the tooltip
+- Clean white/silver UI elements on a Deep Purple gradient backdrop
+- Orange/Coral accents for the "Buy" actions within the glass tooltip
+- Realistic cast shadows
+- Motion blur effect suggesting the tooltip just popped up
+- "Smart Shopping" floating text
 
-Style: Mobile app UI, E-commerce aesthetic
-Mood: Shopping-friendly, Quick access, Modern retail
+Style: E-commerce, High-fashion UI, Minimalist
+Mood: Desirable, Fast, Modern
 ```
 
 ---
 
-## 16:9 - Social Media Chat Interface
+## 4:5 - Social Reactions Interface
 
 ```
-A messaging/chat application interface demonstrating TooltipCard for message actions and reactions.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical chat interface focusing on social engagement. A message bubble is featured with a "Reaction" tooltip expanding above it, housing animated 3D emojis. The vibe is lively and connected.
 
 Scene composition:
-- Chat conversation with message bubbles (both sent and received)
-- One message has an active tooltip showing:
-  - Emoji reaction bar (👍 ❤️ 😂 😮 😢 🎉)
-  - Action options (Reply, Forward, Copy, Delete)
-- Another message shows a user profile preview tooltip (avatar, name, status)
-- Chat input area at the bottom
+- Vertical message thread layout
+- One message bubble is highlighted/elevated
+- Glass tooltip hovering above, containing glossy 3D emojis (Heart, Laugh, Thumbs Up)
+- Deep Purple background with floating conversation bubbles in the distance
 
 Design elements:
-- Modern chat UI with rounded message bubbles
-- Different colors for sent (purple) vs received (gray) messages
-- Profile avatars for participants
-- Timestamps on messages
-- The reaction tooltip appears above the message
-- The profile tooltip appears on avatar hover
-- Read receipts (double checkmarks)
+- Soft rounded corners on all UI elements
+- The tooltip uses a high-blur glass effect to separate from the chat
+- Emojis are rendered with 3D depth, not flat vector
+- Subtly glowing avatars
+- "Express Yourself" subtle background typography
 
-Style: Messaging app UI, Social platform aesthetic
-Mood: Social, Interactive, Engaging
+Style: Social App, Chat UI, Friendly
+Mood: Social, Interactive, Playful
 ```
 
 ---
 
-## 4:5 - Form Validation Helper
+## 4:5 - Form Guidance Assistant
 
 ```
-A mobile form interface showing TooltipCard providing contextual help and validation feedback.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical login/signup pattern showing an intelligent helper tooltip. As a password field is focused, a sleek glass tooltip appears to guide the user with security requirements.
 
 Scene composition:
-- Registration or profile form with multiple input fields
-- Password field with a help tooltip showing:
-  - Password requirements checklist
-  - Strength indicator
-  - Tips for strong passwords
-- Another field with validation error tooltip (red accent)
-- Info icons (ℹ️) next to field labels triggering help tooltips
+- Modern glass-morphic input fields stacking vertically
+- "Password" field is active with a glowing border
+- Helper tooltip floats to the side or above, listing requirements (Length, Symbol, Number) with checkmarks
+- Abstract lock or shield security icon floating in 3D space
 
 Design elements:
-- Clean form UI with labeled input fields
-- Input states visible (focused, error, success)
-- The help tooltip has a lightbulb icon and friendly tone
-- Checkmarks for met requirements, X for unmet
-- Password strength bar (weak/medium/strong)
-- Form title: "Create Account" or similar
-- Progress indicator at top
+- Dark mode security UI
+- Green glowing checkmarks inside the glass tooltip
+- Deep Purple/Indigo dominant colors
+- Soft, reassuring lighting
+- "Secure Entry" visual motif
 
-Style: Form UI, Onboarding aesthetic
-Mood: Helpful, Guiding, User-friendly
+Style: Onboarding UI, Security pattern, Clean
+Mood: Helpful, Secure, User-centric
 ```

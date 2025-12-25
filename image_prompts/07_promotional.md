@@ -1,129 +1,93 @@
 # Promotional Images
 
-## 16:9 - Conference/Talk Slide
+## 4:5 - Technical Conference Poster
 
 ```
-A presentation slide design for Flutter conference talks featuring TooltipCard.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A striking vertical poster design for a Flutter conference talk. The central visual is an exploded view of the TooltipCard widget, showing its internal layers (shadow, shape, content) floating in suspension.
 
 Composition:
-- Clean presentation layout with speaker area consideration
-- Large tooltip component as the main visual
-- Bullet points for key features
-- Code snippet in corner
+- Header: "Next-Gen UI Triggers" in bold typography
+- Visual: The exploded widget diagram in glorious 3D glass
+- Footer: Speaker details and QR code for the package
+
+Design elements:
+- Conference hall lighting effects (spotlights)
+- Deep Purple/Indigo brand colors
+- High-tech, blueprint-style grid lines in the background
+- "Scan to Install" call to action
+
+Style: Event Poster, Technical Art
+Mood: Inspiring, Knowledgeable, Professional
+```
+
+---
+
+## 4:5 - Newsletter Spotlight Vertical
+
+```
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical editorial layout for a tech newsletter. It features the TooltipCard as the "Package of the Week". The design mimics a high-end tech magazine cover.
+
+Composition:
+- "FEATURED" badge in gold foil texture
+- Large product shot of the tooltip in action
+- Pull quote: "The tooltip widget we've all been waiting for."
+- Key stats (Likes, Pub Points) displayed as 3D floating counters
+
+Design elements:
+- Elegant serif fonts paired with clean sans-serifs
+- Rich, velvety background texture
+- "Read More" button at the bottom
+- Soft, luxurious lighting
+
+Style: Digital Magazine, Editorial
+Mood: Curated, Premium, Must-Read
+```
+
+---
+
+## 4:5 - Version Release Story
+
+```
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A dynamic vertical animation still announcing the v2.4.2 update. A 3D rocket (or abstract upward motion graphic) is launching, trailing a stream of new features represented by icons.
 
 Content:
-- Title: "Elevating UX with TooltipCard"
-- Subtitle: "Fluent UI Tooltips for Flutter"
-- 3 key points with icons:
-  • Smart auto-positioning
-  • Rich content support
-  • Seamless integration
+- Big "v2.5" Neon Sign
+- Feature Bubbles: "Border Support", "Modal Barrier", "Clean Beaks"
+- Confetti/Particle effects in Deep Purple and Gold
 
 Design elements:
-- Conference-appropriate professional design
-- Space for speaker notes/avatar
-- Flutter/Dart conference branding compatible
-- QR code to package (bottom corner)
-- Slide number indicator
-- High contrast for projection
+- High energy composition
+- Motion blur on the rising elements
+- "Update Now" pulsating button
+- Festive but professional atmosphere
 
-Style: Conference presentation, Technical talk
-Mood: Educational, Professional, Engaging
+Style: Release Announcement, Celebration
+Mood: Exciting, New, Fast
 ```
 
 ---
 
-## 4:5 - Newsletter Feature
+## 4:5 - Developer Social Proof
 
 ```
-A newsletter-style feature image highlighting TooltipCard as a "Package of the Week" type spotlight.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical testimonial card designed for reliability. A large glass quote bubble floats in the center, containing glowing text from a happy developer.
 
 Composition:
-- Magazine/newsletter aesthetic
-- "FLUTTER PACKAGE SPOTLIGHT" header badge
-- Package card with logo, name, description
-- Key stats (pub points, likes, popularity)
-- Pull quote from a review or feature
-
-Content sections:
-- Package overview
-- Top 3 features highlighted
-- Code snippet teaser
-- "Get Started" CTA
+- Large 3D Avatar of the developer
+- The Quote: "TooltipCard transformed our UX in minutes."
+- 5 Star rating taking up the visual width
+- Company Logo watermark in the background
 
 Design elements:
-- Editorial layout style
-- Serif + Sans-serif typography mix
-- Quotation marks for testimonial
-- Rating stars (5/5)
-- "Featured" or "Editor's Pick" badge
-- Newsletter-appropriate colors
+- Trust-inspiring blue and indigo tones
+- Glass material for the quote bubble
+- "Verified Developer" badge
+- Clean, breathable layout
 
-Style: Newsletter feature, Editorial spotlight
-Mood: Curated, Recommended, Quality
-```
-
----
-
-## 16:9 - Version Release Banner
-
-```
-A release announcement banner for version 2.4.1 update.
-
-Composition:
-- Celebration-style design with confetti/particles
-- Version number prominently displayed "v2.4.1"
-- What's new highlights in cards/bubbles
-- Changelog preview
-
-What's New highlights:
-- 🎨 Border Support (borderColor, borderWidth)
-- 🛡️ Modal Barrier Fix
-- 📱 10 Real-World Examples
-- 🧹 Cleaner Beak Design
-
-Design elements:
-- Celebration colors (gold accents)
-- "NEW RELEASE" badge
-- Update arrow or rocket icon
-- Before/after subtle comparison
-- "Update Now" CTA button
-- GitHub release link QR code
-
-Style: Release announcement, Changelog
-Mood: Exciting, Improvement, Update
-```
-
----
-
-## 4:5 - Developer Testimonial
-
-```
-A testimonial-style image featuring (placeholder) developer feedback.
-
-Composition:
-- Quote-focused design
-- Large quotation marks
-- Testimonial text in center
-- Developer info below (avatar placeholder, name, title)
-
-Quote example:
-"TooltipCard transformed our app's UX. The smart positioning and modal barrier features are exactly what we needed. Integration took just minutes."
-
-Developer info:
-- Circular avatar placeholder
-- "Ahmed H." or similar
-- "Senior Flutter Developer"
-- Company logo placeholder
-
-Design elements:
-- Clean, trustworthy design
-- Star rating (5 stars)
-- Subtle tooltip graphics in background
-- Professional color scheme
-- "Trusted by Developers" tagline
-- Social proof aesthetic
-
-Style: Testimonial, Social proof
-Mood: Trustworthy, Recommended, Real-world
+Style: Testimonial, Trust Signal
+Mood: Authentic, Reliable, Human
 ```

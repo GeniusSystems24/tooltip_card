@@ -1,155 +1,92 @@
 # Documentation Images
 
-## 16:9 - API Overview Diagram
+## 4:5 - API Architecture Tree
 
 ```
-A clean technical diagram showing the TooltipCard widget architecture and its main properties. The visualization uses a tree/mind-map structure.
-
-Central element: TooltipCard widget icon (tooltip shape)
-
-Branching categories:
-├── Appearance
-│   ├── backgroundColor
-│   ├── elevation
-│   ├── borderRadius
-│   ├── borderColor
-│   └── borderWidth
-├── Beak
-│   ├── beakEnabled
-│   ├── beakSize
-│   ├── beakColor
-│   └── beakInset
-├── Positioning
-│   ├── placementSide
-│   ├── placementAlignment
-│   ├── awaySpace
-│   └── offset
-├── Behavior
-│   ├── whenContentVisible
-│   ├── whenContentHide
-│   ├── modalBarrierEnabled
-│   └── dismissOnPointerMoveAway
-└── Timing
-    ├── hoverOpenDelay
-    ├── hoverCloseDelay
-    └── showDuration
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical mind-map diagram visualizing the TooltipCard API structure. The core "TooltipCard" node sits at the top center, with cascading glass panes flowing downwards representing properties like "Appearance", "Beak", "Positioning", and "Behavior".
 
 Design elements:
-- Light background with subtle grid
-- Color-coded branches (each category has distinct color)
-- Clean sans-serif typography
-- Icons next to each property
-- Connecting lines with smooth curves
-- "TooltipCard API" title at top
-- Version badge "v2.4.1"
+- Deep Purple background with a faint circuit-board pattern
+- Nodes are frosted glass cards connected by glowing neon lines
+- "Appearance" branch glows Cyan, "Beak" branch glows Magenta, etc.
+- 3D perspective looking slightly upwards at the tree
+- High-contrast text for readability
+- Floating version badge "v2.5"
 
-Style: Technical documentation, API reference
-Mood: Organized, Comprehensive, Developer-focused
+Style: Technical visualization, 3D Node Tree
+Mood: Organized, Structural, High-tech
 ```
 
 ---
 
-## 4:5 - Quick Start Guide
+## 4:5 - Quick Start Vertical
 
 ```
-A vertical step-by-step guide showing how to implement TooltipCard in 4 steps.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical step-by-step installation guide. Four distinct 3D glass sections float vertically, connected by a central "timeline" light beam.
 
-Step layout (top to bottom):
-
-STEP 1: Install
-- Terminal/console icon
-- Code: flutter pub add tooltip_card
-- Checkmark indicator
-
-STEP 2: Import
-- File icon
-- Code: import 'package:tooltip_card/tooltip_card.dart';
-- Checkmark indicator
-
-STEP 3: Wrap Widget
-- Widget tree icon
-- Code snippet showing TooltipCard.builder wrapping a button
-- Arrow pointing to the child widget
-
-STEP 4: Customize
-- Palette icon
-- Code snippet showing common customization options
-- Preview of the resulting tooltip
+Step layout:
+1. INSTALL - Terminal window graphic with `flutter pub add tooltip_card`
+2. IMPORT - Document icon with code lines
+3. WRAP - Widget tree icon showing the wrapping logic
+4. CUSTOMIZE - Palette icon with a mini tooltip preview
 
 Design elements:
-- Dark code editor theme for code snippets
-- Numbered steps with circular badges
-- Progress line connecting steps
-- Syntax highlighting in code
-- "Get Started in Minutes" header
-- Flutter logo watermark
+- Dark mode aesthetic
+- Each step icon is a 3D floaty element
+- The central beam pulses with light
+- "Get Started" header in large, modern typography
+- Progress indicators (checkmarks) glowing green
 
-Style: Tutorial guide, Developer onboarding
-Mood: Simple, Approachable, Quick-start
+Style: Onboarding Flow, Vertical Timeline
+Mood: Simple, Fast, Efficient
 ```
 
 ---
 
-## 16:9 - Theme Configuration
+## 4:5 - Theming Code Showcase
 
 ```
-A documentation image showing how to configure TooltipCardThemeData for app-wide theming.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical split composition focused on code configuration. The top half features a sleek, dark-mode code editor window showing `TooltipCardThemeData`. The bottom half shows the *result* of that code: a set of beautiful, custom-themed tooltips.
 
-Split layout:
-Left side: Code editor showing ThemeData configuration with TooltipCardThemeData extension
-Right side: Live preview of themed tooltips
-
-Code section shows:
-- TooltipCardThemeData instantiation
-- Key properties being set (backgroundColor, beakColor, elevation, etc.)
-- Comment annotations explaining each property
-
-Preview section shows:
-- Light theme tooltip example
-- Dark theme tooltip example
-- Custom branded tooltip example
+Composition:
+- Top: IDE window (VS Code style) with syntax highlighting (neon purple/blue tokens)
+- Bottom: 3D render of the resulting tooltips (Dark, Light, Custom) floating
+- A glowing arrow connects the code to the preview
 
 Design elements:
-- VS Code-like editor appearance
-- Syntax highlighting with proper colors
-- Line numbers visible
-- Preview tooltips with realistic content
-- "App-Wide Theming" title
-- Theme toggle icon (sun/moon)
+- Glassmorphism window chrome for the editor
+- "Live Reload" conceptual visual link
+- Deep indigo background
+- "Theme It Your Way" banner text
 
-Style: Code documentation, IDE aesthetic
-Mood: Professional, Configurable, Consistent
+Style: Developer Experience (DX), Code-to-Visual
+Mood: Powerful, Flexible, Developer-centric
 ```
 
 ---
 
-## 4:5 - Positioning Reference Card
+## 4:5 - Positioning Matrix
 
 ```
-A compact reference card showing all 12 tooltip placements with visual examples.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A dense, high-information vertical grid reference card. It displays the 12 placement options in a clean, dark-mode grid, acting as a quick cheat sheet for developers.
 
-Grid layout (4 columns × 3 rows):
-Each cell contains:
-- Small button element
-- Tooltip in the correct position
-- Placement name label below
-
-Placements arranged logically:
-Row 1: topStart, top, topEnd, (legend)
-Row 2: startTop, [center button], endTop
-Row 3: start, [center button], end
-Row 4: startBottom, [center button], endBottom
-Row 5: bottomStart, bottom, bottomEnd
+Layout:
+- 4x3 Grid of mini-modules
+- Each module shows a central "anchor" dot and a tooltip in the relative position
+- Placement names (e.g., "topStart") are crisp and legible
+- Active positions are highlighted in Neon Cyan
 
 Design elements:
-- Minimal design with focus on positions
-- Color coding for position groups
-- Arrows showing beak direction
-- Grid lines for alignment reference
-- "Placement Reference" header
-- Legend showing color meanings
-- Compact, printable format
+- Tech-dark aesthetic (Slate/Charcoal background)
+- Subtle glowing outlines for the grid cells
+- "Compass" or "Target" iconography in the background
+- Printable reference quality (sharp lines)
+- "Positioning Masterclass" header
 
-Style: Reference card, Cheat sheet
-Mood: Quick reference, Educational, Practical
+Style: Cheat Sheet, Reference Grid, Clean
+Mood: Educational, Handy, Precise
 ```

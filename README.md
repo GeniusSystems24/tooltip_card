@@ -153,7 +153,7 @@ Add `tooltip_card` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  tooltip_card: ^2.4.1
+  tooltip_card: ^2.4.2
 ```
 
 Then run:

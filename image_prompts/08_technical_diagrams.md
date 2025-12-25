@@ -1,150 +1,89 @@
 # Technical Diagrams
 
-## 16:9 - Widget Tree Diagram
+## 4:5 - Vertical Widget Tree
 
 ```
-A technical diagram showing how TooltipCard integrates into a Flutter widget tree.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical hierarchy diagram visualizing the TooltipCard widget structure in 3D space. The tree grows from top to bottom.
 
-Diagram structure (tree format):
-MaterialApp
-└── Scaffold
-    └── Column
-        └── TooltipCard  ← [HIGHLIGHTED]
-            ├── child: ElevatedButton
-            └── builder: (context, close) → Container
-                └── [Tooltip Content Widgets]
-
-Overlay layer (shown separately):
-Overlay
-└── TooltipCardPanel (positioned)
-    └── BeakedPanelWithBeak
-        ├── PanelMaterial (shadow, background)
-        └── BeakWidget (arrow/caret)
+Nodes:
+- Top: MaterialApp (Glass Sphere)
+- Mid: Scaffold (Glass Cube)
+- Hero: TooltipCard (Glowing Pyramid/Prism) highlighting its injection point
 
 Design elements:
-- Tree structure with connecting lines
-- Color coding: Main tree (blue), Overlay (purple)
-- Highlighted TooltipCard node
-- Arrows showing widget relationships
-- Layer visualization (main layer vs overlay)
-- "Widget Architecture" title
-- Legend for colors/symbols
+- Deep Indigo background
+- Connection lines are fiber-optic cables (glowing)
+- "Overlay Layer" shown as a ghost plane hovering in front of the main tree
+- High-tech, microscopic detail level
 
-Style: Technical architecture diagram
-Mood: Educational, Technical, Clear
+Style: Architecture Viz, Sci-Fi Data
+Mood: Complex yet Organized, Structural
 ```
 
 ---
 
-## 4:5 - Positioning Algorithm
+## 4:5 - Positioning Logic Vertical
 
 ```
-A vertical diagram explaining the 3-phase positioning system.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical three-step logic flow visualizing the "Smart Positioning" algorithm.
 
-Phase breakdown:
-
-PHASE 1: Select Side
-- Diagram showing screen bounds check
-- Arrow indicating selected side based on available space
-- "Smart side selection based on overflow"
-
-PHASE 2: Calculate Beak
-- Diagram showing beak position calculation
-- Alignment to trigger element center
-- Beak inset constraints shown
-
-PHASE 3: Calculate Flyout
-- Final tooltip position calculation
-- Offset adjustments illustrated
-- Screen boundary respect shown
+Steps (Top Down):
+1. SCAN: A radar-like scan effect checking screen boundaries
+2. COMPUTE: A glowing geometric core calculating the best angle
+3. PLACE: The final tooltip snapping into position with a green "Success" glow
 
 Design elements:
-- Step-by-step flow (1 → 2 → 3)
-- Mini diagrams for each phase
-- Coordinate system visualization
-- Mathematical formulas (simplified)
-- Color progression (light to dark)
-- "Positioning Pipeline" header
+- Cyberpunk/Matrix data rainfall aesthetics (subtle)
+- Mathematical angles and distance lines shown in gold
+- "Algorithm in Action" vertical text
 
-Style: Algorithm visualization, Technical flow
-Mood: Technical, Precise, Educational
+Style: Algorithm Viz, Process Flow
+Mood: Intelligent, Fast, Automated
 ```
 
 ---
 
-## 16:9 - Event Flow Diagram
+## 4:5 - Event Loop Flowchart
 
 ```
-A flowchart showing the tooltip visibility event flow.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical circuit-board flowchart showing the lifecycle of a tooltip.
 
-Flow paths:
-
-Hover Mode:
-Mouse Enter → [hoverOpenDelay] → Show Tooltip → Mouse Exit → [hoverCloseDelay] → Hide
-
-Press Mode:
-Tap → Show Tooltip → Tap Outside/Barrier → Hide
-
-Long Press Mode:
-Press Start → [500ms] → Show Tooltip → Release → [goAway?] → Hide
-
-Programmatic Mode:
-visibleDeterminer: true → Show → visibleDeterminer: false → Hide
+Path:
+- Input (Tap/Hover) -> Timer (Delay) -> Bloom (Fade In) -> Wait -> Fade Out
 
 Design elements:
-- Flowchart style with decision diamonds
-- Timer icons for delays
-- Different colors per mode
-- Start/End nodes clearly marked
-- Conditional branches shown
-- "Event Flow" title
-- Mode selector tabs at top
+- Dark background with neon path tracing
+- Each stage in the lifecycle is a micro-chip node
+- Active path is lit up in bright Cyan
+- "State Machine" aesthetic with binary code texture
 
-Style: Flowchart, Event diagram
-Mood: Logical, Comprehensive, Technical
+Style: Technical Flow, Logic Circuit
+Mood: Logical, Electrical, Precise
 ```
 
 ---
 
-## 4:5 - Customization Layers
+## 4:5 - Anatomy Exploded View
 
 ```
-An exploded view diagram showing the customization layers of a tooltip.
+**STYLE PRESET (MAINTAIN STRICT VISUAL CONSISTENCY)**
+A vertical exploded view of the tooltip layers, separated along the Z-axis.
 
-Layers (from back to front):
-
-Layer 1: Shadow
-- elevation property
-- Soft shadow visualization
-
-Layer 2: Background
-- backgroundColor
-- borderRadius
-- Rounded rectangle shape
-
-Layer 3: Border (optional)
-- borderColor
-- borderWidth
-- Stroke visualization
-
-Layer 4: Beak
-- beakColor
-- beakSize
-- Triangle shape with border
-
-Layer 5: Content
-- padding
-- child widgets
-- Content area
+Layers (Top to Bottom):
+1. Content (Text/Icon widgets)
+2. Shape/Path (The tooltip body with beak)
+3. Background/Blur (The glass material)
+4. Shadow (The ambient occlusion plane)
 
 Design elements:
-- Isometric/3D exploded view
-- Each layer separated vertically
-- Property labels pointing to each layer
-- Assembly arrows showing how they stack
-- "Anatomy of a Tooltip" title
-- Color swatches for each property
+- Isometric perspective
+- Dotted lines connecting the corners of each layer
+- Labels floating off to the side (e.g., "Glass Shader", "Beak Path")
+- High-end product rendering quality
 
-Style: Exploded view diagram, Anatomy illustration
-Mood: Educational, Detailed, Visual
+Style: Exploded Diagram, Component Anatomy
+Mood: Deep, Educational, Detailed
 ```
