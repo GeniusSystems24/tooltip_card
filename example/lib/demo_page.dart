@@ -111,7 +111,7 @@ class _DemoContentState extends State<_DemoContent> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                'v5.3.0',
+                'v2.5.0',
                 style: TextStyle(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -217,7 +217,7 @@ class _DemoContentState extends State<_DemoContent> {
           ),
           const SizedBox(height: 12),
           Text(
-            'Beautiful, customizable tooltip cards with smart positioning, beak arrows, modal barriers, and smooth animations.',
+            'Beautiful, customizable tooltip cards with smart positioning, 7 trigger modes (including touch-friendly), modal barriers, and smooth animations.',
             style: TextStyle(
               fontSize: 15,
               color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -388,38 +388,143 @@ class _DemoContentState extends State<_DemoContent> {
   }
 
   Widget _buildTriggerModesSection(ColorScheme colorScheme) {
-    return Row(
-      children: [
-        Expanded(
-          child: _TriggerModeCard(
-            icon: Icons.touch_app_rounded,
-            title: 'Press',
-            description: 'Tap to open',
-            publicState: _publicState,
-            whenVisible: WhenContentVisible.pressButton,
-          ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Desktop/Mouse Triggers
+            Row(
+              children: [
+                Icon(Icons.mouse_rounded, color: colorScheme.primary, size: 20),
+                const SizedBox(width: 10),
+                Text(
+                  'Desktop Triggers',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Optimized for mouse and trackpad interactions',
+              style: TextStyle(
+                fontSize: 13,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                _TriggerModeCard(
+                  icon: Icons.touch_app_rounded,
+                  title: 'Press',
+                  description: 'Single tap',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.pressButton,
+                ),
+                _TriggerModeCard(
+                  icon: Icons.mouse_rounded,
+                  title: 'Hover',
+                  description: 'Mouse hover',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.hoverButton,
+                ),
+                _TriggerModeCard(
+                  icon: Icons.ads_click_rounded,
+                  title: 'Double Tap',
+                  description: 'Double click',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.doubleTapButton,
+                ),
+                _TriggerModeCard(
+                  icon: Icons.mouse_outlined,
+                  title: 'Right Click',
+                  description: 'Context menu',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.secondaryTapButton,
+                ),
+              ],
+            ),
+            const SizedBox(height: 28),
+
+            // Touch/Mobile Triggers
+            Row(
+              children: [
+                Icon(Icons.smartphone_rounded, color: colorScheme.tertiary, size: 20),
+                const SizedBox(width: 10),
+                Text(
+                  'Touch Triggers',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: colorScheme.tertiary.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    'NEW',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Designed for touchscreens and mobile devices',
+              style: TextStyle(
+                fontSize: 13,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                _TriggerModeCard(
+                  icon: Icons.touch_app_rounded,
+                  title: 'Long Press',
+                  description: 'Hold ~500ms',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.longPressButton,
+                  isTouch: true,
+                ),
+                _TriggerModeCard(
+                  icon: Icons.pan_tool_alt_rounded,
+                  title: 'Long Press Up',
+                  description: 'Release after hold',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.longPressUpButton,
+                  isTouch: true,
+                ),
+                _TriggerModeCard(
+                  icon: Icons.compress_rounded,
+                  title: 'Force Press',
+                  description: '3D Touch / Haptic',
+                  publicState: _publicState,
+                  whenVisible: WhenContentVisible.forcePressButton,
+                  isTouch: true,
+                ),
+              ],
+            ),
+          ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _TriggerModeCard(
-            icon: Icons.mouse_rounded,
-            title: 'Hover',
-            description: 'Hover to open',
-            publicState: _publicState,
-            whenVisible: WhenContentVisible.hoverButton,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _TriggerModeCard(
-            icon: Icons.ads_click_rounded,
-            title: 'Double Tap',
-            description: 'Double-tap to open',
-            publicState: _publicState,
-            whenVisible: WhenContentVisible.doubleTapButton,
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -1010,6 +1115,7 @@ class _TriggerModeCard extends StatelessWidget {
     required this.description,
     required this.publicState,
     required this.whenVisible,
+    this.isTouch = false,
   });
 
   final IconData icon;
@@ -1017,10 +1123,31 @@ class _TriggerModeCard extends StatelessWidget {
   final String description;
   final TooltipCardPublicState publicState;
   final WhenContentVisible whenVisible;
+  final bool isTouch;
+
+  String _getTriggerExplanation() {
+    switch (whenVisible) {
+      case WhenContentVisible.pressButton:
+        return 'A single tap/click opens the tooltip. Best for buttons and interactive elements.';
+      case WhenContentVisible.hoverButton:
+        return 'Hovering with mouse opens the tooltip. Ideal for desktop info icons and help text.';
+      case WhenContentVisible.doubleTapButton:
+        return 'Double-tap/double-click opens the tooltip. Good for secondary actions.';
+      case WhenContentVisible.secondaryTapButton:
+        return 'Right-click (or two-finger tap) opens the tooltip. Perfect for context menus.';
+      case WhenContentVisible.longPressButton:
+        return 'Press and hold for ~500ms to open. The most natural touch interaction.';
+      case WhenContentVisible.longPressUpButton:
+        return 'Opens when you release after a long press. Gives feedback before showing content.';
+      case WhenContentVisible.forcePressButton:
+        return '3D Touch / Haptic Touch on supported iOS devices. Falls back to long press.';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final accentColor = isTouch ? colorScheme.tertiary : colorScheme.primary;
 
     return TooltipCard.builder(
       publicState: publicState,
@@ -1028,35 +1155,53 @@ class _TriggerModeCard extends StatelessWidget {
       hoverOpenDelay: const Duration(milliseconds: 100),
       placementSide: TooltipCardPlacementSide.bottom,
       beakEnabled: true,
+      modalBarrierEnabled: isTouch,
+      barrierBlur: isTouch ? 4 : 0,
       builder: (ctx, close) => TooltipCardContent(
         icon: Icon(icon),
-        iconColor: colorScheme.primary,
+        iconColor: accentColor,
         title: '$title Mode',
-        subtitle: '$description the trigger to activate this tooltip.',
+        subtitle: _getTriggerExplanation(),
         primaryAction: FilledButton(
           onPressed: close,
-          child: const Text('Close'),
+          child: const Text('Got it'),
         ),
         onClose: close,
       ),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(icon, size: 28, color: colorScheme.primary),
-              const SizedBox(height: 10),
-              Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 4),
-              Text(
-                description,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: accentColor.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: accentColor.withValues(alpha: 0.2)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 20, color: accentColor),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: colorScheme.onSurface,
+                  ),
                 ),
-              ),
-            ],
-          ),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

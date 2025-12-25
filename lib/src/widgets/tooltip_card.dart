@@ -1,4 +1,4 @@
-// TooltipCard — Fluent Beak/Callout (v5.3.0 - Fluent UI Inspired)
+// TooltipCard — Fluent Beak/Callout (v5.4.0 - Touch Friendly)
 // -----------------------------------------------------------------
 // Enhanced Fluent-style tooltip with comprehensive improvements:
 //
@@ -29,12 +29,17 @@
 //   • Keyboard navigation
 //   • Screen reader support
 //
+// 📱 Touch-Friendly (v2.5.0):
+//   • Long press trigger for touch screens
+//   • Long press up trigger for touch interaction
+//   • Force press (3D Touch) support for iOS
+//
 // 🚀 Core Features:
 //   • RTL-aware positioning
 //   • Beak/caret with shadow matching panel
 //   • Viewport-fit with auto-flip and smart placement
 //   • Modal scrim with blur support
-//   • Multiple trigger modes (press/hover/double-tap/right-click)
+//   • 7 trigger modes (press/hover/double-tap/right-click/long-press/force-press)
 //   • Builder API with close callback
 
 part of 'widgets.dart';
@@ -42,7 +47,9 @@ part of 'widgets.dart';
 /// A powerful, customizable tooltip widget with Fluent UI inspired design.
 ///
 /// Features:
-/// - Multiple trigger modes (press, hover, double-tap, right-click)
+/// - 7 trigger modes: press, hover, double-tap, right-click, long-press,
+///   long-press-up, and force-press (3D Touch)
+/// - Touch-friendly triggers for mobile devices
 /// - Smart positioning with auto-flip
 /// - Beak/arrow pointing to trigger
 /// - Modal barrier support with blur
@@ -313,7 +320,10 @@ class _TooltipCardState extends State<TooltipCard>
   bool get _isPressLike =>
       widget.whenContentVisible == WhenContentVisible.pressButton ||
       widget.whenContentVisible == WhenContentVisible.doubleTapButton ||
-      widget.whenContentVisible == WhenContentVisible.secondaryTapButton;
+      widget.whenContentVisible == WhenContentVisible.secondaryTapButton ||
+      widget.whenContentVisible == WhenContentVisible.longPressButton ||
+      widget.whenContentVisible == WhenContentVisible.longPressUpButton ||
+      widget.whenContentVisible == WhenContentVisible.forcePressButton;
 
   bool get _shouldAutoCloseOnHoverOut {
     // When modal barrier is enabled, don't auto-close on hover out
@@ -660,12 +670,24 @@ class _TooltipCardState extends State<TooltipCard>
             : null,
         onDoubleTap:
             (widget.whenContentVisible == WhenContentVisible.doubleTapButton)
-            ? _toggleFromPressLike
-            : null,
+                ? _toggleFromPressLike
+                : null,
         onSecondaryTap:
             (widget.whenContentVisible == WhenContentVisible.secondaryTapButton)
-            ? _toggleFromPressLike
-            : null,
+                ? _toggleFromPressLike
+                : null,
+        onLongPress:
+            (widget.whenContentVisible == WhenContentVisible.longPressButton)
+                ? _toggleFromPressLike
+                : null,
+        onLongPressUp:
+            (widget.whenContentVisible == WhenContentVisible.longPressUpButton)
+                ? _toggleFromPressLike
+                : null,
+        onForcePressStart:
+            (widget.whenContentVisible == WhenContentVisible.forcePressButton)
+                ? (_) => _toggleFromPressLike()
+                : null,
         behavior: HitTestBehavior.opaque,
         child: Focus(
           onKeyEvent: (node, event) {

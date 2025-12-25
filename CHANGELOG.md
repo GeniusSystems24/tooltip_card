@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2025-12-25 (UTC+03:00)
+
+### Added
+
+- **Touch-Friendly Trigger Modes** - 3 new triggers designed for mobile and touch devices
+  - `longPressButton` - Opens tooltip after holding for ~500ms (natural touch interaction)
+  - `longPressUpButton` - Opens tooltip when releasing after a long press
+  - `forcePressButton` - 3D Touch / Haptic Touch support for iOS devices
+
+- **7 Total Trigger Modes** - Comprehensive input support
+  - Desktop: `pressButton`, `hoverButton`, `doubleTapButton`, `secondaryTapButton`
+  - Touch: `longPressButton`, `longPressUpButton`, `forcePressButton`
+
+- **Enhanced Demo Page** - Improved trigger modes showcase
+  - Separate sections for Desktop and Touch triggers
+  - Detailed explanations for each trigger mode
+  - Visual distinction between desktop (primary color) and touch (tertiary color) triggers
+  - NEW badge highlighting touch-friendly triggers
+
+### Changed
+
+- Updated `WhenContentVisible` enum with new trigger modes
+- Enhanced `TooltipCard` GestureDetector to handle all 7 trigger modes
+- Demo page now shows v2.5.0 with touch-friendly features
+- Improved code documentation for trigger modes
+
 ## [2.4.1] - 2025-12-25 (UTC+03:00)
 
 ### Added

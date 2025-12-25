@@ -50,7 +50,8 @@
 | Smart Auto-positioning | ❌ | ✅ 12 placement options with auto-flip |
 | Beak/Arrow Pointer | ❌ | ✅ With matching shadow |
 | Structured Content | ❌ | ✅ Icons, titles, actions |
-| Trigger Modes | Hover only | ✅ Tap, hover, double-tap, right-click |
+| Trigger Modes | Hover only | ✅ 7 modes: tap, hover, double-tap, right-click, long-press, force-press |
+| Touch-Friendly | ❌ | ✅ Long press, force press (3D Touch) |
 | Programmatic Control | ❌ | ✅ Controller API |
 | Modal Barrier | ❌ | ✅ With blur effect |
 | Material 3 | Partial | ✅ Full theming support |
@@ -94,12 +95,12 @@
       </ul>
     </td>
     <td>
-      <h3>⚡ Multiple Trigger Modes</h3>
+      <h3>⚡ 7 Trigger Modes</h3>
       <ul>
-        <li>Tap/Press to show</li>
-        <li>Hover (desktop/web)</li>
-        <li>Double-tap</li>
-        <li>Right-click / Secondary tap</li>
+        <li><strong>Desktop:</strong> Tap, Hover, Double-tap, Right-click</li>
+        <li><strong>Touch:</strong> Long press, Long press up, Force press</li>
+        <li>3D Touch / Haptic Touch support (iOS)</li>
+        <li>Automatic fallback for unsupported gestures</li>
       </ul>
     </td>
   </tr>

@@ -1,11 +1,11 @@
 name: tooltip_card
 description: >-
-  A powerful tooltip/popover widget inspired by Fluent UI TeachingTip. Features smart 
-  auto-positioning with 12 placements, beak/arrow pointer, Material 3 theming, multiple 
-  triggers (tap/hover/double-tap/right-click), modal barrier with blur, RTL support, 
-  accessibility, TooltipCardController, and TooltipCardContent for onboarding and 
-  feature discovery.
-version: 2.4.2
+  A powerful tooltip/popover widget inspired by Fluent UI TeachingTip. Features smart
+  auto-positioning with 12 placements, beak/arrow pointer, Material 3 theming, 7 trigger
+  modes (tap/hover/double-tap/right-click/long-press/force-press), touch-friendly support,
+  modal barrier with blur, RTL support, accessibility, TooltipCardController, and
+  TooltipCardContent for onboarding and feature discovery.
+version: 2.5.0
 homepage: https://github.com/geniussystems24/tooltip_card
 repository: https://github.com/geniussystems24/tooltip_card
 issue_tracker: https://github.com/geniussystems24/tooltip_card/issues
