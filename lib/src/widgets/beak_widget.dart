@@ -1,7 +1,7 @@
 part of 'widgets.dart';
 
 /// Beak widget that uses the pre-calculated position from Phase 2
-/// with enhanced shadow and optional border support
+/// with optional border support
 class BeakWidget extends StatelessWidget {
   const BeakWidget({
     super.key,
@@ -9,7 +9,6 @@ class BeakWidget extends StatelessWidget {
     required this.side,
     required this.size,
     required this.color,
-    required this.elevation,
     required this.textDirection,
     this.borderColor,
     this.borderWidth = 0.0,
@@ -20,7 +19,6 @@ class BeakWidget extends StatelessWidget {
   final TooltipCardPlacementSide side;
   final double size;
   final Color color;
-  final double elevation;
   final TextDirection textDirection;
 
   /// Optional border color for the beak
@@ -48,7 +46,6 @@ class BeakWidget extends StatelessWidget {
             size: size,
             color: color,
             side: side,
-            elevation: elevation,
             textDirection: textDirection,
             borderColor: borderColor,
             borderWidth: borderWidth,

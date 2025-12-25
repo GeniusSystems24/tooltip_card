@@ -14,11 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `borderWidth` - Border stroke width (default: 0)
   - Borders render only on visible edges (not where beak connects to panel)
 
-- **Directional Shadows for Beak** - Enhanced visual depth
-  - Shadow direction matches beak placement (top, bottom, start, end)
-  - Multi-layer shadow rendering (3 layers) for realistic depth effect
-  - Consistent shadow behavior across all placement options
-
 - **Redesigned Demo Page** - Professional Material 3 showcase
   - Modern hero section with gradient background
   - Interactive examples for all features
@@ -42,9 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Enhanced `BeakPainter` with improved shadow rendering
+- Simplified `BeakPainter` - removed shadow rendering for cleaner appearance
 - Updated `PanelMaterial` to support border decorations
-- Optimized beak position calculations for better precision
+- Beak now renders as a solid color matching the panel
 
 ## [2.4.0] - 2025-12-24 (UTC+03:00)
 
