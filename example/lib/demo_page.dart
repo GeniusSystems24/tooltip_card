@@ -765,6 +765,65 @@ class _DemoContentState extends State<_DemoContent> {
             textColor: colorScheme.onSurface,
           ),
         ),
+
+        // Bordered Style - NEW!
+        TooltipCard.builder(
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          elevation: 4,
+          borderColor: colorScheme.primary,
+          borderWidth: 1.5,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.border_all_rounded),
+            iconColor: colorScheme.primary,
+            title: 'Bordered Style',
+            subtitle: 'Clean border on panel and beak',
+            primaryAction: FilledButton(
+              onPressed: close,
+              child: const Text('Nice!'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.border_all_rounded,
+            label: 'Bordered',
+            color: colorScheme.surface,
+            textColor: colorScheme.primary,
+          ),
+        ),
+
+        // Outlined Error Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          elevation: 2,
+          flyoutBackgroundColor: Colors.red.shade50,
+          beakColor: Colors.red.shade50,
+          borderColor: Colors.red.shade400,
+          borderWidth: 1.5,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.error_outline_rounded),
+            iconColor: Colors.red.shade700,
+            title: 'Error Alert',
+            subtitle: 'Bordered error notification style',
+            primaryAction: FilledButton(
+              onPressed: close,
+              style: FilledButton.styleFrom(
+                backgroundColor: Colors.red.shade600,
+              ),
+              child: const Text('Dismiss'),
+            ),
+            onClose: close,
+          ),
+          child: _StyleCard(
+            icon: Icons.error_outline_rounded,
+            label: 'Error',
+            color: Colors.red.shade50,
+            textColor: Colors.red.shade700,
+          ),
+        ),
       ],
     );
   }

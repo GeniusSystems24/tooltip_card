@@ -1,6 +1,7 @@
 part of 'widgets.dart';
 
 /// Wrapper for tooltip panel with animations
+/// with optional border support
 class BeakedTooltipCardPanel extends StatelessWidget {
   const BeakedTooltipCardPanel({
     super.key,
@@ -21,6 +22,9 @@ class BeakedTooltipCardPanel extends StatelessWidget {
     required this.beakColor,
     required this.beakPosition,
     required this.textDirection,
+    // border
+    this.borderColor,
+    this.borderWidth = 0.0,
   });
 
   final Animation<double> fade;
@@ -40,6 +44,12 @@ class BeakedTooltipCardPanel extends StatelessWidget {
   final Color beakColor;
   final double beakPosition;
   final TextDirection textDirection;
+
+  /// Optional border color
+  final Color? borderColor;
+
+  /// Border width (0 = no border)
+  final double borderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +99,8 @@ class BeakedTooltipCardPanel extends StatelessWidget {
                   padding: padding,
                   onEscape: onEscape,
                   textDirection: textDirection,
+                  borderColor: borderColor,
+                  borderWidth: borderWidth,
                   child: child,
                 );
               },

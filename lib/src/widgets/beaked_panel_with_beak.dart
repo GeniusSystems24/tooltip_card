@@ -1,6 +1,7 @@
 part of 'widgets.dart';
 
 /// Widget that handles the panel content and beak positioning
+/// with optional border support for both panel and beak
 class BeakedPanelWithBeak extends StatelessWidget {
   const BeakedPanelWithBeak({
     super.key,
@@ -17,6 +18,8 @@ class BeakedPanelWithBeak extends StatelessWidget {
     required this.onEscape,
     required this.textDirection,
     required this.child,
+    this.borderColor,
+    this.borderWidth = 0.0,
   });
 
   final TooltipCardPlacementSide baseSide;
@@ -33,6 +36,12 @@ class BeakedPanelWithBeak extends StatelessWidget {
   final TextDirection textDirection;
   final Widget child;
 
+  /// Optional border color for both panel and beak
+  final Color? borderColor;
+
+  /// Border width (0 = no border)
+  final double borderWidth;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -43,6 +52,8 @@ class BeakedPanelWithBeak extends StatelessWidget {
           elevation: elevation,
           backgroundColor: backgroundColor,
           borderRadius: borderRadius,
+          borderColor: borderColor,
+          borderWidth: borderWidth,
           child: ConstrainedBox(
             constraints:
                 constraints ??
@@ -91,6 +102,8 @@ class BeakedPanelWithBeak extends StatelessWidget {
                 color: beakColor,
                 elevation: elevation,
                 textDirection: textDirection,
+                borderColor: borderColor,
+                borderWidth: borderWidth,
               ),
             ),
           ),
@@ -112,6 +125,8 @@ class BeakedPanelWithBeak extends StatelessWidget {
                 color: beakColor,
                 elevation: elevation,
                 textDirection: textDirection,
+                borderColor: borderColor,
+                borderWidth: borderWidth,
               ),
             ),
           ),

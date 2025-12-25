@@ -1,6 +1,7 @@
 part of 'widgets.dart';
 
 /// Beak widget that uses the pre-calculated position from Phase 2
+/// with enhanced shadow and optional border support
 class BeakWidget extends StatelessWidget {
   const BeakWidget({
     super.key,
@@ -10,6 +11,8 @@ class BeakWidget extends StatelessWidget {
     required this.color,
     required this.elevation,
     required this.textDirection,
+    this.borderColor,
+    this.borderWidth = 0.0,
   });
 
   /// Pre-calculated from Phase 2 (X for vertical, Y for horizontal)
@@ -19,6 +22,12 @@ class BeakWidget extends StatelessWidget {
   final Color color;
   final double elevation;
   final TextDirection textDirection;
+
+  /// Optional border color for the beak
+  final Color? borderColor;
+
+  /// Border width (0 = no border)
+  final double borderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +50,8 @@ class BeakWidget extends StatelessWidget {
             side: side,
             elevation: elevation,
             textDirection: textDirection,
+            borderColor: borderColor,
+            borderWidth: borderWidth,
           ),
         );
       },

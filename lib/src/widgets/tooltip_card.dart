@@ -112,6 +112,9 @@ class TooltipCard extends StatefulWidget {
     this.beakSize = TooltipCardConstants.defaultBeakSize,
     this.beakInset = TooltipCardConstants.defaultBeakInset,
     this.beakColor,
+    // Border
+    this.borderColor,
+    this.borderWidth = 0.0,
   }) : flyoutContent = null;
 
   /// Creates a TooltipCard with static content.
@@ -155,6 +158,9 @@ class TooltipCard extends StatefulWidget {
     this.beakSize = TooltipCardConstants.defaultBeakSize,
     this.beakInset = 20,
     this.beakColor,
+    // Border
+    this.borderColor,
+    this.borderWidth = 0.0,
   }) : builder = null;
 
   /// Static content widget to display in the tooltip
@@ -269,6 +275,14 @@ class TooltipCard extends StatefulWidget {
 
   /// Color of the beak
   final Color? beakColor;
+
+  // Border options
+
+  /// Optional border color for both panel and beak
+  final Color? borderColor;
+
+  /// Border width (0 = no border)
+  final double borderWidth;
 
   @override
   State<TooltipCard> createState() => _TooltipCardState();
@@ -546,6 +560,8 @@ class _TooltipCardState extends State<TooltipCard>
                 beakPosition: _resolvedBeakPosition,
                 side: _resolvedSide,
                 textDirection: Directionality.of(context),
+                borderColor: widget.borderColor,
+                borderWidth: widget.borderWidth,
                 child: builtChild,
               ),
             ),
