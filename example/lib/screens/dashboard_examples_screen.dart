@@ -6,7 +6,8 @@ class DashboardExamplesScreen extends StatefulWidget {
   const DashboardExamplesScreen({super.key});
 
   @override
-  State<DashboardExamplesScreen> createState() => _DashboardExamplesScreenState();
+  State<DashboardExamplesScreen> createState() =>
+      _DashboardExamplesScreenState();
 }
 
 class _DashboardExamplesScreenState extends State<DashboardExamplesScreen>
@@ -34,18 +35,23 @@ class _DashboardExamplesScreenState extends State<DashboardExamplesScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard & Analytics'),
-        backgroundColor: Colors.teal.withValues(alpha: 0.1),
-        foregroundColor: Colors.teal.shade700,
+        backgroundColor: const Color(0xFF0D9488).withValues(alpha: 0.1),
+        foregroundColor: const Color(0xFF0F766E), // Teal 700
         elevation: 0,
         bottom: TabBar(
           controller: _tabController,
-          labelColor: Colors.teal.shade700,
+          labelColor: const Color(0xFF0F766E),
           unselectedLabelColor: colorScheme.onSurface.withValues(alpha: 0.6),
-          indicatorColor: Colors.teal,
+          indicatorColor: const Color(0xFF0D9488), // Teal 600
+          indicatorSize: TabBarIndicatorSize.label,
+          dividerColor: Colors.transparent,
           tabs: const [
             Tab(text: 'KPIs', icon: Icon(Icons.speed_rounded, size: 20)),
             Tab(text: 'Charts', icon: Icon(Icons.bar_chart_rounded, size: 20)),
-            Tab(text: 'Reports', icon: Icon(Icons.assessment_rounded, size: 20)),
+            Tab(
+              text: 'Reports',
+              icon: Icon(Icons.assessment_rounded, size: 20),
+            ),
           ],
         ),
       ),
@@ -72,39 +78,93 @@ class _KPIsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kpis = [
-      _KPI('Total Revenue', '\$124,500', '+12.5%', true, Icons.attach_money_rounded, Colors.green, [65, 72, 80, 75, 90, 95, 100]),
-      _KPI('Active Users', '8,421', '+8.2%', true, Icons.people_rounded, Colors.blue, [40, 50, 55, 60, 58, 70, 75]),
-      _KPI('Orders', '1,284', '-3.1%', false, Icons.shopping_cart_rounded, Colors.orange, [80, 75, 70, 65, 68, 62, 60]),
-      _KPI('Conversion', '3.2%', '+0.5%', true, Icons.trending_up_rounded, Colors.purple, [25, 28, 30, 32, 31, 34, 38]),
-      _KPI('Avg. Order Value', '\$97.50', '+5.2%', true, Icons.receipt_rounded, Colors.teal, [85, 88, 90, 92, 91, 95, 97]),
-      _KPI('Bounce Rate', '42.3%', '-2.1%', true, Icons.exit_to_app_rounded, Colors.red, [50, 48, 46, 45, 44, 43, 42]),
+      _KPI(
+        'Total Revenue',
+        '\$124,500',
+        '+12.5%',
+        true,
+        Icons.attach_money_rounded,
+        Colors.green,
+        [65, 72, 80, 75, 90, 95, 100],
+      ),
+      _KPI(
+        'Active Users',
+        '8,421',
+        '+8.2%',
+        true,
+        Icons.people_rounded,
+        Colors.blue,
+        [40, 50, 55, 60, 58, 70, 75],
+      ),
+      _KPI(
+        'Orders',
+        '1,284',
+        '-3.1%',
+        false,
+        Icons.shopping_cart_rounded,
+        Colors.orange,
+        [80, 75, 70, 65, 68, 62, 60],
+      ),
+      _KPI(
+        'Conversion',
+        '3.2%',
+        '+0.5%',
+        true,
+        Icons.trending_up_rounded,
+        Colors.purple,
+        [25, 28, 30, 32, 31, 34, 38],
+      ),
+      _KPI(
+        'Avg. Order Value',
+        '\$97.50',
+        '+5.2%',
+        true,
+        Icons.receipt_rounded,
+        Colors.teal,
+        [85, 88, 90, 92, 91, 95, 97],
+      ),
+      _KPI(
+        'Bounce Rate',
+        '42.3%',
+        '-2.1%',
+        true,
+        Icons.exit_to_app_rounded,
+        Colors.red,
+        [50, 48, 46, 45, 44, 43, 42],
+      ),
     ];
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _SectionHeader(
-            title: 'Key Performance Indicators',
-            subtitle: 'Last 30 days overview',
-            icon: Icons.speed_rounded,
-            color: Colors.teal,
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 900),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _SectionHeader(
+                title: 'Key Performance Indicators',
+                subtitle: 'Last 30 days overview',
+                icon: Icons.speed_rounded,
+                color: Color(0xFF0D9488), // Teal
+              ),
+              const SizedBox(height: 16),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  childAspectRatio: 1.25,
+                ),
+                itemCount: kpis.length,
+                itemBuilder: (ctx, i) =>
+                    _KPICard(kpi: kpis[i], publicState: publicState),
+              ),
+            ],
           ),
-          const SizedBox(height: 16),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              childAspectRatio: 1.1,
-            ),
-            itemCount: kpis.length,
-            itemBuilder: (ctx, i) => _KPICard(kpi: kpis[i], publicState: publicState),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -116,7 +176,15 @@ class _KPI {
   final IconData icon;
   final Color color;
   final List<int> sparkline;
-  _KPI(this.name, this.value, this.change, this.isPositive, this.icon, this.color, this.sparkline);
+  _KPI(
+    this.name,
+    this.value,
+    this.change,
+    this.isPositive,
+    this.icon,
+    this.color,
+    this.sparkline,
+  );
 }
 
 class _KPICard extends StatelessWidget {
@@ -137,10 +205,18 @@ class _KPICard extends StatelessWidget {
       borderWidth: 1,
       builder: (ctx, close) => _KPIDetails(kpi: kpi, onClose: close),
       child: Container(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(14),
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,23 +233,33 @@ class _KPICard extends StatelessWidget {
                   child: Icon(kpi.icon, color: kpi.color, size: 18),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
-                    color: (kpi.isPositive ? Colors.green : Colors.red).withValues(alpha: 0.1),
+                    color: (kpi.isPositive ? Colors.green : Colors.red)
+                        .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        kpi.isPositive ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
+                        kpi.isPositive
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded,
                         size: 10,
                         color: kpi.isPositive ? Colors.green : Colors.red,
                       ),
                       const SizedBox(width: 2),
                       Text(
                         kpi.change,
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: kpi.isPositive ? Colors.green : Colors.red),
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: kpi.isPositive ? Colors.green : Colors.red,
+                        ),
                       ),
                     ],
                   ),
@@ -181,9 +267,22 @@ class _KPICard extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Text(kpi.value, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22, color: kpi.color)),
+            Text(
+              kpi.value,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 22,
+                color: kpi.color,
+              ),
+            ),
             const SizedBox(height: 2),
-            Text(kpi.name, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+            Text(
+              kpi.name,
+              style: TextStyle(
+                fontSize: 12,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
             const SizedBox(height: 8),
             SizedBox(
               height: 24,
@@ -209,9 +308,10 @@ class _SparklinePainter extends CustomPainter {
     if (data.isEmpty) return;
     final paint = Paint()
       ..color = color
-      ..strokeWidth = 2
+      ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
     final maxVal = data.reduce((a, b) => a > b ? a : b).toDouble();
     final minVal = data.reduce((a, b) => a < b ? a : b).toDouble();
@@ -266,8 +366,20 @@ class _KPIDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(kpi.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                      Text('Last 7 days', style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                      Text(
+                        kpi.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        'Last 7 days',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -280,24 +392,49 @@ class _KPIDetails extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Current', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
-                    Text(kpi.value, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: kpi.color)),
+                    Text(
+                      'Current',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
+                    ),
+                    Text(
+                      kpi.value,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        color: kpi.color,
+                      ),
+                    ),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Change', style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.5))),
+                    Text(
+                      'Change',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
+                    ),
                     Row(
                       children: [
                         Icon(
-                          kpi.isPositive ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
+                          kpi.isPositive
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
                           size: 16,
                           color: kpi.isPositive ? Colors.green : Colors.red,
                         ),
                         Text(
                           kpi.change,
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: kpi.isPositive ? Colors.green : Colors.red),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: kpi.isPositive ? Colors.green : Colors.red,
+                          ),
                         ),
                       ],
                     ),
@@ -321,9 +458,20 @@ class _KPIDetails extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: OutlinedButton(onPressed: onClose, child: const Text('Export'))),
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: onClose,
+                    child: const Text('Export'),
+                  ),
+                ),
                 const SizedBox(width: 10),
-                Expanded(child: FilledButton(onPressed: onClose, style: FilledButton.styleFrom(backgroundColor: kpi.color), child: const Text('Details'))),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: onClose,
+                    style: FilledButton.styleFrom(backgroundColor: kpi.color),
+                    child: const Text('Details'),
+                  ),
+                ),
               ],
             ),
           ],
@@ -343,31 +491,35 @@ class _ChartsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _SectionHeader(
-            title: 'Revenue Chart',
-            subtitle: 'Monthly breakdown with interactive data points',
-            icon: Icons.bar_chart_rounded,
-            color: Colors.blue,
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 900),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _SectionHeader(
+                title: 'Revenue Chart',
+                subtitle: 'Monthly breakdown with interactive data points',
+                icon: Icons.bar_chart_rounded,
+                color: Color(0xFF3B82F6), // Blue
+              ),
+              const SizedBox(height: 16),
+              _BarChartSection(publicState: publicState),
+              const SizedBox(height: 24),
+              const _SectionHeader(
+                title: 'Traffic Sources',
+                subtitle: 'Hover over segments for details',
+                icon: Icons.pie_chart_rounded,
+                color: Color(0xFF8B5CF6), // Purple
+              ),
+              const SizedBox(height: 16),
+              _PieChartSection(publicState: publicState),
+            ],
           ),
-          const SizedBox(height: 16),
-          _BarChartSection(publicState: publicState),
-          const SizedBox(height: 24),
-          _SectionHeader(
-            title: 'Traffic Sources',
-            subtitle: 'Hover over segments for details',
-            icon: Icons.pie_chart_rounded,
-            color: Colors.purple,
-          ),
-          const SizedBox(height: 16),
-          _PieChartSection(publicState: publicState),
-        ],
+        ),
       ),
     );
   }
@@ -393,45 +545,83 @@ class _BarChartSection extends StatelessWidget {
     final maxValue = data.map((d) => d.value).reduce((a, b) => a > b ? a : b);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          SizedBox(
-            height: 180,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: data.map((d) => Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: TooltipCard.builder(
-                    publicState: publicState,
-                    placementSide: TooltipCardPlacementSide.top,
-                    beakEnabled: true,
-                    whenContentVisible: WhenContentVisible.hoverButton,
-                    builder: (ctx, close) => _BarTooltip(data: d),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          height: (d.value / maxValue) * 140,
-                          decoration: BoxDecoration(
-                            color: d.color,
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(d.label, style: TextStyle(fontSize: 11, color: colorScheme.onSurface.withValues(alpha: 0.6))),
-                      ],
-                    ),
+          // Simulated Grid Lines
+          Stack(
+            children: [
+              Column(
+                children: List.generate(
+                  4,
+                  (i) => Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    height: 1,
+                    color: colorScheme.outline.withValues(alpha: 0.1),
                   ),
                 ),
-              )).toList(),
-            ),
+              ),
+              SizedBox(
+                height: 180,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: data
+                      .map(
+                        (d) => Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            child: TooltipCard.builder(
+                              publicState: publicState,
+                              placementSide: TooltipCardPlacementSide.top,
+                              beakEnabled: true,
+                              whenContentVisible:
+                                  WhenContentVisible.hoverButton,
+                              builder: (ctx, close) => _BarTooltip(data: d),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  AnimatedContainer(
+                                    duration: const Duration(milliseconds: 300),
+                                    height: (d.value / maxValue) * 140,
+                                    decoration: BoxDecoration(
+                                      color: d.color,
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(6),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    d.label,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: colorScheme.onSurface.withValues(
+                                        alpha: 0.6,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -459,7 +649,14 @@ class _BarTooltip extends StatelessWidget {
         children: [
           Text(data.label, style: const TextStyle(fontWeight: FontWeight.w600)),
           const SizedBox(height: 4),
-          Text('\$${data.value.toStringAsFixed(0)}', style: TextStyle(color: data.color, fontWeight: FontWeight.w700, fontSize: 16)),
+          Text(
+            '\$${data.value.toStringAsFixed(0)}',
+            style: TextStyle(
+              color: data.color,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
+          ),
         ],
       ),
     );
@@ -483,10 +680,18 @@ class _PieChartSection extends StatelessWidget {
     ];
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -505,11 +710,14 @@ class _PieChartSection extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest,
+                  color: colorScheme.surface,
                   shape: BoxShape.circle,
                 ),
                 child: const Center(
-                  child: Text('100%', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+                  child: Text(
+                    '100%',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                  ),
                 ),
               ),
             ),
@@ -517,7 +725,12 @@ class _PieChartSection extends StatelessWidget {
           const SizedBox(width: 20),
           Expanded(
             child: Column(
-              children: sources.map((s) => _TrafficSourceRow(source: s, publicState: publicState)).toList(),
+              children: sources
+                  .map(
+                    (s) =>
+                        _TrafficSourceRow(source: s, publicState: publicState),
+                  )
+                  .toList(),
             ),
           ),
         ],
@@ -540,7 +753,6 @@ class _TrafficSourceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -556,11 +768,23 @@ class _TrafficSourceRow extends StatelessWidget {
             Container(
               width: 10,
               height: 10,
-              decoration: BoxDecoration(color: source.color, shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                color: source.color,
+                shape: BoxShape.circle,
+              ),
             ),
             const SizedBox(width: 8),
-            Expanded(child: Text(source.name, style: const TextStyle(fontSize: 12))),
-            Text('${source.percentage}%', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: source.color)),
+            Expanded(
+              child: Text(source.name, style: const TextStyle(fontSize: 12)),
+            ),
+            Text(
+              '${source.percentage}%',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: source.color,
+              ),
+            ),
           ],
         ),
       ),
@@ -580,11 +804,29 @@ class _TrafficTooltip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(source.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+          Text(
+            source.name,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
           const SizedBox(height: 4),
-          Text('${source.percentage}% of total traffic', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
+          Text(
+            '${source.percentage}% of total traffic',
+            style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
+          ),
           const SizedBox(height: 4),
-          Text('~${(source.percentage * 84.21).toInt()} visitors', style: TextStyle(fontSize: 12, color: source.color, fontWeight: FontWeight.w600)),
+          Text(
+            '~${(source.percentage * 84.21).toInt()} visitors',
+            style: TextStyle(
+              fontSize: 12,
+              color: source.color,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
@@ -601,18 +843,198 @@ class _ReportsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final reports = [
-      _Report('Sales Report', 'Monthly sales performance', 'Dec 2024', 'PDF', Colors.red, Icons.picture_as_pdf_rounded),
-      _Report('User Analytics', 'User behavior analysis', 'Q4 2024', 'Excel', Colors.green, Icons.table_chart_rounded),
-      _Report('Marketing ROI', 'Campaign performance', 'Nov 2024', 'PDF', Colors.blue, Icons.campaign_rounded),
-      _Report('Inventory Report', 'Stock levels & turnover', 'Dec 2024', 'CSV', Colors.orange, Icons.inventory_rounded),
-      _Report('Financial Summary', 'P&L and balance sheet', 'Q4 2024', 'PDF', Colors.purple, Icons.account_balance_rounded),
+      _Report(
+        'Sales Report',
+        'Monthly sales performance',
+        'Dec 2024',
+        'PDF',
+        Colors.red,
+        Icons.picture_as_pdf_rounded,
+      ),
+      _Report(
+        'User Analytics',
+        'User behavior analysis',
+        'Q4 2024',
+        'Excel',
+        Colors.green,
+        Icons.table_chart_rounded,
+      ),
+      _Report(
+        'Marketing ROI',
+        'Campaign performance',
+        'Nov 2024',
+        'PDF',
+        Colors.blue,
+        Icons.campaign_rounded,
+      ),
+      _Report(
+        'Inventory Report',
+        'Stock levels & turnover',
+        'Dec 2024',
+        'CSV',
+        Colors.orange,
+        Icons.inventory_rounded,
+      ),
+      _Report(
+        'Financial Summary',
+        'P&L and balance sheet',
+        'Q4 2024',
+        'PDF',
+        Colors.purple,
+        Icons.account_balance_rounded,
+      ),
     ];
 
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: reports.length,
-      itemBuilder: (ctx, i) => _ReportCard(report: reports[i], publicState: publicState),
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const _SectionHeader(
+                title: 'Financial & Usage Reports',
+                subtitle: 'Download or share monthly reports',
+                icon: Icons.assessment_rounded,
+                color: Color(0xFF8B5CF6), // Purple
+              ),
+              const SizedBox(height: 16),
+              // Filter Bar
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: colorScheme.outline.withValues(alpha: 0.1),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colorScheme.shadow.withValues(alpha: 0.05),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search reports...',
+                          prefixIcon: Icon(
+                            Icons.search_rounded,
+                            color: colorScheme.onSurface.withValues(alpha: 0.5),
+                          ),
+                          filled: true,
+                          fillColor: colorScheme.surface,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  TooltipCard.builder(
+                    publicState: publicState,
+                    placementSide: TooltipCardPlacementSide.bottomEnd,
+                    beakEnabled: true,
+                    whenContentVisible: WhenContentVisible.pressButton,
+                    modalBarrierEnabled: true,
+                    barrierBlur: 2,
+                    builder: (ctx, close) => Container(
+                      width: 200,
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            'Filter by Type',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const Divider(),
+                          _MenuItem(
+                            icon: Icons.picture_as_pdf_rounded,
+                            label: 'PDF Documents',
+                            onTap: close,
+                          ),
+                          _MenuItem(
+                            icon: Icons.table_chart_rounded,
+                            label: 'Excel Spreadsheets',
+                            onTap: close,
+                          ),
+                          _MenuItem(
+                            icon: Icons.inventory_rounded,
+                            label: 'CSV Data',
+                            onTap: close,
+                          ),
+                        ],
+                      ),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: colorScheme.outline.withValues(alpha: 0.1),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colorScheme.shadow.withValues(alpha: 0.05),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(Icons.filter_list_rounded),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              ...reports.map(
+                (r) => _ReportCard(report: r, publicState: publicState),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MenuItem extends StatelessWidget {
+  const _MenuItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(width: 12),
+            Text(label, style: const TextStyle(fontSize: 14)),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -621,7 +1043,14 @@ class _Report {
   final String name, description, period, format;
   final Color color;
   final IconData icon;
-  _Report(this.name, this.description, this.period, this.format, this.color, this.icon);
+  _Report(
+    this.name,
+    this.description,
+    this.period,
+    this.format,
+    this.color,
+    this.icon,
+  );
 }
 
 class _ReportCard extends StatelessWidget {
@@ -638,8 +1067,16 @@ class _ReportCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(14),
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -656,29 +1093,62 @@ class _ReportCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(report.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  Text(
+                    report.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(report.description, style: TextStyle(fontSize: 12, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+                  Text(
+                    report.description,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
                   const SizedBox(height: 6),
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: colorScheme.surfaceContainerHighest,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
                         ),
-                        child: Text(report.period, style: TextStyle(fontSize: 10, color: colorScheme.onSurface.withValues(alpha: 0.7))),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surface,
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
+                            color: colorScheme.outline.withValues(alpha: 0.2),
+                          ),
+                        ),
+                        child: Text(
+                          report.period,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: colorScheme.onSurface.withValues(alpha: 0.7),
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: report.color.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text(report.format, style: TextStyle(fontSize: 10, color: report.color, fontWeight: FontWeight.w600)),
+                        child: Text(
+                          report.format,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: report.color,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -694,7 +1164,10 @@ class _ReportCard extends StatelessWidget {
                   whenContentVisible: WhenContentVisible.hoverButton,
                   builder: (ctx, close) => const Padding(
                     padding: EdgeInsets.all(8),
-                    child: Text('Download report', style: TextStyle(fontSize: 11)),
+                    child: Text(
+                      'Download report',
+                      style: TextStyle(fontSize: 11),
+                    ),
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(8),
@@ -702,7 +1175,11 @@ class _ReportCard extends StatelessWidget {
                       color: report.color,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.download_rounded, size: 18, color: Colors.white),
+                    child: const Icon(
+                      Icons.download_rounded,
+                      size: 18,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -717,9 +1194,15 @@ class _ReportCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
+                      border: Border.all(
+                        color: colorScheme.outline.withValues(alpha: 0.2),
+                      ),
                     ),
-                    child: Icon(Icons.more_vert_rounded, size: 18, color: colorScheme.onSurface.withValues(alpha: 0.6)),
+                    child: Icon(
+                      Icons.more_vert_rounded,
+                      size: 18,
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
                   ),
                 ),
               ],
@@ -742,10 +1225,27 @@ class _ReportActions extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _ActionItem(icon: Icons.visibility_rounded, label: 'Preview', onTap: onClose),
-          _ActionItem(icon: Icons.share_rounded, label: 'Share', onTap: onClose),
-          _ActionItem(icon: Icons.schedule_rounded, label: 'Schedule', onTap: onClose),
-          _ActionItem(icon: Icons.delete_rounded, label: 'Delete', onTap: onClose, isDestructive: true),
+          _ActionItem(
+            icon: Icons.visibility_rounded,
+            label: 'Preview',
+            onTap: onClose,
+          ),
+          _ActionItem(
+            icon: Icons.share_rounded,
+            label: 'Share',
+            onTap: onClose,
+          ),
+          _ActionItem(
+            icon: Icons.schedule_rounded,
+            label: 'Schedule',
+            onTap: onClose,
+          ),
+          _ActionItem(
+            icon: Icons.delete_rounded,
+            label: 'Delete',
+            onTap: onClose,
+            isDestructive: true,
+          ),
         ],
       ),
     );
@@ -757,7 +1257,12 @@ class _ReportActions extends StatelessWidget {
 // =============================================================================
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.title, required this.subtitle, required this.icon, required this.color});
+  const _SectionHeader({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.color,
+  });
   final String title, subtitle;
   final IconData icon;
   final Color color;
@@ -780,8 +1285,20 @@ class _SectionHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
-              Text(subtitle, style: TextStyle(fontSize: 13, color: colorScheme.onSurface.withValues(alpha: 0.6))),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
+              ),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
             ],
           ),
         ),
@@ -791,7 +1308,12 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _ActionItem extends StatelessWidget {
-  const _ActionItem({required this.icon, required this.label, required this.onTap, this.isDestructive = false});
+  const _ActionItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.isDestructive = false,
+  });
   final IconData icon;
   final String label;
   final VoidCallback onTap;
@@ -799,7 +1321,9 @@ class _ActionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Theme.of(context).colorScheme.onSurface;
+    final color = isDestructive
+        ? Colors.red
+        : Theme.of(context).colorScheme.onSurface;
     return InkWell(
       onTap: onTap,
       child: Padding(

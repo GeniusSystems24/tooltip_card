@@ -21,36 +21,48 @@ class DemoPage extends StatelessWidget {
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
+      scaffoldBackgroundColor: isDark
+          ? const Color(0xFF0B0E14) // Deep, rich dark background
+          : const Color(0xFFF0F4F8), // Crisp, cool light background
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF6366F1), // Indigo
+        seedColor: const Color(0xFF6366F1), // Vibrant Indigo
+        primary: const Color(0xFF6366F1),
+        secondary: const Color(0xFFEC4899), // Pink splash for accents
+        tertiary: const Color(0xFF8B5CF6), // Violet for variety
         brightness: brightness,
+        surface: isDark ? const Color(0xFF151922) : Colors.white,
       ),
       fontFamily: 'Inter',
       cardTheme: CardThemeData(
         elevation: 0,
+        color: isDark ? const Color(0xFF1A1F2C) : Colors.white,
+        clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
             color: isDark
-                ? Colors.white10
-                : Colors.black.withValues(alpha: 0.06),
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.black.withValues(alpha: 0.03),
           ),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
+          elevation: 4,
+          shadowColor: const Color(0xFF6366F1).withValues(alpha: 0.4),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
+          side: const BorderSide(color: Color(0xFF6366F1)),
         ),
       ),
     );
@@ -185,46 +197,101 @@ class _DemoContentState extends State<_DemoContent> {
 
   Widget _buildHeroSection(ColorScheme colorScheme, bool isDark) {
     return Container(
-      padding: const EdgeInsets.all(28),
+      padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            colorScheme.primaryContainer.withValues(alpha: 0.4),
-            colorScheme.tertiaryContainer.withValues(alpha: 0.3),
-          ],
+          colors: isDark
+              ? [
+                  const Color(0xFF4F46E5),
+                  const Color(0xFF7C3AED),
+                ] // Indigo to Violet
+              : [
+                  const Color(0xFFEEF2FF),
+                  const Color(0xFFE0E7FF),
+                ], // Soft indigo tint
+          stops: const [0.0, 1.0],
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.1)),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.white.withValues(alpha: 0.8),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.primary.withValues(alpha: isDark ? 0.4 : 0.15),
+            blurRadius: 40,
+            offset: const Offset(0, 20),
+            spreadRadius: -10,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.auto_awesome, color: colorScheme.primary, size: 28),
-              const SizedBox(width: 12),
-              Text(
-                'Fluent-Inspired Tooltips',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.primary.withValues(alpha: 0.2),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.auto_awesome,
+                  color: Color(0xFF4F46E5),
+                  size: 32,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Fluent-Inspired Tooltips',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Premium Interaction Design',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.primary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 24),
           Text(
             'Beautiful, customizable tooltip cards with smart positioning, 7 trigger modes (including touch-friendly), modal barriers, and smooth animations.',
             style: TextStyle(
-              fontSize: 15,
-              color: colorScheme.onSurface.withValues(alpha: 0.7),
-              height: 1.5,
+              fontSize: 16,
+              color: colorScheme.onSurface.withValues(alpha: 0.8),
+              height: 1.6,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 32),
           TooltipCard.builder(
             publicState: _publicState,
             placementSide: TooltipCardPlacementSide.bottom,
@@ -246,7 +313,15 @@ class _DemoContentState extends State<_DemoContent> {
             child: FilledButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.play_arrow_rounded),
-              label: const Text('Try it now'),
+              label: const Text('Try Live Demo'),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF4F46E5),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 28,
+                  vertical: 16,
+                ),
+              ),
             ),
           ),
         ],
@@ -259,20 +334,31 @@ class _DemoContentState extends State<_DemoContent> {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: colorScheme.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(
+              colors: [
+                colorScheme.primary.withValues(alpha: 0.15),
+                colorScheme.secondary.withValues(alpha: 0.1),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: colorScheme.primary.withValues(alpha: 0.15),
+            ),
           ),
-          child: Icon(icon, color: colorScheme.primary, size: 20),
+          child: Icon(icon, color: colorScheme.primary, size: 22),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 14),
         Text(
           title,
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
             color: colorScheme.onSurface,
+            letterSpacing: -0.5,
           ),
         ),
       ],
@@ -456,7 +542,11 @@ class _DemoContentState extends State<_DemoContent> {
             // Touch/Mobile Triggers
             Row(
               children: [
-                Icon(Icons.smartphone_rounded, color: colorScheme.tertiary, size: 20),
+                Icon(
+                  Icons.smartphone_rounded,
+                  color: colorScheme.tertiary,
+                  size: 20,
+                ),
                 const SizedBox(width: 10),
                 Text(
                   'Touch Triggers',
@@ -467,7 +557,10 @@ class _DemoContentState extends State<_DemoContent> {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: colorScheme.tertiary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(6),
@@ -744,16 +837,18 @@ class _DemoContentState extends State<_DemoContent> {
         // Dark Theme Style
         TooltipCard.builder(
           publicState: _publicState,
-          flyoutBackgroundColor: const Color(0xFF1E1E1E),
-          beakColor: const Color(0xFF1E1E1E),
+          flyoutBackgroundColor: const Color(0xFF0F172A), // Deep Slate
+          beakColor: const Color(0xFF0F172A),
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
           elevation: 12,
+          borderWidth: 1,
+          borderColor: Colors.white.withValues(alpha: 0.1),
           builder: (ctx, close) => DefaultTextStyle(
             style: const TextStyle(color: Colors.white),
             child: TooltipCardContent(
               icon: const Icon(Icons.dark_mode_rounded),
-              iconColor: Colors.blueAccent,
+              iconColor: const Color(0xFF818CF8), // Indigo 400
               title: 'Dark Theme',
               titleStyle: const TextStyle(
                 color: Colors.white,
@@ -764,17 +859,18 @@ class _DemoContentState extends State<_DemoContent> {
               primaryAction: FilledButton(
                 onPressed: close,
                 style: FilledButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: const Color(0xFF6366F1), // Indigo 500
+                  foregroundColor: Colors.white,
                 ),
                 child: const Text('Nice!'),
               ),
               onClose: close,
             ),
           ),
-          child: _StyleCard(
+          child: const _StyleCard(
             icon: Icons.dark_mode_rounded,
             label: 'Dark',
-            color: const Color(0xFF1E1E1E),
+            color: Color(0xFF0F172A),
             textColor: Colors.white,
           ),
         ),
@@ -782,195 +878,234 @@ class _DemoContentState extends State<_DemoContent> {
         // Gradient Style
         TooltipCard.builder(
           publicState: _publicState,
-          flyoutBackgroundColor: colorScheme.primaryContainer,
-          beakColor: colorScheme.primaryContainer,
+          flyoutBackgroundColor: const Color(0xFF6366F1), // Indigo 500
+          beakColor: const Color(0xFF6366F1),
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
-          builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.gradient_rounded),
-            iconColor: colorScheme.primary,
-            title: 'Primary Container',
-            subtitle: 'Uses theme primary container colors',
-            primaryAction: FilledButton(
-              onPressed: close,
-              child: const Text('Beautiful!'),
+          elevation: 8,
+
+          builder: (ctx, close) => DefaultTextStyle(
+            style: const TextStyle(color: Colors.white),
+            child: TooltipCardContent(
+              icon: const Icon(Icons.auto_awesome_rounded),
+              iconColor: Colors.white,
+              title: 'Vibrant',
+              titleStyle: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              subtitle: 'Rich gradient background',
+              subtitleStyle: TextStyle(
+                color: Colors.white.withValues(alpha: 0.8),
+              ),
+              primaryAction: FilledButton(
+                onPressed: close,
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xFF6366F1),
+                ),
+                child: const Text('Beautiful!'),
+              ),
+              onClose: close,
             ),
-            onClose: close,
           ),
-          child: _StyleCard(
+          child: const _StyleCard(
             icon: Icons.gradient_rounded,
-            label: 'Primary',
-            color: colorScheme.primaryContainer,
-            textColor: colorScheme.onPrimaryContainer,
+            label: 'Gradient',
+            color: Color(0xFF6366F1),
+            textColor: Colors.white,
           ),
         ),
 
         // Warning Style
         TooltipCard.builder(
           publicState: _publicState,
-          flyoutBackgroundColor: Colors.amber.shade50,
-          beakColor: Colors.amber.shade50,
+          flyoutBackgroundColor: const Color(0xFFFFFBEB), // Amber 50
+          beakColor: const Color(0xFFFFFBEB),
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
+          borderColor: const Color(0xFFFCD34D), // Amber 300
+          borderWidth: 1,
           builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.warning_rounded),
-            iconColor: Colors.amber.shade700,
+            icon: const Icon(Icons.warning_amber_rounded),
+            iconColor: const Color(0xFFD97706), // Amber 600
             title: 'Warning',
             subtitle: 'Attention-grabbing warning style',
             primaryAction: FilledButton(
               onPressed: close,
               style: FilledButton.styleFrom(
-                backgroundColor: Colors.amber.shade700,
+                backgroundColor: const Color(0xFFD97706),
+                foregroundColor: Colors.white,
               ),
               child: const Text('Understood'),
             ),
             onClose: close,
           ),
-          child: _StyleCard(
-            icon: Icons.warning_rounded,
+          child: const _StyleCard(
+            icon: Icons.warning_amber_rounded,
             label: 'Warning',
-            color: Colors.amber.shade100,
-            textColor: Colors.amber.shade900,
+            color: Color(0xFFFFFBEB),
+            textColor: Color(0xFFD97706),
           ),
         ),
 
         // Success Style
         TooltipCard.builder(
           publicState: _publicState,
-          flyoutBackgroundColor: Colors.green.shade50,
-          beakColor: Colors.green.shade50,
+          flyoutBackgroundColor: const Color(0xFFECFDF5), // Emerald 50
+          beakColor: const Color(0xFFECFDF5),
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
+          borderColor: const Color(0xFF6EE7B7), // Emerald 300
+          borderWidth: 1,
           builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.check_circle_rounded),
-            iconColor: Colors.green.shade700,
+            icon: const Icon(Icons.check_circle_outline_rounded),
+            iconColor: const Color(0xFF059669), // Emerald 600
             title: 'Success',
             subtitle: 'Operation completed successfully',
             primaryAction: FilledButton(
               onPressed: close,
               style: FilledButton.styleFrom(
-                backgroundColor: Colors.green.shade600,
+                backgroundColor: const Color(0xFF059669),
+                foregroundColor: Colors.white,
               ),
               child: const Text('Great!'),
             ),
             onClose: close,
           ),
-          child: _StyleCard(
-            icon: Icons.check_circle_rounded,
+          child: const _StyleCard(
+            icon: Icons.check_circle_outline_rounded,
             label: 'Success',
-            color: Colors.green.shade100,
-            textColor: Colors.green.shade900,
+            color: Color(0xFFECFDF5),
+            textColor: Color(0xFF059669),
           ),
         ),
 
         // Info Style
         TooltipCard.builder(
           publicState: _publicState,
-          flyoutBackgroundColor: Colors.blue.shade50,
-          beakColor: Colors.blue.shade50,
+          flyoutBackgroundColor: const Color(0xFFEFF6FF), // Blue 50
+          beakColor: const Color(0xFFEFF6FF),
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
+          borderColor: const Color(0xFF93C5FD), // Blue 300
+          borderWidth: 1,
           builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.info_rounded),
-            iconColor: Colors.blue.shade700,
+            icon: const Icon(Icons.info_outline_rounded),
+            iconColor: const Color(0xFF2563EB), // Blue 600
             title: 'Information',
             subtitle: 'Helpful information for users',
             primaryAction: FilledButton(
               onPressed: close,
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF2563EB),
+                foregroundColor: Colors.white,
+              ),
               child: const Text('Got it'),
             ),
             onClose: close,
           ),
-          child: _StyleCard(
-            icon: Icons.info_rounded,
+          child: const _StyleCard(
+            icon: Icons.info_outline_rounded,
             label: 'Info',
-            color: Colors.blue.shade100,
-            textColor: Colors.blue.shade900,
+            color: Color(0xFFEFF6FF),
+            textColor: Color(0xFF2563EB),
           ),
         ),
 
         // Rounded Style
         TooltipCard.builder(
           publicState: _publicState,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(28),
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
-          elevation: 16,
+          elevation: 12,
+
           builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.circle_rounded),
-            iconColor: colorScheme.primary,
+            icon: const Icon(Icons.circle_notifications_rounded),
+            iconColor: const Color(0xFF8B5CF6), // Violet 500
             title: 'Extra Rounded',
             subtitle: 'Soft, friendly appearance',
             primaryAction: FilledButton(
               onPressed: close,
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF8B5CF6),
+                foregroundColor: Colors.white,
+                shape: const StadiumBorder(),
+              ),
               child: const Text('Love it!'),
             ),
             onClose: close,
           ),
-          child: _StyleCard(
-            icon: Icons.circle_rounded,
+          child: const _StyleCard(
+            icon: Icons.circle_notifications_rounded,
             label: 'Rounded',
-            color: colorScheme.surfaceContainerHighest,
-            textColor: colorScheme.onSurface,
+            color: Color(0xFFF5F3FF), // Violet 50
+            textColor: Color(0xFF7C3AED), // Violet 600
           ),
         ),
 
-        // Bordered Style - NEW!
+        // Bordered Style
+        TooltipCard.builder(
+          publicState: _publicState,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          elevation: 0,
+          borderColor: const Color(0xFFE2E8F0), // Slate 200
+          borderWidth: 1.5,
+          builder: (ctx, close) => TooltipCardContent(
+            icon: const Icon(Icons.border_style_rounded),
+            iconColor: const Color(0xFF475569), // Slate 600
+            title: 'Bordered',
+            subtitle: 'Clean, unexpected border style',
+            primaryAction: OutlinedButton(
+              onPressed: close,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: const Color(0xFF475569),
+                side: const BorderSide(color: Color(0xFFCBD5E1)),
+              ),
+              child: const Text('Nice'),
+            ),
+            onClose: close,
+          ),
+          child: const _StyleCard(
+            icon: Icons.border_style_rounded,
+            label: 'Bordered',
+            color: Colors.white,
+            textColor: Color(0xFF475569),
+          ),
+        ),
+
+        // Error Style
         TooltipCard.builder(
           publicState: _publicState,
           placementSide: TooltipCardPlacementSide.bottom,
           beakEnabled: true,
           elevation: 4,
-          borderColor: colorScheme.primary,
-          borderWidth: 1.5,
+          flyoutBackgroundColor: const Color(0xFFFEF2F2), // Red 50
+          beakColor: const Color(0xFFFEF2F2),
+          borderColor: const Color(0xFFFECACA), // Red 200
+          borderWidth: 1,
           builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.border_all_rounded),
-            iconColor: colorScheme.primary,
-            title: 'Bordered Style',
-            subtitle: 'Clean border on panel and beak',
-            primaryAction: FilledButton(
-              onPressed: close,
-              child: const Text('Nice!'),
-            ),
-            onClose: close,
-          ),
-          child: _StyleCard(
-            icon: Icons.border_all_rounded,
-            label: 'Bordered',
-            color: colorScheme.surface,
-            textColor: colorScheme.primary,
-          ),
-        ),
-
-        // Outlined Error Style
-        TooltipCard.builder(
-          publicState: _publicState,
-          placementSide: TooltipCardPlacementSide.bottom,
-          beakEnabled: true,
-          elevation: 2,
-          flyoutBackgroundColor: Colors.red.shade50,
-          beakColor: Colors.red.shade50,
-          borderColor: Colors.red.shade400,
-          borderWidth: 1.5,
-          builder: (ctx, close) => TooltipCardContent(
-            icon: const Icon(Icons.error_outline_rounded),
-            iconColor: Colors.red.shade700,
+            icon: const Icon(Icons.report_gmailerrorred_rounded),
+            iconColor: const Color(0xFFDC2626), // Red 600
             title: 'Error Alert',
-            subtitle: 'Bordered error notification style',
+            subtitle: 'Critical system notification',
             primaryAction: FilledButton(
               onPressed: close,
               style: FilledButton.styleFrom(
-                backgroundColor: Colors.red.shade600,
+                backgroundColor: const Color(0xFFDC2626),
+                foregroundColor: Colors.white,
               ),
-              child: const Text('Dismiss'),
+              child: const Text('Fix Issue'),
             ),
             onClose: close,
           ),
-          child: _StyleCard(
-            icon: Icons.error_outline_rounded,
+          child: const _StyleCard(
+            icon: Icons.report_gmailerrorred_rounded,
             label: 'Error',
-            color: Colors.red.shade50,
-            textColor: Colors.red.shade700,
+            color: Color(0xFFFEF2F2),
+            textColor: Color(0xFFDC2626),
           ),
         ),
       ],
@@ -1146,7 +1281,9 @@ class _TriggerModeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     final accentColor = isTouch ? colorScheme.tertiary : colorScheme.primary;
 
     return TooltipCard.builder(
@@ -1171,9 +1308,20 @@ class _TriggerModeCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: accentColor.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: accentColor.withValues(alpha: 0.2)),
+          color: isDark ? accentColor.withValues(alpha: 0.1) : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark
+                ? accentColor.withValues(alpha: 0.2)
+                : Colors.grey.withValues(alpha: 0.1),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: accentColor.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -1303,26 +1451,41 @@ class _StyleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      width: 110,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(10),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            color,
+            color.withValues(alpha: 0.8), // Slightly darker/lighter
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: color.withValues(alpha: 0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: color.withValues(alpha: 0.25),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-      child: Row(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 18, color: textColor),
-          const SizedBox(width: 8),
+          Icon(icon, color: textColor, size: 28),
+          const SizedBox(height: 8),
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.w600, color: textColor),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -1455,8 +1618,28 @@ class _ExampleCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: colorScheme.outline.withValues(alpha: 0.1),
+          width: 1,
+        ),
+      ),
+      color: colorScheme.surface, // Ensure surface color for card
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              colorScheme.surface,
+              colorScheme.surfaceContainerLowest.withValues(alpha: 0.5),
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1520,7 +1703,7 @@ class _DataGridExample extends StatelessWidget {
         'Senior Developer',
         85000,
         'Active',
-        Colors.green,
+        const Color(0xFF059669),
       ),
       _Employee(
         'Sara Ali',
@@ -1529,7 +1712,7 @@ class _DataGridExample extends StatelessWidget {
         'UI/UX Lead',
         75000,
         'Active',
-        Colors.green,
+        const Color(0xFF059669),
       ),
       _Employee(
         'Mohamed Khaled',
@@ -1538,7 +1721,7 @@ class _DataGridExample extends StatelessWidget {
         'Marketing Manager',
         70000,
         'On Leave',
-        Colors.orange,
+        const Color(0xFFD97706),
       ),
       _Employee(
         'Fatima Omar',
@@ -1547,7 +1730,7 @@ class _DataGridExample extends StatelessWidget {
         'HR Specialist',
         55000,
         'Active',
-        Colors.green,
+        const Color(0xFF059669),
       ),
     ];
 
@@ -1959,7 +2142,7 @@ class _ActionMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isDestructive
-        ? Colors.red
+        ? const Color(0xFFDC2626) // Red 600
         : Theme.of(context).colorScheme.onSurface;
 
     return InkWell(
@@ -2080,24 +2263,24 @@ class _InvoiceExample extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade100,
+                      color: const Color(0xFFFFF7ED), // Orange 50
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           Icons.schedule,
                           size: 14,
-                          color: Colors.amber.shade800,
+                          color: Color(0xFF9A3412), // Orange 800
                         ),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 6),
                         Text(
                           'Pending',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: Colors.amber.shade800,
+                            color: Color(0xFF9A3412), // Orange 800
                           ),
                         ),
                       ],
@@ -2398,18 +2581,18 @@ class _InvoiceStatusTooltip extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 12),
-          _StatusOption(
+          const _StatusOption(
             icon: Icons.hourglass_empty,
             label: 'Pending',
             color: Colors.amber,
             isSelected: true,
           ),
-          _StatusOption(
+          const _StatusOption(
             icon: Icons.check_circle_outline,
             label: 'Paid',
             color: Colors.green,
           ),
-          _StatusOption(
+          const _StatusOption(
             icon: Icons.cancel_outlined,
             label: 'Cancelled',
             color: Colors.red,
@@ -2530,7 +2713,7 @@ class _UserProfilesExample extends StatelessWidget {
         'nour@startup.io',
         '+971 50 123 4567',
         'https://linkedin.com/in/nour',
-        Colors.indigo,
+        const Color(0xFF6366F1), // Indigo 500
       ),
       _User(
         'Layla Ahmed',
@@ -2538,7 +2721,7 @@ class _UserProfilesExample extends StatelessWidget {
         'layla@startup.io',
         '+971 50 234 5678',
         'https://linkedin.com/in/layla',
-        Colors.pink,
+        const Color(0xFFEC4899), // Pink 500
       ),
       _User(
         'Youssef Mahmoud',
@@ -2546,7 +2729,7 @@ class _UserProfilesExample extends StatelessWidget {
         'youssef@startup.io',
         '+971 50 345 6789',
         'https://linkedin.com/in/youssef',
-        Colors.teal,
+        const Color(0xFF0F766E), // Teal 700
       ),
       _User(
         'Hana Kareem',
@@ -2554,7 +2737,7 @@ class _UserProfilesExample extends StatelessWidget {
         'hana@startup.io',
         '+971 50 456 7890',
         'https://linkedin.com/in/hana',
-        Colors.purple,
+        const Color(0xFF8B5CF6), // Violet 500
       ),
     ];
 
@@ -2660,7 +2843,6 @@ class _UserProfileTooltip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
       width: 280,
@@ -2728,7 +2910,7 @@ class _UserProfileTooltip extends StatelessWidget {
               children: [
                 _ContactRow(icon: Icons.email_outlined, value: user.email),
                 _ContactRow(icon: Icons.phone_outlined, value: user.phone),
-                _ContactRow(
+                const _ContactRow(
                   icon: Icons.link_rounded,
                   value: 'LinkedIn Profile',
                 ),
@@ -2803,7 +2985,7 @@ class _ProductCatalogExample extends StatelessWidget {
         4.9,
         128,
         'Electronics',
-        Colors.grey.shade800,
+        const Color(0xFF1E293B), // Slate 800
       ),
       _Product(
         'iPhone 15 Pro',
@@ -2812,7 +2994,7 @@ class _ProductCatalogExample extends StatelessWidget {
         4.8,
         256,
         'Electronics',
-        Colors.blue.shade700,
+        const Color(0xFF2563EB), // Blue 600
       ),
       _Product(
         'AirPods Pro 2',
@@ -2821,7 +3003,7 @@ class _ProductCatalogExample extends StatelessWidget {
         4.7,
         512,
         'Audio',
-        Colors.teal,
+        const Color(0xFF0D9488), // Teal 600
       ),
       _Product(
         'Apple Watch Ultra 2',
@@ -2830,7 +3012,7 @@ class _ProductCatalogExample extends StatelessWidget {
         4.9,
         89,
         'Wearables',
-        Colors.orange,
+        const Color(0xFFEA580C), // Orange 600
       ),
     ];
 
@@ -3132,7 +3314,7 @@ class _NotificationsExample extends StatelessWidget {
         _NotificationBadge(
           icon: Icons.cloud_done_rounded,
           label: 'Synced',
-          color: Colors.green,
+          color: const Color(0xFF059669), // Emerald 600
           publicState: publicState,
           tooltipTitle: 'All Changes Synced',
           tooltipMessage:
@@ -3141,7 +3323,7 @@ class _NotificationsExample extends StatelessWidget {
         _NotificationBadge(
           icon: Icons.warning_rounded,
           label: '3 Warnings',
-          color: Colors.orange,
+          color: const Color(0xFFD97706), // Amber 600
           publicState: publicState,
           tooltipTitle: 'System Warnings',
           tooltipMessage:
@@ -3151,7 +3333,7 @@ class _NotificationsExample extends StatelessWidget {
         _NotificationBadge(
           icon: Icons.error_rounded,
           label: '1 Error',
-          color: Colors.red,
+          color: const Color(0xFFDC2626), // Red 600
           publicState: publicState,
           tooltipTitle: 'Critical Error',
           tooltipMessage:
@@ -3161,7 +3343,7 @@ class _NotificationsExample extends StatelessWidget {
         _NotificationBadge(
           icon: Icons.update_rounded,
           label: 'Update Available',
-          color: Colors.blue,
+          color: const Color(0xFF2563EB), // Blue 600
           publicState: publicState,
           tooltipTitle: 'Version 2.5.0 Available',
           tooltipMessage:
@@ -3171,7 +3353,7 @@ class _NotificationsExample extends StatelessWidget {
         _NotificationBadge(
           icon: Icons.security_rounded,
           label: 'Secured',
-          color: Colors.teal,
+          color: const Color(0xFF0D9488), // Teal 600
           publicState: publicState,
           tooltipTitle: 'Connection Secure',
           tooltipMessage:
@@ -3341,7 +3523,7 @@ class _CalendarExample extends StatelessWidget {
         'Daily sync with the team',
         'Conference Room A',
         ['Ahmed', 'Sara', 'Mohamed'],
-        Colors.blue,
+        const Color(0xFF2563EB), // Blue 600
       ),
       _CalendarEvent(
         'Design Review',
@@ -3349,7 +3531,7 @@ class _CalendarExample extends StatelessWidget {
         'Review new dashboard designs',
         'Online - Zoom',
         ['Layla', 'Youssef'],
-        Colors.purple,
+        const Color(0xFF8B5CF6), // Violet 500
       ),
       _CalendarEvent(
         'Client Meeting',
@@ -3357,7 +3539,7 @@ class _CalendarExample extends StatelessWidget {
         'Quarterly review with Acme Corp',
         'Meeting Room 2',
         ['Nour', 'Ahmed'],
-        Colors.green,
+        const Color(0xFF059669), // Emerald 600
       ),
       _CalendarEvent(
         'Sprint Planning',
@@ -3365,7 +3547,7 @@ class _CalendarExample extends StatelessWidget {
         'Plan tasks for next sprint',
         'Main Hall',
         ['All Team'],
-        Colors.orange,
+        const Color(0xFFD97706), // Amber 600
       ),
     ];
 
@@ -3689,7 +3871,6 @@ class _AnalyticsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     final metrics = [
       _AnalyticsMetric(
@@ -3698,7 +3879,7 @@ class _AnalyticsExample extends StatelessWidget {
         '+12.5%',
         true,
         Icons.trending_up_rounded,
-        Colors.green,
+        const Color(0xFF059669), // Emerald 600
         [65, 72, 80, 75, 90, 95, 100],
       ),
       _AnalyticsMetric(
@@ -3707,7 +3888,7 @@ class _AnalyticsExample extends StatelessWidget {
         '+8.2%',
         true,
         Icons.people_rounded,
-        Colors.blue,
+        const Color(0xFF2563EB), // Blue 600
         [40, 50, 55, 60, 58, 70, 75],
       ),
       _AnalyticsMetric(
@@ -3716,7 +3897,7 @@ class _AnalyticsExample extends StatelessWidget {
         '-3.1%',
         false,
         Icons.shopping_cart_rounded,
-        Colors.orange,
+        const Color(0xFFD97706), // Amber 600
         [80, 75, 70, 65, 68, 62, 60],
       ),
       _AnalyticsMetric(
@@ -3725,7 +3906,7 @@ class _AnalyticsExample extends StatelessWidget {
         '+0.5%',
         true,
         Icons.auto_graph_rounded,
-        Colors.purple,
+        const Color(0xFF8B5CF6), // Violet 500
         [25, 28, 30, 32, 31, 34, 38],
       ),
     ];
@@ -4046,7 +4227,7 @@ class _FileManagerExample extends StatelessWidget {
         '2.4 MB',
         'Dec 20, 2024',
         Icons.picture_as_pdf_rounded,
-        Colors.red,
+        const Color(0xFFDC2626), // Red 600
       ),
       _FileItem(
         'Design Assets.zip',
@@ -4054,7 +4235,7 @@ class _FileManagerExample extends StatelessWidget {
         '45.8 MB',
         'Dec 22, 2024',
         Icons.folder_zip_rounded,
-        Colors.amber,
+        const Color(0xFFD97706), // Amber 600
       ),
       _FileItem(
         'Presentation.pptx',
@@ -4062,7 +4243,7 @@ class _FileManagerExample extends StatelessWidget {
         '8.2 MB',
         'Dec 23, 2024',
         Icons.slideshow_rounded,
-        Colors.orange,
+        const Color(0xFFEA580C), // Orange 600
       ),
       _FileItem(
         'Budget 2025.xlsx',
@@ -4070,7 +4251,7 @@ class _FileManagerExample extends StatelessWidget {
         '1.1 MB',
         'Dec 24, 2024',
         Icons.table_chart_rounded,
-        Colors.green,
+        const Color(0xFF059669), // Emerald 600
       ),
       _FileItem(
         'Meeting Notes.docx',
@@ -4078,7 +4259,7 @@ class _FileManagerExample extends StatelessWidget {
         '524 KB',
         'Dec 25, 2024',
         Icons.description_rounded,
-        Colors.blue,
+        const Color(0xFF2563EB), // Blue 600
       ),
     ];
 
@@ -4266,7 +4447,7 @@ class _FileMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isDestructive
-        ? Colors.red
+        ? const Color(0xFFDC2626) // Red 600
         : Theme.of(context).colorScheme.onSurface;
 
     return InkWell(
@@ -4296,40 +4477,39 @@ class _KanbanExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     final tasks = [
       _KanbanTask(
         'Implement auth flow',
         'High',
-        Colors.red,
+        const Color(0xFFDC2626), // Red 600
         'In Progress',
         'A',
-        Colors.blue,
+        const Color(0xFF2563EB), // Blue 600
       ),
       _KanbanTask(
         'Design dashboard',
         'Medium',
-        Colors.orange,
+        const Color(0xFFD97706), // Amber 600
         'Review',
         'L',
-        Colors.pink,
+        const Color(0xFFEC4899), // Pink 500
       ),
       _KanbanTask(
         'Write API docs',
         'Low',
-        Colors.green,
+        const Color(0xFF059669), // Emerald 600
         'To Do',
         'M',
-        Colors.teal,
+        const Color(0xFF0F766E), // Teal 700
       ),
       _KanbanTask(
         'Fix login bug',
         'High',
-        Colors.red,
+        const Color(0xFFDC2626), // Red 600
         'Done',
         'Y',
-        Colors.purple,
+        const Color(0xFF8B5CF6), // Violet 500
       ),
     ];
 
@@ -4456,11 +4636,11 @@ class _KanbanTaskCard extends StatelessWidget {
       case 'To Do':
         return Colors.grey;
       case 'In Progress':
-        return Colors.blue;
+        return const Color(0xFF2563EB); // Blue 600
       case 'Review':
-        return Colors.orange;
+        return const Color(0xFFD97706); // Amber 600
       case 'Done':
-        return Colors.green;
+        return const Color(0xFF059669); // Emerald 600
       default:
         return Colors.grey;
     }
@@ -4475,7 +4655,6 @@ class _KanbanTaskDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
       width: 280,
@@ -4556,11 +4735,11 @@ class _KanbanTaskDetail extends StatelessWidget {
       case 'To Do':
         return Colors.grey;
       case 'In Progress':
-        return Colors.blue;
+        return const Color(0xFF2563EB); // Blue 600
       case 'Review':
-        return Colors.orange;
+        return const Color(0xFFD97706); // Amber 600
       case 'Done':
-        return Colors.green;
+        return const Color(0xFF059669); // Emerald 600
       default:
         return Colors.grey;
     }
@@ -4865,7 +5044,7 @@ class _MessageAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isDestructive
-        ? Colors.red
+        ? const Color(0xFFDC2626) // Red 600
         : Theme.of(context).colorScheme.onSurface;
 
     return InkWell(

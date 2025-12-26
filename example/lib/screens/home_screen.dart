@@ -54,450 +54,465 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // Hero Header
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(24, 60, 24, 32),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    colorScheme.primary,
-                    colorScheme.tertiary,
+      body: Center(
+        child: CustomScrollView(
+          slivers: [
+            // Hero Header
+            SliverToBoxAdapter(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(24, 60, 24, 32),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF8B5CF6), // Violet 500
+                      Color(0xFFD946EF), // Fuchsia 500
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.primary.withValues(alpha: 0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
                   ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.primary.withValues(alpha: 0.3),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
+                child: SafeArea(
+                  bottom: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.3),
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.widgets_rounded,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'TooltipCard',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    letterSpacing: -0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.25,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: const Text(
+                                        'v2.5.0',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.greenAccent.withValues(
+                                          alpha: 0.3,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.smartphone_rounded,
+                                            size: 12,
+                                            color: Colors.greenAccent.shade100,
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            'Touch Ready',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600,
+                                              color:
+                                                  Colors.greenAccent.shade100,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          TooltipCard.builder(
+                            placementSide: TooltipCardPlacementSide.bottomEnd,
+                            beakEnabled: true,
+                            modalBarrierEnabled: true,
+                            barrierBlur: 4,
+                            flyoutBackgroundColor: isDark
+                                ? colorScheme.surfaceContainerHigh
+                                : Colors.white,
+                            beakColor: isDark
+                                ? colorScheme.surfaceContainerHigh
+                                : Colors.white,
+                            builder: (ctx, close) => TooltipCardContent(
+                              icon: const Icon(Icons.auto_awesome_rounded),
+                              iconColor: colorScheme.primary,
+                              title: 'Fluent UI Inspired',
+                              subtitle:
+                                  'Beautiful tooltips with smart positioning, 7 trigger modes, and smooth animations.',
+                              primaryAction: FilledButton(
+                                onPressed: close,
+                                child: const Text('Got it'),
+                              ),
+                              onClose: close,
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: const Icon(
+                                Icons.info_outline_rounded,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 28),
+                      Text(
+                        'Explore real-world examples',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white.withValues(alpha: 0.95),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Tap on any category to see interactive demos with various trigger modes',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white.withValues(alpha: 0.75),
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-              child: SafeArea(
-                bottom: false,
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+            // Trigger Modes Showcase
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(14),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.3),
-                            ),
+                            color: colorScheme.tertiary.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Icon(
-                            Icons.widgets_rounded,
-                            color: Colors.white,
-                            size: 32,
+                          child: Icon(
+                            Icons.touch_app_rounded,
+                            color: colorScheme.tertiary,
+                            size: 18,
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'TooltipCard',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  letterSpacing: -0.5,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withValues(alpha: 0.25),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: const Text(
-                                      'v2.5.0',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.greenAccent.withValues(alpha: 0.3),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.smartphone_rounded,
-                                          size: 12,
-                                          color: Colors.greenAccent.shade100,
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          'Touch Ready',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.greenAccent.shade100,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                        const SizedBox(width: 10),
+                        Text(
+                          'Trigger Modes',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: colorScheme.onSurface,
                           ),
                         ),
-                        TooltipCard.builder(
-                          placementSide: TooltipCardPlacementSide.bottomEnd,
-                          beakEnabled: true,
-                          modalBarrierEnabled: true,
-                          barrierBlur: 4,
-                          flyoutBackgroundColor:
-                              isDark ? colorScheme.surfaceContainerHigh : Colors.white,
-                          beakColor:
-                              isDark ? colorScheme.surfaceContainerHigh : Colors.white,
-                          builder: (ctx, close) => TooltipCardContent(
-                            icon: const Icon(Icons.auto_awesome_rounded),
-                            iconColor: colorScheme.primary,
-                            title: 'Fluent UI Inspired',
-                            subtitle:
-                                'Beautiful tooltips with smart positioning, 7 trigger modes, and smooth animations.',
-                            primaryAction: FilledButton(
-                              onPressed: close,
-                              child: const Text('Got it'),
-                            ),
-                            onClose: close,
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 3,
                           ),
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.3),
-                              ),
-                            ),
-                            child: const Icon(
-                              Icons.info_outline_rounded,
-                              color: Colors.white,
-                              size: 22,
+                          decoration: BoxDecoration(
+                            color: colorScheme.tertiary.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            '7 modes',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.tertiary,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 28),
-                    Text(
-                      'Explore real-world examples',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white.withValues(alpha: 0.95),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Tap on any category to see interactive demos with various trigger modes',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white.withValues(alpha: 0.75),
-                        height: 1.4,
+                    const SizedBox(height: 14),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          _TriggerDemo(
+                            icon: Icons.touch_app_rounded,
+                            label: 'Tap',
+                            mode: WhenContentVisible.pressButton,
+                            color: colorScheme.primary,
+                          ),
+                          _TriggerDemo(
+                            icon: Icons.mouse_rounded,
+                            label: 'Hover',
+                            mode: WhenContentVisible.hoverButton,
+                            color: colorScheme.primary,
+                          ),
+                          _TriggerDemo(
+                            icon: Icons.ads_click_rounded,
+                            label: 'Double',
+                            mode: WhenContentVisible.doubleTapButton,
+                            color: colorScheme.primary,
+                          ),
+                          _TriggerDemo(
+                            icon: Icons.pan_tool_alt_rounded,
+                            label: 'Long Press',
+                            mode: WhenContentVisible.longPressButton,
+                            color: colorScheme.tertiary,
+                            isNew: true,
+                          ),
+                          _TriggerDemo(
+                            icon: Icons.back_hand_rounded,
+                            label: 'Long Up',
+                            mode: WhenContentVisible.longPressUpButton,
+                            color: colorScheme.tertiary,
+                            isNew: true,
+                          ),
+                          _TriggerDemo(
+                            icon: Icons.compress_rounded,
+                            label: '3D Touch',
+                            mode: WhenContentVisible.forcePressButton,
+                            color: colorScheme.tertiary,
+                            isNew: true,
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
 
-          // Trigger Modes Showcase
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: colorScheme.tertiary.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(
-                          Icons.touch_app_rounded,
-                          color: colorScheme.tertiary,
-                          size: 18,
-                        ),
+            // Categories Header
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Trigger Modes',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: colorScheme.onSurface,
-                        ),
+                      child: Icon(
+                        Icons.category_rounded,
+                        color: colorScheme.primary,
+                        size: 18,
                       ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: colorScheme.tertiary.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          '7 modes',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.tertiary,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Example Categories',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Categories Grid
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              sliver: SliverGrid(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 250,
+                  mainAxisSpacing: 14,
+                  crossAxisSpacing: 14,
+                  childAspectRatio: 0.88,
+                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  if (index < categories.length) {
+                    return _CategoryCard(category: categories[index]);
+                  }
+                  return null;
+                }, childCount: categories.length),
+              ),
+            ),
+
+            // Features Section
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 28, 20, 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: colorScheme.secondary.withValues(
+                              alpha: 0.15,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.star_rounded,
+                            color: colorScheme.secondary,
+                            size: 18,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        _TriggerDemo(
-                          icon: Icons.touch_app_rounded,
-                          label: 'Tap',
-                          mode: WhenContentVisible.pressButton,
-                          color: colorScheme.primary,
-                        ),
-                        _TriggerDemo(
-                          icon: Icons.mouse_rounded,
-                          label: 'Hover',
-                          mode: WhenContentVisible.hoverButton,
-                          color: colorScheme.primary,
-                        ),
-                        _TriggerDemo(
-                          icon: Icons.ads_click_rounded,
-                          label: 'Double',
-                          mode: WhenContentVisible.doubleTapButton,
-                          color: colorScheme.primary,
-                        ),
-                        _TriggerDemo(
-                          icon: Icons.pan_tool_alt_rounded,
-                          label: 'Long Press',
-                          mode: WhenContentVisible.longPressButton,
-                          color: colorScheme.tertiary,
-                          isNew: true,
-                        ),
-                        _TriggerDemo(
-                          icon: Icons.back_hand_rounded,
-                          label: 'Long Up',
-                          mode: WhenContentVisible.longPressUpButton,
-                          color: colorScheme.tertiary,
-                          isNew: true,
-                        ),
-                        _TriggerDemo(
-                          icon: Icons.compress_rounded,
-                          label: '3D Touch',
-                          mode: WhenContentVisible.forcePressButton,
-                          color: colorScheme.tertiary,
-                          isNew: true,
+                        const SizedBox(width: 10),
+                        Text(
+                          'Key Features',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: colorScheme.onSurface,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Categories Header
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      Icons.category_rounded,
-                      color: colorScheme.primary,
-                      size: 18,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Example Categories',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Categories Grid
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 14,
-                crossAxisSpacing: 14,
-                childAspectRatio: 0.88,
-              ),
-              delegate: SliverChildBuilderDelegate((context, index) {
-                if (index < categories.length) {
-                  return _CategoryCard(category: categories[index]);
-                }
-                return null;
-              }, childCount: categories.length),
-            ),
-          ),
-
-          // Features Section
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 28, 20, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: colorScheme.secondary.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 14),
+                    const Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _FeatureChip(
+                          label: '12 Placements',
+                          icon: Icons.grid_view_rounded,
                         ),
-                        child: Icon(
-                          Icons.star_rounded,
-                          color: colorScheme.secondary,
+                        _FeatureChip(
+                          label: 'Smart Position',
+                          icon: Icons.auto_fix_high_rounded,
+                        ),
+                        _FeatureChip(
+                          label: 'Touch Friendly',
+                          icon: Icons.smartphone_rounded,
+                          isHighlight: true,
+                        ),
+                        _FeatureChip(
+                          label: 'Modal Barrier',
+                          icon: Icons.blur_on_rounded,
+                        ),
+                        _FeatureChip(
+                          label: 'RTL Support',
+                          icon: Icons.format_textdirection_r_to_l_rounded,
+                        ),
+                        _FeatureChip(
+                          label: 'Accessibility',
+                          icon: Icons.accessibility_new_rounded,
+                        ),
+                        _FeatureChip(
+                          label: 'Material 3',
+                          icon: Icons.palette_rounded,
+                        ),
+                        _FeatureChip(
+                          label: 'Beak Arrow',
+                          icon: Icons.arrow_drop_up_rounded,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Footer
+            SliverToBoxAdapter(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: colorScheme.outline.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.flutter_dash,
                           size: 18,
+                          color: colorScheme.onSurface.withValues(alpha: 0.4),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Key Features',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: colorScheme.onSurface,
+                        const SizedBox(width: 8),
+                        Text(
+                          'Made with Flutter',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: colorScheme.onSurface.withValues(alpha: 0.5),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      _FeatureChip(
-                        label: '12 Placements',
-                        icon: Icons.grid_view_rounded,
-                      ),
-                      _FeatureChip(
-                        label: 'Smart Position',
-                        icon: Icons.auto_fix_high_rounded,
-                      ),
-                      _FeatureChip(
-                        label: 'Touch Friendly',
-                        icon: Icons.smartphone_rounded,
-                        isHighlight: true,
-                      ),
-                      _FeatureChip(
-                        label: 'Modal Barrier',
-                        icon: Icons.blur_on_rounded,
-                      ),
-                      _FeatureChip(
-                        label: 'RTL Support',
-                        icon: Icons.format_textdirection_r_to_l_rounded,
-                      ),
-                      _FeatureChip(
-                        label: 'Accessibility',
-                        icon: Icons.accessibility_new_rounded,
-                      ),
-                      _FeatureChip(
-                        label: 'Material 3',
-                        icon: Icons.palette_rounded,
-                      ),
-                      _FeatureChip(
-                        label: 'Beak Arrow',
-                        icon: Icons.arrow_drop_up_rounded,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Footer
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-              child: Column(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: colorScheme.outline.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(2),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.flutter_dash,
-                        size: 18,
-                        color: colorScheme.onSurface.withValues(alpha: 0.4),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Made with Flutter',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: colorScheme.onSurface.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -580,11 +595,18 @@ class _TriggerDemo extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: color.withValues(alpha: 0.25),
+              color: colorScheme.outline.withValues(alpha: 0.1),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.shadow.withValues(alpha: 0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -646,7 +668,6 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return TooltipCard.builder(
       placementSide: TooltipCardPlacementSide.top,
@@ -658,7 +679,8 @@ class _CategoryCard extends StatelessWidget {
         icon: Icon(category.icon),
         iconColor: category.color,
         title: category.title,
-        subtitle: 'Tap to explore examples with different tooltip configurations and use cases.',
+        subtitle:
+            'Tap to explore examples with different tooltip configurations and use cases.',
         primaryAction: FilledButton(
           onPressed: () {
             close();
@@ -675,90 +697,101 @@ class _CategoryCard extends StatelessWidget {
         ),
         onClose: close,
       ),
-      child: Material(
-        color: isDark
-            ? colorScheme.surfaceContainerHighest
-            : colorScheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => category.screen),
-            );
-          },
-          child: Container(
-            padding: const EdgeInsets.all(18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: category.color.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(14),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => category.screen),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: category.color.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Icon(category.icon, color: category.color, size: 26),
                   ),
-                  child: Icon(category.icon, color: category.color, size: 26),
-                ),
-                const Spacer(),
-                Text(
-                  category.title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: colorScheme.onSurface,
-                    height: 1.2,
+                  const Spacer(),
+                  Text(
+                    category.title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: colorScheme.onSurface,
+                      height: 1.2,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  category.subtitle,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: colorScheme.onSurface.withValues(alpha: 0.6),
-                    height: 1.3,
+                  const SizedBox(height: 5),
+                  Text(
+                    category.subtitle,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      height: 1.3,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: category.color.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Explore',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: category.color.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Explore',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: category.color,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 14,
                               color: category.color,
                             ),
-                          ),
-                          const SizedBox(width: 4),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            size: 14,
-                            color: category.color,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

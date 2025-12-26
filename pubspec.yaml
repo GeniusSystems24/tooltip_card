@@ -35,6 +35,12 @@ screenshots:
     path: screenshots/3.png
   - description: 'Modal barrier with blur effect'
     path: screenshots/4.png
+  - description: 'Modal barrier with blur effect'
+    path: screenshots/5.png
+  - description: 'Modal barrier with blur effect'
+    path: screenshots/6.png
+  - description: 'Modal barrier with blur effect'
+    path: screenshots/7.png
 
 environment:
   sdk: ^3.10.3

@@ -35,6 +35,9 @@
   <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/2.png" alt="Structured Content" width="220"/>
   <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/3.png" alt="Placement Options" width="220"/>
   <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/4.png" alt="Modal Barrier" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/5.png" alt="Screenshot 5" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/6.png" alt="Screenshot 6" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/7.png" alt="Screenshot 7" width="220"/>
 </p>
 
 ---

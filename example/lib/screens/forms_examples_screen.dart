@@ -34,14 +34,16 @@ class _FormsExamplesScreenState extends State<FormsExamplesScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forms & Validation'),
-        backgroundColor: Colors.pink.withValues(alpha: 0.1),
-        foregroundColor: Colors.pink.shade700,
+        backgroundColor: const Color(0xFF6366F1).withValues(alpha: 0.1),
+        foregroundColor: const Color(0xFF4338CA), // Indigo 700
         elevation: 0,
         bottom: TabBar(
           controller: _tabController,
-          labelColor: Colors.pink.shade700,
+          labelColor: const Color(0xFF4338CA),
           unselectedLabelColor: colorScheme.onSurface.withValues(alpha: 0.6),
-          indicatorColor: Colors.pink,
+          indicatorColor: const Color(0xFF6366F1), // Indigo 500
+          indicatorSize: TabBarIndicatorSize.label,
+          dividerColor: Colors.transparent,
           tabs: const [
             Tab(
               text: 'Input Help',
@@ -85,72 +87,120 @@ class _InputHelpTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _SectionHeader(
-            title: 'Form with Help Tooltips',
-            subtitle: 'Hover over info icons for guidance',
-            icon: Icons.help_outline_rounded,
-            color: Colors.pink,
+          const _SectionHeader(
+            title: 'Smart Form Assistance',
+            subtitle: 'Contextual help where you need it most',
+            icon: Icons.lightbulb_circle_rounded,
+            color: Color(0xFFEC4899), // Pink 500
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           _FormCard(
+            title: 'Account Registration',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Email field
                 _FormFieldWithHelp(
                   label: 'Email Address',
-                  hint: 'Enter your email',
-                  icon: Icons.email_rounded,
+                  hint: 'name@example.com',
+                  icon: Icons.email_outlined,
                   helpTitle: 'Email Format',
                   helpContent:
-                      'Enter a valid email address (e.g., user@example.com). This will be used for account verification and notifications.',
+                      'We\'ll send a verification link to this address. Ensure you have access to it.',
                   publicState: publicState,
+                  accentColor: const Color(0xFFEC4899),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 24),
+
                 // Password field
                 _FormFieldWithHelp(
                   label: 'Password',
                   hint: 'Create a strong password',
-                  icon: Icons.lock_rounded,
+                  icon: Icons.lock_outline_rounded,
                   isPassword: true,
-                  helpTitle: 'Password Requirements',
+                  helpTitle: 'Secure Password',
                   helpContent:
-                      '• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number\n• One special character (!@#\$%)',
+                      '• Min 8 chars\n• uppercase & lowercase\n• 1+ number\n• 1+ symbol (!@#\$)',
                   publicState: publicState,
-                ),
-                const SizedBox(height: 20),
-                // Phone field
-                _FormFieldWithHelp(
-                  label: 'Phone Number',
-                  hint: '+1 (555) 000-0000',
-                  icon: Icons.phone_rounded,
-                  helpTitle: 'Phone Format',
-                  helpContent:
-                      'Enter your phone number with country code. We may use this for two-factor authentication.',
-                  publicState: publicState,
-                ),
-                const SizedBox(height: 20),
-                // Card number field
-                _FormFieldWithHelp(
-                  label: 'Credit Card',
-                  hint: '0000 0000 0000 0000',
-                  icon: Icons.credit_card_rounded,
-                  helpTitle: 'Payment Security',
-                  helpContent:
-                      'Your card information is encrypted and securely processed. We never store your full card number.',
-                  publicState: publicState,
-                  isSecure: true,
+                  accentColor: const Color(0xFF8B5CF6), // Violet
                 ),
                 const SizedBox(height: 24),
+
+                // Date of Birth (New Example)
+                _DatePickerField(
+                  label: 'Date of Birth',
+                  hint: 'Select date',
+                  publicState: publicState,
+                ),
+                const SizedBox(height: 24),
+
+                // Payment Section Header
+                Row(
+                  children: [
+                    Text(
+                      'Payment Details',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Expanded(child: Divider(height: 1)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Card Number with CVV Help
+                _FormFieldWithHelp(
+                  label: 'Card Number',
+                  hint: '0000 0000 0000 0000',
+                  icon: Icons.credit_card_rounded,
+                  helpTitle: 'Bank Security',
+                  helpContent:
+                      'We use bank-level encryption. Your card details are never stored on our servers.',
+                  publicState: publicState,
+                  isSecure: true,
+                  accentColor: const Color(0xFF059669), // Emerald
+                ),
+                const SizedBox(height: 24),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: _CurrencyInputField(
+                        label: 'Monthly Limit',
+                        publicState: publicState,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(child: _CVVInputField(publicState: publicState)),
+                  ],
+                ),
+
+                const SizedBox(height: 32),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () {},
                     style: FilledButton.styleFrom(
-                      backgroundColor: Colors.pink,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: const Color(0xFF6366F1), // Indigo 500
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 4,
+                      shadowColor: const Color(
+                        0xFF6366F1,
+                      ).withValues(alpha: 0.4),
                     ),
-                    child: const Text('Submit'),
+                    child: const Text(
+                      'Create Account',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -172,12 +222,14 @@ class _FormFieldWithHelp extends StatelessWidget {
     required this.publicState,
     this.isPassword = false,
     this.isSecure = false,
+    this.accentColor = const Color(0xFF6366F1),
   });
 
   final String label, hint, helpTitle, helpContent;
   final IconData icon;
   final TooltipCardPublicState publicState;
   final bool isPassword, isSecure;
+  final Color accentColor;
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +257,8 @@ class _FormFieldWithHelp extends StatelessWidget {
               ),
               child: Icon(
                 Icons.info_outline_rounded,
-                size: 16,
-                color: colorScheme.primary,
+                size: 18,
+                color: colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
           ],
@@ -214,29 +266,37 @@ class _FormFieldWithHelp extends StatelessWidget {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(10),
+            color: colorScheme.surface, // Cleaner white/dark bg
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: colorScheme.outline.withValues(alpha: 0.2),
+              color: colorScheme.outline.withValues(alpha: 0.15),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.shadow.withValues(alpha: 0.03),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Icon(
-                  icon,
-                  size: 20,
-                  color: colorScheme.onSurface.withValues(alpha: 0.5),
-                ),
+                padding: const EdgeInsets.only(left: 14, right: 10),
+                child: Icon(icon, size: 20, color: accentColor),
               ),
               Expanded(
                 child: TextField(
                   obscureText: isPassword,
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: hint,
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                    hintStyle: TextStyle(
+                      color: colorScheme.onSurface.withValues(alpha: 0.4),
+                      fontWeight: FontWeight.w400,
+                    ),
+                    border: InputBorder.none, // Removes default underline
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
               ),
@@ -247,29 +307,43 @@ class _FormFieldWithHelp extends StatelessWidget {
                     publicState: publicState,
                     placementSide: TooltipCardPlacementSide.start,
                     beakEnabled: true,
-                    whenContentVisible: WhenContentVisible.hoverButton,
+                    // shadowColor: const Color(0xFF10B981).withValues(alpha: 0.2), // Defined property
                     builder: (ctx, close) => const Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.lock_rounded,
                             size: 14,
-                            color: Colors.green,
+                            color: Color(0xFF10B981), // Emerald
                           ),
                           SizedBox(width: 6),
                           Text(
-                            'Secure & Encrypted',
-                            style: TextStyle(fontSize: 11),
+                            'TLS Encrypted',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF065F46), // Dark Emerald
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    child: Icon(
-                      Icons.verified_user_rounded,
-                      size: 18,
-                      color: Colors.green,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.verified_user_rounded,
+                        size: 16,
+                        color: Color(0xFF10B981),
+                      ),
                     ),
                   ),
                 ),
@@ -304,39 +378,73 @@ class _HelpTooltip extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.lightbulb_rounded, size: 18, color: Colors.amber),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                const Icon(
+                  Icons.lightbulb_circle,
+                  size: 24,
+                  color: Color(0xFFF59E0B),
+                ), // Amber 500
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Text(
               content,
               style: TextStyle(
                 fontSize: 13,
                 height: 1.5,
-                color: colorScheme.onSurface.withValues(alpha: 0.8),
+                color: colorScheme.onSurface.withValues(alpha: 0.85),
               ),
             ),
             if (isSecure) ...[
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.green.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color(0xFF10B981).withValues(alpha: 0.2),
+                  ),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.security_rounded, size: 16, color: Colors.green),
-                    const SizedBox(width: 8),
-                    const Expanded(
-                      child: Text(
-                        '256-bit SSL encryption',
-                        style: TextStyle(fontSize: 11, color: Colors.green),
+                    const Icon(
+                      Icons.security_rounded,
+                      size: 20,
+                      color: Color(0xFF059669),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Encrypted Connection',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF065F46),
+                            ),
+                          ),
+                          Text(
+                            '256-bit SSL encryption active',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: const Color(
+                                0xFF065F46,
+                              ).withValues(alpha: 0.8),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -386,14 +494,15 @@ class _ValidationTabState extends State<_ValidationTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _SectionHeader(
+          const _SectionHeader(
             title: 'Real-time Validation',
-            subtitle: 'See validation feedback with helpful tooltips',
-            icon: Icons.check_circle_outline_rounded,
-            color: Colors.green,
+            subtitle: 'Instant feedback with intelligent suggestions',
+            icon: Icons.verified_user_rounded,
+            color: Color(0xFF059669), // Emerald 600
           ),
           const SizedBox(height: 20),
           _FormCard(
+            title: 'Sign Up Form',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -492,10 +601,19 @@ class _ValidationTabState extends State<_ValidationTab> {
                         ? () {}
                         : null,
                     style: FilledButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: const Color(0xFF059669), // Emerald 600
+                      disabledBackgroundColor: const Color(
+                        0xFFE5E7EB,
+                      ), // Gray 200
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    child: const Text('Create Account'),
+                    child: const Text(
+                      'Create Account',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],
@@ -547,60 +665,89 @@ class _ValidationField extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
         ),
         const SizedBox(height: 8),
-        TooltipCard.builder(
-          publicState: publicState,
-          placementSide: TooltipCardPlacementSide.end,
-          beakEnabled: true,
-          // whenContentVisible: WhenContentVisible.manual,
-          // visibleDeterminer: hasInput && !isValid,
-          builder: (ctx, close) =>
-              _ValidationRulesTooltip(rules: validationRules),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: hasInput
-                    ? (isValid ? Colors.green : Colors.red)
-                    : colorScheme.outline.withValues(alpha: 0.2),
-                width: hasInput ? 1.5 : 1,
+        Container(
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: hasInput
+                  ? (isValid
+                        ? const Color(0xFF059669)
+                        : const Color(0xFFEF4444))
+                  : colorScheme.outline.withValues(alpha: 0.15),
+              width: hasInput ? 1.5 : 1,
+            ),
+            boxShadow: hasInput
+                ? [
+                    BoxShadow(
+                      color:
+                          (isValid
+                                  ? const Color(0xFF059669)
+                                  : const Color(0xFFEF4444))
+                              .withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: hasInput
+                      ? (isValid
+                            ? const Color(0xFF059669)
+                            : const Color(0xFFEF4444))
+                      : colorScheme.onSurface.withValues(alpha: 0.4),
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  obscureText: isPassword,
+                  onChanged: onChanged,
+                  style: const TextStyle(fontSize: 14),
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: TextStyle(
+                      color: colorScheme.onSurface.withValues(alpha: 0.4),
+                      fontWeight: FontWeight.w400,
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                ),
+              ),
+              TooltipCard.builder(
+                publicState: publicState,
+                placementSide: TooltipCardPlacementSide.start,
+                beakEnabled: true,
+                whenContentVisible: WhenContentVisible.pressButton,
+                builder: (ctx, close) =>
+                    _ValidationRulesTooltip(rules: validationRules),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 14, 8),
                   child: Icon(
-                    icon,
+                    hasInput
+                        ? (isValid
+                              ? Icons.check_circle_rounded
+                              : Icons.error_rounded)
+                        : Icons
+                              .info_outline_rounded, // Improved: Always show an icon
                     size: 20,
-                    color: colorScheme.onSurface.withValues(alpha: 0.5),
+                    color: hasInput
+                        ? (isValid
+                              ? const Color(0xFF059669)
+                              : const Color(0xFFEF4444))
+                        : colorScheme.onSurface.withValues(alpha: 0.2),
                   ),
                 ),
-                Expanded(
-                  child: TextField(
-                    controller: controller,
-                    obscureText: isPassword,
-                    onChanged: onChanged,
-                    decoration: InputDecoration(
-                      hintText: hint,
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                  ),
-                ),
-                if (hasInput)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: Icon(
-                      isValid
-                          ? Icons.check_circle_rounded
-                          : Icons.error_rounded,
-                      size: 20,
-                      color: isValid ? Colors.green : Colors.red,
-                    ),
-                  ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -624,7 +771,7 @@ class _ValidationRulesTooltip extends StatelessWidget {
           children: [
             const Row(
               children: [
-                Icon(Icons.rule_rounded, size: 16, color: Colors.orange),
+                Icon(Icons.rule_rounded, size: 16, color: Color(0xFFF59E0B)),
                 SizedBox(width: 8),
                 Text(
                   'Requirements',
@@ -641,24 +788,32 @@ class _ValidationRulesTooltip extends StatelessWidget {
                     Icon(
                       rule.passed
                           ? Icons.check_circle_rounded
-                          : Icons.circle_outlined,
-                      size: 14,
-                      color: rule.passed ? Colors.green : Colors.grey,
+                          : Icons
+                                .cancel_outlined, // Changed icon to clearer error state
+                      size: 16,
+                      color: rule.passed
+                          ? const Color(0xFF059669)
+                          : const Color(
+                              0xFFEF4444,
+                            ).withValues(alpha: 0.5), // Faint red
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         rule.text,
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                           color: rule.passed
-                              ? Colors.green
-                              : Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withValues(alpha: 0.7),
+                              ? const Color(0xFF059669)
+                              : const Color(
+                                  0xFFEF4444,
+                                ).withValues(alpha: 0.7), // Faint, readable red
                           decoration: rule.passed
                               ? TextDecoration.lineThrough
                               : null,
+                          decorationColor: const Color(
+                            0xFF059669,
+                          ).withValues(alpha: 0.5),
                         ),
                       ),
                     ),
@@ -694,23 +849,23 @@ class _PasswordStrengthIndicator extends StatelessWidget {
       case 0:
       case 1:
         label = 'Weak';
-        color = Colors.red;
+        color = const Color(0xFFEF4444); // Red 500
         break;
       case 2:
         label = 'Fair';
-        color = Colors.orange;
+        color = const Color(0xFFF59E0B); // Amber 500
         break;
       case 3:
         label = 'Good';
-        color = Colors.amber;
+        color = const Color(0xFF84CC16); // Lime 500
         break;
       case 4:
         label = 'Strong';
-        color = Colors.lightGreen;
+        color = const Color(0xFF10B981); // Emerald 500
         break;
       default:
         label = 'Very Strong';
-        color = Colors.green;
+        color = const Color(0xFF059669); // Emerald 600
     }
 
     return Column(
@@ -776,31 +931,31 @@ class _WizardTabState extends State<_WizardTab> {
       'Personal Info',
       'Basic details',
       Icons.person_rounded,
-      Colors.blue,
+      const Color(0xFF2563EB), // Blue 600
     ),
     _WizardStep(
       'Contact',
       'Email & phone',
       Icons.contact_mail_rounded,
-      Colors.green,
+      const Color(0xFF059669), // Emerald 600
     ),
     _WizardStep(
       'Address',
       'Shipping address',
       Icons.location_on_rounded,
-      Colors.orange,
+      const Color(0xFFF59E0B), // Amber 500
     ),
     _WizardStep(
       'Payment',
       'Payment method',
       Icons.payment_rounded,
-      Colors.purple,
+      const Color(0xFF8B5CF6), // Violet 500
     ),
     _WizardStep(
       'Review',
       'Confirm order',
       Icons.check_circle_rounded,
-      Colors.teal,
+      const Color(0xFF0F766E), // Teal 700
     ),
   ];
 
@@ -813,11 +968,11 @@ class _WizardTabState extends State<_WizardTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _SectionHeader(
+          const _SectionHeader(
             title: 'Multi-Step Wizard',
             subtitle: 'Hover over steps for navigation help',
             icon: Icons.linear_scale_rounded,
-            color: Colors.indigo,
+            color: Color(0xFF6366F1), // Indigo 500
           ),
           const SizedBox(height: 20),
           // Stepper
@@ -1120,20 +1275,20 @@ class _PersonalInfoStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         _SimpleField(
           label: 'First Name',
           hint: 'Enter first name',
           icon: Icons.person_outline_rounded,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         _SimpleField(
           label: 'Last Name',
           hint: 'Enter last name',
           icon: Icons.person_outline_rounded,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         _SimpleField(
           label: 'Date of Birth',
           hint: 'MM/DD/YYYY',
@@ -1150,14 +1305,14 @@ class _ContactStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         _SimpleField(
           label: 'Email',
           hint: 'Enter email',
           icon: Icons.email_rounded,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         _SimpleField(
           label: 'Phone',
           hint: 'Enter phone number',
@@ -1174,14 +1329,14 @@ class _AddressStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         _SimpleField(
           label: 'Street Address',
           hint: 'Enter street address',
           icon: Icons.home_rounded,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         Row(
           children: [
             Expanded(
@@ -1191,7 +1346,7 @@ class _AddressStep extends StatelessWidget {
                 icon: Icons.location_city_rounded,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: _SimpleField(
                 label: 'ZIP',
@@ -1212,14 +1367,14 @@ class _PaymentStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         _SimpleField(
           label: 'Card Number',
           hint: '0000 0000 0000 0000',
           icon: Icons.credit_card_rounded,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         Row(
           children: [
             Expanded(
@@ -1229,7 +1384,7 @@ class _PaymentStep extends StatelessWidget {
                 icon: Icons.date_range_rounded,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: _SimpleField(
                 label: 'CVV',
@@ -1250,7 +1405,6 @@ class _ReviewStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
       children: [
@@ -1264,7 +1418,7 @@ class _ReviewStep extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.green,
                   shape: BoxShape.circle,
                 ),
@@ -1347,7 +1501,7 @@ class _SimpleField extends StatelessWidget {
                     hintText: hint,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                    hintStyle: TextStyle(fontSize: 13),
+                    hintStyle: const TextStyle(fontSize: 13),
                   ),
                 ),
               ),
@@ -1415,19 +1569,365 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _FormCard extends StatelessWidget {
-  const _FormCard({required this.child});
+  const _FormCard({required this.child, this.title});
   final Widget child;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16),
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow.withValues(alpha: 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
-      child: child,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title != null)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: colorScheme.outline.withValues(alpha: 0.1),
+                  ),
+                ),
+              ),
+              child: Text(
+                title!,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          Padding(padding: const EdgeInsets.all(24), child: child),
+        ],
+      ),
+    );
+  }
+}
+
+// NEW EXAMPLES
+class _DatePickerField extends StatelessWidget {
+  const _DatePickerField({
+    required this.label,
+    required this.hint,
+    required this.publicState,
+  });
+
+  final String label, hint;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+        const SizedBox(height: 8),
+        TooltipCard.builder(
+          publicState: publicState,
+          placementSide: TooltipCardPlacementSide.bottom,
+          beakEnabled: true,
+          whenContentVisible:
+              WhenContentVisible.pressButton, // Show on interaction
+          builder: (context, close) => _DateSelectionTooltip(
+            onClose: close,
+            onSelect: (date) {
+              close();
+            },
+          ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: colorScheme.outline.withValues(alpha: 0.15),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.calendar_today_rounded,
+                  size: 18,
+                  color: Color(0xFF6366F1),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  hint,
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: colorScheme.onSurface.withValues(alpha: 0.4),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DateSelectionTooltip extends StatelessWidget {
+  const _DateSelectionTooltip({required this.onClose, required this.onSelect});
+  final VoidCallback onClose;
+  final Function(DateTime) onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      width: 280,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Select Date',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              IconButton(
+                icon: const Icon(Icons.close, size: 18),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: onClose,
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          // Mock Calendar Grid for Visuals
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 7,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+            ),
+            itemCount: 28, // Just a few days
+            itemBuilder: (context, index) {
+              final day = index + 1;
+              final isSelected = day == 15;
+              return InkWell(
+                onTap: () => onSelect(DateTime(2025, 1, day)),
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? const Color(0xFF6366F1)
+                        : Colors.transparent,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '$day',
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : colorScheme.onSurface,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CVVInputField extends StatelessWidget {
+  const _CVVInputField({required this.publicState});
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Text(
+              'CVV / CVC',
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+            ),
+            const SizedBox(width: 8),
+            TooltipCard.builder(
+              publicState: publicState,
+              placementSide: TooltipCardPlacementSide.topEnd,
+              beakEnabled: true,
+              whenContentVisible: WhenContentVisible.hoverButton,
+              builder: (ctx, close) => Container(
+                width: 200,
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.grey.shade300, Colors.grey.shade400],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 20,
+                            left: 0,
+                            right: 0,
+                            child: Container(height: 20, color: Colors.black12),
+                          ),
+                          Positioned(
+                            top: 50,
+                            right: 20,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red, width: 2),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: const Text(
+                                '123',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'The 3-digit number on the back of your card.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              child: Icon(
+                Icons.help_outline,
+                size: 16,
+                color: colorScheme.primary,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: colorScheme.outline.withValues(alpha: 0.15),
+            ),
+          ),
+          child: const TextField(
+            decoration: InputDecoration(
+              hintText: '123',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 14,
+                horizontal: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CurrencyInputField extends StatelessWidget {
+  const _CurrencyInputField({required this.label, required this.publicState});
+  final String label;
+  final TooltipCardPublicState publicState;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: colorScheme.outline.withValues(alpha: 0.15),
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.5,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  '\$',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              const Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: '1,000.00',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
