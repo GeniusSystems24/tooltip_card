@@ -31,9 +31,9 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/1.png" alt="Basic Tooltip" width="220"/>
-  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/2.png" alt="Structured Content" width="220"/>
-  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/3.png" alt="Placement Options" width="220"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/1.png" alt="Basic Tooltip"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/2.png" alt="Structured Content"/>
+  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/3.png" alt="Placement Options"/>
   <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/4.png" alt="Modal Barrier" width="220"/>
   <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/5.png" alt="Screenshot 5" width="220"/>
   <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/6.png" alt="Screenshot 6" width="220"/>
@@ -157,7 +157,7 @@ Add `tooltip_card` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  tooltip_card: ^2.4.2
+  tooltip_card: ^2.5.1
 ```
 
 Then run:
