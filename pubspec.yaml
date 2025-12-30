@@ -43,7 +43,7 @@ screenshots:
     path: screenshots/7.png
 
 environment:
-  sdk: ^3.10.3
+  sdk: ^3.10.1
   flutter: ">=3.10.0"
 
 dependencies:
