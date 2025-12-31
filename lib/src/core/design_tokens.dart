@@ -30,11 +30,38 @@ class TooltipCardCurves {
   /// Curve for fade animations
   static const Curve fade = Curves.easeOut;
 
+  /// Curve for fade out animations
+  static const Curve fadeOut = Curves.easeIn;
+
   /// Enhanced scale animation with spring effect
-  static final Curve scaleIn = Curves.easeOutBack;
+  static const Curve scaleIn = Curves.easeOutBack;
 
   /// Curve for scale out animation
   static const Curve scaleOut = Curves.easeInCubic;
+
+  /// Curve for slide animations
+  static const Curve slideIn = Curves.easeOutCubic;
+
+  /// Curve for slide out animations
+  static const Curve slideOut = Curves.easeInCubic;
+
+  /// Curve for bounce animations
+  static const Curve bounce = Curves.bounceOut;
+
+  /// Curve for bounce in animations
+  static const Curve bounceIn = Curves.easeOutBack;
+
+  /// Curve for elastic animations
+  static const Curve elastic = Curves.elasticOut;
+
+  /// Curve for elastic in animations
+  static const Curve elasticIn = Curves.easeOutBack;
+
+  /// Curve for zoom animations with overshoot
+  static const Curve zoom = Curves.easeOutBack;
+
+  /// Curve for zoom out animations
+  static const Curve zoomOut = Curves.easeInBack;
 }
 
 /// Sizing and layout constants

@@ -1,104 +1,179 @@
-import 'package:example/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:tooltip_card/tooltip_card.dart';
-
+import 'core/router.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static MyAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<MyAppState>()!;
+
+  @override
+  State<MyApp> createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.system;
+
+  ThemeMode get themeMode => _themeMode;
+
+  void setThemeMode(ThemeMode mode) {
+    setState(() => _themeMode = mode);
+  }
+
+  void toggleTheme() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'TooltipCard Examples',
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF4F46E5), // Indigo 600
-          brightness: Brightness.light,
-          surface: const Color(0xFFF8FAFC), // Slate 50
-        ),
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF8FAFC),
-        extensions: [
-          TooltipCardThemeData(
-            backgroundColor: Colors.white,
-            beakColor: Colors.white,
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(16),
-            beakSize: 12.0,
-            beakInset: 20.0,
-            padding: const EdgeInsets.all(6),
-            barrierColor: Colors.black.withValues(alpha: 0.3),
-            barrierBlur: 4.0,
-            titleStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1E293B), // Slate 800
-              fontFamily: 'Inter',
-            ),
-            subtitleStyle: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF64748B), // Slate 500
-              height: 1.5,
-              fontFamily: 'Inter',
-            ),
-            iconColor: const Color(0xFF4F46E5),
-            iconSize: 24.0,
-            contentMaxWidth: 340.0,
-            contentPadding: const EdgeInsets.all(20),
-            contentSpacing: 16.0,
-            actionSpacing: 12.0,
-          ),
-        ],
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6366F1), // Indigo 500
-          brightness: Brightness.dark,
-          surface: const Color(0xFF0F172A), // Slate 900
-        ),
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFF0F172A),
-        extensions: [
-          TooltipCardThemeData(
-            backgroundColor: const Color(0xFF1E293B), // Slate 800
-            beakColor: const Color(0xFF1E293B),
-            elevation: 12.0,
-            borderRadius: BorderRadius.circular(16),
-            beakSize: 12.0,
-            beakInset: 20.0,
-            padding: const EdgeInsets.all(6),
-            barrierColor: Colors.black.withValues(alpha: 0.6),
-            barrierBlur: 6.0,
+      themeMode: _themeMode,
+      theme: _buildLightTheme(),
+      darkTheme: _buildDarkTheme(),
+      routerConfig: appRouter,
+    );
+  }
 
-            titleStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFFF1F5F9), // Slate 100
-              fontFamily: 'Inter',
-            ),
-            subtitleStyle: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF94A3B8), // Slate 400
-              height: 1.5,
-              fontFamily: 'Inter',
-            ),
-            iconColor: const Color(0xFF818CF8), // Indigo 400
-            iconSize: 24.0,
-            contentMaxWidth: 340.0,
-            contentPadding: const EdgeInsets.all(20),
-            contentSpacing: 16.0,
-            actionSpacing: 12.0,
-          ),
-        ],
+  ThemeData _buildLightTheme() {
+    const seedColor = Color(0xFF6366F1);
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: seedColor,
+        brightness: Brightness.light,
       ),
-      // home: const DemoPage(),
-      home: const HomeScreen(),
+      useMaterial3: true,
+      fontFamily: 'Inter',
+      appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        scrolledUnderElevation: 0,
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      extensions: [
+        TooltipCardThemeData(
+          backgroundColor: Colors.white,
+          beakColor: Colors.white,
+          elevation: 8.0,
+          borderRadius: BorderRadius.circular(12),
+          beakSize: 10.0,
+          beakInset: 16.0,
+          padding: const EdgeInsets.all(4),
+          barrierColor: Colors.black38,
+          barrierBlur: 2.0,
+          titleStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+          subtitleStyle: TextStyle(
+            fontSize: 14,
+            color: Colors.grey.shade600,
+            height: 1.4,
+          ),
+          iconColor: seedColor,
+          iconSize: 24.0,
+          contentMaxWidth: 320.0,
+          contentPadding: const EdgeInsets.all(16),
+          contentSpacing: 12.0,
+          actionSpacing: 8.0,
+        ),
+      ],
+    );
+  }
+
+  ThemeData _buildDarkTheme() {
+    const seedColor = Color(0xFF6366F1);
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: seedColor,
+        brightness: Brightness.dark,
+      ),
+      useMaterial3: true,
+      fontFamily: 'Inter',
+      appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        scrolledUnderElevation: 0,
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      extensions: [
+        TooltipCardThemeData(
+          backgroundColor: const Color(0xFF2D2D30),
+          beakColor: const Color(0xFF2D2D30),
+          elevation: 12.0,
+          borderRadius: BorderRadius.circular(12),
+          beakSize: 10.0,
+          beakInset: 16.0,
+          padding: const EdgeInsets.all(4),
+          barrierColor: Colors.black54,
+          barrierBlur: 3.0,
+          titleStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          subtitleStyle: TextStyle(
+            fontSize: 14,
+            color: Colors.grey.shade400,
+            height: 1.4,
+          ),
+          iconColor: const Color(0xFF818CF8),
+          iconSize: 24.0,
+          contentMaxWidth: 320.0,
+          contentPadding: const EdgeInsets.all(16),
+          contentSpacing: 12.0,
+          actionSpacing: 8.0,
+        ),
+      ],
     );
   }
 }

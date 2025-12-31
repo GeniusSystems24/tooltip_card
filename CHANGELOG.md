@@ -5,6 +5,72 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.1] - 2025-12-31 (UTC+03:00)
+
+### Added
+
+- **Live Data Updates** - Update tooltip content while it stays open
+  - `controller.updateData(value)` - Update data without closing tooltip
+  - `controller.open(data: value)` - Now also updates if already open
+  - Perfect for dynamic content like product quick views, data grids
+  - Data comparison to avoid unnecessary rebuilds
+
+### Example App
+
+- New "Live Data Updates" demo section showing real-time content switching
+- Product showcase with live data updates while tooltip remains visible
+
+---
+
+## [2.6.0] - 2025-12-31 (UTC+03:00)
+
+### Added
+
+- **Controller Data Passing** - Dynamic content based on programmatic control
+  - `controller.open(data: value)` - Pass any data when opening tooltip
+  - `controller.data` - Access the passed data in builder
+  - `controller.dataAs<T>()` - Type-safe data access
+  - `controller.hasData(value)` - Check if data matches
+  - `controller.isDataType<T>()` - Check data type
+  - Data is automatically cleared when tooltip closes
+
+- **9 Animation Types** - Customizable tooltip animations
+  - `fade` - Simple opacity transition
+  - `scale` - Scale from 0.88 to 1.0
+  - `fadeScale` - Combined fade and scale (default)
+  - `slideIn` - Slide from placement direction
+  - `slideFade` - Combined slide and fade
+  - `bounce` - Bouncy scale effect
+  - `elastic` - Elastic spring effect
+  - `zoom` - Zoom in with overshoot
+  - `none` - Instant show/hide
+
+- **Direction-Aware Animations** - Slide animations respect placement
+  - Top placements: slide down
+  - Bottom placements: slide up
+  - Start placements: slide right
+  - End placements: slide left
+
+- **Animation Timing** - Optimized durations per animation type
+  - Default: 200ms enter, 150ms exit
+  - Bounce/Elastic: 400ms for spring effect
+  - Zoom: 300ms for smooth overshoot
+
+### Changed
+
+- `TooltipCardController.toggle()` now accepts optional `data` parameter
+- Added `animation` property to `TooltipCard` constructors
+- Enhanced `TooltipCardCurves` with new curves for all animation types
+- `BeakedTooltipCardPanel` now handles all 9 animation types
+
+### Example App
+
+- Added GoRouter for declarative navigation
+- New `TriggersScreen` showcasing all 7 trigger modes
+- Modern home screen with stats and feature cards
+- Theme toggle support (light/dark)
+- Responsive layout with NavigationRail (desktop) and BottomNavBar (mobile)
+
 ## [2.5.0] - 2025-12-25 (UTC+03:00)
 
 ### Added

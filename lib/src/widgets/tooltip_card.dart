@@ -1,4 +1,4 @@
-// TooltipCard — Fluent Beak/Callout (v5.4.0 - Touch Friendly)
+// TooltipCard — Fluent Beak/Callout (v5.5.0 - Animations & Data)
 // -----------------------------------------------------------------
 // Enhanced Fluent-style tooltip with comprehensive improvements:
 //
@@ -8,10 +8,12 @@
 //   • Reduced redundant calculations
 //   • 3-phase sequential positioning system
 //
-// 🎬 Animations:
-//   • Smooth spring-based animations
-//   • Enhanced curve transitions
-//   • Improved timing
+// 🎬 Animations (v2.6.0):
+//   • 9 animation types: fade, scale, fadeScale, slideIn, slideFade,
+//     bounce, elastic, zoom, none
+//   • Direction-aware slide animations
+//   • Spring-based bounce and elastic effects
+//   • Customizable per-tooltip animation
 //
 // 🎨 Theming:
 //   • Full Material 3 color scheme support
@@ -34,6 +36,11 @@
 //   • Long press up trigger for touch interaction
 //   • Force press (3D Touch) support for iOS
 //
+// 🔄 Controller Data (v2.6.0):
+//   • Pass data when opening: controller.open(data: 'user')
+//   • Access data in builder: controller.data, controller.dataAs<T>()
+//   • Dynamic content based on passed data
+//
 // 🚀 Core Features:
 //   • RTL-aware positioning
 //   • Beak/caret with shadow matching panel
@@ -49,6 +56,9 @@ part of 'widgets.dart';
 /// Features:
 /// - 7 trigger modes: press, hover, double-tap, right-click, long-press,
 ///   long-press-up, and force-press (3D Touch)
+/// - 9 animation types: fade, scale, fadeScale, slideIn, slideFade,
+///   bounce, elastic, zoom, none
+/// - Controller with data passing for dynamic content
 /// - Touch-friendly triggers for mobile devices
 /// - Smart positioning with auto-flip
 /// - Beak/arrow pointing to trigger
@@ -122,6 +132,8 @@ class TooltipCard extends StatefulWidget {
     // Border
     this.borderColor,
     this.borderWidth = 0.0,
+    // Animation
+    this.animation = TooltipCardAnimation.fadeScale,
   }) : flyoutContent = null;
 
   /// Creates a TooltipCard with static content.
@@ -168,6 +180,8 @@ class TooltipCard extends StatefulWidget {
     // Border
     this.borderColor,
     this.borderWidth = 0.0,
+    // Animation
+    this.animation = TooltipCardAnimation.fadeScale,
   }) : builder = null;
 
   /// Static content widget to display in the tooltip
@@ -291,6 +305,14 @@ class TooltipCard extends StatefulWidget {
   /// Border width (0 = no border)
   final double borderWidth;
 
+  // Animation
+
+  /// Animation style for tooltip appearance
+  ///
+  /// Defaults to [TooltipCardAnimation.fadeScale] which combines
+  /// fade and scale for a polished effect.
+  final TooltipCardAnimation animation;
+
   @override
   State<TooltipCard> createState() => _TooltipCardState();
 }
@@ -311,6 +333,7 @@ class _TooltipCardState extends State<TooltipCard>
   late AnimationController _anim;
   late Animation<double> _fade;
   late Animation<double> _scale;
+  late Animation<Offset> _slide;
   bool _hoverTarget = false;
   bool _hoverPanel = false;
   Timer? _hoverTimer;
@@ -341,30 +364,103 @@ class _TooltipCardState extends State<TooltipCard>
     _resolvedSide = widget.placementSide;
     _anim = AnimationController(
       vsync: this,
-      duration: TooltipCardTiming.enterDuration,
+      duration: _getAnimationDuration(),
       reverseDuration: TooltipCardTiming.exitDuration,
     );
-    _fade = CurvedAnimation(parent: _anim, curve: TooltipCardCurves.fade);
-    _setupScale();
+    _setupAnimations();
     _controller.addListener(_handleControllerChange);
   }
 
-  void _setupScale() {
-    _scale = Tween<double>(begin: 0.88, end: 1.0).animate(
+  Duration _getAnimationDuration() {
+    switch (widget.animation) {
+      case TooltipCardAnimation.none:
+        return Duration.zero;
+      case TooltipCardAnimation.bounce:
+      case TooltipCardAnimation.elastic:
+        return const Duration(milliseconds: 400);
+      case TooltipCardAnimation.zoom:
+        return const Duration(milliseconds: 300);
+      default:
+        return TooltipCardTiming.enterDuration;
+    }
+  }
+
+  void _setupAnimations() {
+    // Fade animation
+    _fade = CurvedAnimation(
+      parent: _anim,
+      curve: TooltipCardCurves.fade,
+      reverseCurve: TooltipCardCurves.fadeOut,
+    );
+
+    // Scale animation based on type
+    final (scaleBegin, scaleCurve, scaleReverseCurve) = _getScaleConfig();
+    _scale = Tween<double>(begin: scaleBegin, end: 1.0).animate(
       CurvedAnimation(
         parent: _anim,
-        curve: TooltipCardCurves.scaleIn,
-        reverseCurve: TooltipCardCurves.scaleOut,
+        curve: scaleCurve,
+        reverseCurve: scaleReverseCurve,
       ),
     );
+
+    // Slide animation
+    _slide = Tween<Offset>(begin: _getSlideOffset(), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _anim,
+        curve: TooltipCardCurves.slideIn,
+        reverseCurve: TooltipCardCurves.slideOut,
+      ),
+    );
+  }
+
+  (double, Curve, Curve) _getScaleConfig() {
+    switch (widget.animation) {
+      case TooltipCardAnimation.scale:
+      case TooltipCardAnimation.fadeScale:
+        return (0.88, TooltipCardCurves.scaleIn, TooltipCardCurves.scaleOut);
+      case TooltipCardAnimation.bounce:
+        return (0.5, TooltipCardCurves.bounce, TooltipCardCurves.scaleOut);
+      case TooltipCardAnimation.elastic:
+        return (0.6, TooltipCardCurves.elastic, TooltipCardCurves.scaleOut);
+      case TooltipCardAnimation.zoom:
+        return (0.3, TooltipCardCurves.zoom, TooltipCardCurves.zoomOut);
+      case TooltipCardAnimation.fade:
+      case TooltipCardAnimation.slideIn:
+      case TooltipCardAnimation.slideFade:
+      case TooltipCardAnimation.none:
+        return (1.0, Curves.linear, Curves.linear);
+    }
+  }
+
+  Offset _getSlideOffset() {
+    const slideAmount = 0.1;
+    switch (_resolvedSide) {
+      case TooltipCardPlacementSide.top:
+      case TooltipCardPlacementSide.topStart:
+      case TooltipCardPlacementSide.topEnd:
+        return const Offset(0, slideAmount);
+      case TooltipCardPlacementSide.bottom:
+      case TooltipCardPlacementSide.bottomStart:
+      case TooltipCardPlacementSide.bottomEnd:
+        return const Offset(0, -slideAmount);
+      case TooltipCardPlacementSide.start:
+      case TooltipCardPlacementSide.startTop:
+      case TooltipCardPlacementSide.startBottom:
+        return const Offset(slideAmount, 0);
+      case TooltipCardPlacementSide.end:
+      case TooltipCardPlacementSide.endTop:
+      case TooltipCardPlacementSide.endBottom:
+        return const Offset(-slideAmount, 0);
+    }
   }
 
   @override
   void didUpdateWidget(covariant TooltipCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.placementSide != widget.placementSide) {
+    if (oldWidget.placementSide != widget.placementSide ||
+        oldWidget.animation != widget.animation) {
       _resolvedSide = widget.placementSide;
-      _setupScale();
+      _setupAnimations();
     }
   }
 
@@ -421,7 +517,7 @@ class _TooltipCardState extends State<TooltipCard>
       setState(() {
         _resolvedSide = side;
         _resolvedBeakPosition = beakPosition;
-        _setupScale();
+        _setupAnimations();
       });
     });
   }
@@ -557,6 +653,8 @@ class _TooltipCardState extends State<TooltipCard>
               child: BeakedTooltipCardPanel(
                 fade: _fade,
                 scale: _scale,
+                slide: _slide,
+                animation: widget.animation,
                 onEscape: _controller.close,
                 elevation: widget.elevation,
                 backgroundColor: _getPanelBackgroundColor(theme),

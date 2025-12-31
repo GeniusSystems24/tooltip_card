@@ -5,18 +5,21 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.3
+  sdk: ^3.10.1
 
 dependencies:
   flutter:
     sdk: flutter
   tooltip_card:
     path: ../
+  go_router: ^14.6.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  go_router_builder: ^2.7.3
+  build_runner: ^2.4.13
 
 flutter:
   uses-material-design: true
