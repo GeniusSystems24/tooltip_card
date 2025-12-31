@@ -158,7 +158,7 @@ Add `tooltip_card` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  tooltip_card: ^2.4.2
+  tooltip_card: ^2.6.1
 ```
 
 Then run:
@@ -483,15 +483,40 @@ class _MyWidgetState extends State<MyWidget> {
 
 | Method | Description |
 |--------|-------------|
-| `open()` | Show the tooltip |
-| `close()` | Hide the tooltip |
-| `toggle()` | Toggle between open and closed |
+| `open({data})` | Show the tooltip (optionally with data) |
+| `close()` | Hide the tooltip and clear data |
+| `toggle({data})` | Toggle between open and closed |
+| `updateData(data)` | Update data while tooltip stays open |
 
 #### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `isOpen` | `bool` | Current open state |
+| `data` | `dynamic` | The data passed when opening |
+| `dataAs<T>()` | `T?` | Type-safe data access |
+| `hasData(value)` | `bool` | Check if data equals value |
+| `isDataType<T>()` | `bool` | Check if data is of type T |
+
+#### Data Passing Example
+
+```dart
+// Open tooltip with data
+controller.open(data: {'id': 1, 'name': 'Product A'});
+
+// Update data while tooltip is open (no close/reopen)
+controller.updateData({'id': 2, 'name': 'Product B'});
+
+// Access data in builder
+TooltipCard.builder(
+  controller: controller,
+  builder: (ctx, close) {
+    final product = controller.dataAs<Map<String, dynamic>>();
+    return Text(product?['name'] ?? 'No product');
+  },
+  child: Text('Show Product'),
+)
+```
 
 ---
 

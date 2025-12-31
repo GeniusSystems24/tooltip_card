@@ -203,6 +203,27 @@ class _AnimationsScreenState extends State<AnimationsScreen> {
             ),
           ),
 
+          // Live Data Update Section
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 12),
+              child: _SectionHeader(
+                icon: Icons.sync_rounded,
+                title: 'Live Data Updates',
+                subtitle: 'Update content while tooltip stays open',
+                color: Colors.orange,
+                badge: 'NEW',
+              ),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: _LiveUpdateDemo(),
+            ),
+          ),
+
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),
@@ -554,6 +575,359 @@ class _ControllerDataDemo extends StatelessWidget {
                   'controller.open(data: {\'id\': 1, \'name\': \'John\'});\n\n'
                   '// Access in builder\n'
                   'final data = controller.dataAs<Map>();',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontFamily: 'monospace',
+                    color: colorScheme.onSurface.withValues(alpha: 0.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Demo for live data updates while tooltip stays open
+class _LiveUpdateDemo extends StatefulWidget {
+  const _LiveUpdateDemo();
+
+  @override
+  State<_LiveUpdateDemo> createState() => _LiveUpdateDemoState();
+}
+
+class _LiveUpdateDemoState extends State<_LiveUpdateDemo> {
+  final _controller = TooltipCardController();
+
+  final _products = [
+    {
+      'id': 1,
+      'name': 'iPhone 15 Pro',
+      'price': 999,
+      'stock': 25,
+      'color': Colors.blue,
+      'icon': Icons.phone_iphone_rounded,
+    },
+    {
+      'id': 2,
+      'name': 'MacBook Air M3',
+      'price': 1299,
+      'stock': 12,
+      'color': Colors.grey,
+      'icon': Icons.laptop_mac_rounded,
+    },
+    {
+      'id': 3,
+      'name': 'AirPods Pro',
+      'price': 249,
+      'stock': 50,
+      'color': Colors.white,
+      'icon': Icons.headphones_rounded,
+    },
+    {
+      'id': 4,
+      'name': 'iPad Pro',
+      'price': 799,
+      'stock': 8,
+      'color': Colors.blueGrey,
+      'icon': Icons.tablet_mac_rounded,
+    },
+  ];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark
+            ? colorScheme.surfaceContainerHigh
+            : colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.info_outline_rounded,
+                size: 18,
+                color: Colors.orange,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Open the tooltip, then click other products to update content without closing',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Product tooltip anchor
+          Center(
+            child: TooltipCard.builder(
+              controller: _controller,
+              placementSide: TooltipCardPlacementSide.top,
+              beakEnabled: true,
+              animation: TooltipCardAnimation.fadeScale,
+              modalBarrierEnabled: false, // Allow clicking outside
+              builder: (ctx, close) {
+                final data = _controller.dataAs<Map<String, dynamic>>();
+                if (data == null) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text('Select a product'),
+                  );
+                }
+                return Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: (data['color'] as Color).withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              data['icon'] as IconData,
+                              color: data['color'] == Colors.white
+                                  ? Colors.grey
+                                  : data['color'] as Color,
+                              size: 28,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['name'] as String,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '\$${data['price']}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.close, size: 20),
+                            onPressed: close,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: (data['stock'] as int) > 20
+                              ? Colors.green.withValues(alpha: 0.1)
+                              : (data['stock'] as int) > 10
+                                  ? Colors.orange.withValues(alpha: 0.1)
+                                  : Colors.red.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.inventory_2_rounded,
+                              size: 16,
+                              color: (data['stock'] as int) > 20
+                                  ? Colors.green
+                                  : (data['stock'] as int) > 10
+                                      ? Colors.orange
+                                      : Colors.red,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              '${data['stock']} in stock',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: (data['stock'] as int) > 20
+                                    ? Colors.green
+                                    : (data['stock'] as int) > 10
+                                        ? Colors.orange
+                                        : Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.add_shopping_cart_rounded, size: 18),
+                          label: const Text('Add to Cart'),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: colorScheme.primary.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.touch_app_rounded,
+                      color: colorScheme.primary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Product Info Tooltip',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          // Product buttons grid
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 2.5,
+            ),
+            itemCount: _products.length,
+            itemBuilder: (context, index) {
+              final product = _products[index];
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    // If tooltip is open, update data. Otherwise, open it.
+                    if (_controller.isOpen) {
+                      _controller.updateData(product);
+                    } else {
+                      _controller.open(data: product);
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: colorScheme.outline.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          product['icon'] as IconData,
+                          size: 20,
+                          color: product['color'] == Colors.white
+                              ? Colors.grey
+                              : product['color'] as Color,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            product['name'] as String,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          // Code example
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.orange.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Code Example',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.orange.shade700,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '// Update data while tooltip is open\n'
+                  'if (controller.isOpen) {\n'
+                  '  controller.updateData(newProduct);\n'
+                  '} else {\n'
+                  '  controller.open(data: newProduct);\n'
+                  '}\n\n'
+                  '// Or simply use open() - it updates if already open\n'
+                  'controller.open(data: newProduct);',
                   style: TextStyle(
                     fontSize: 11,
                     fontFamily: 'monospace',

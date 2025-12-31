@@ -9,6 +9,7 @@ part of 'controllers.dart';
 /// - [open] - Show the tooltip (optionally with data)
 /// - [close] - Hide the tooltip
 /// - [toggle] - Toggle between open and closed states
+/// - [updateData] - Update data while keeping the tooltip open
 ///
 /// Example:
 /// ```dart
@@ -29,6 +30,9 @@ part of 'controllers.dart';
 /// controller.open(data: 'user_profile');
 /// controller.open(data: {'id': 1, 'type': 'premium'});
 /// controller.open(data: 42);
+///
+/// // Update data while tooltip is open (without closing/reopening)
+/// controller.updateData({'id': 2, 'type': 'basic'});
 ///
 /// // Or without data
 /// controller.open();
@@ -58,6 +62,10 @@ class TooltipCardController extends ChangeNotifier {
 
   /// Opens the tooltip, optionally with associated data
   ///
+  /// If the tooltip is already open and new data is provided,
+  /// the data will be updated and listeners will be notified
+  /// without closing and reopening the tooltip.
+  ///
   /// The [data] parameter can be any value that will be accessible
   /// via [data] or [dataAs] while the tooltip is open.
   ///
@@ -65,14 +73,44 @@ class TooltipCardController extends ChangeNotifier {
   /// controller.open(data: 'user');
   /// controller.open(data: {'id': 1, 'name': 'John'});
   /// controller.open(data: MyCustomObject());
+  ///
+  /// // If already open, this updates data without closing
+  /// controller.open(data: 'new_user');
   /// ```
   void open({dynamic data}) {
+    final oldData = _data;
     _data = data;
     if (!_isOpen) {
       _isOpen = true;
       notifyListeners();
-    } else if (data != null) {
-      // If already open but data changed, notify listeners
+    } else if (oldData != data) {
+      // If already open and data changed, notify listeners to update content
+      notifyListeners();
+    }
+  }
+
+  /// Updates the data while keeping the tooltip open
+  ///
+  /// This method only updates the data if the tooltip is currently open.
+  /// If the tooltip is closed, this method does nothing.
+  ///
+  /// Use this when you want to update the tooltip content dynamically
+  /// without affecting its open/closed state.
+  ///
+  /// ```dart
+  /// // Open with initial data
+  /// controller.open(data: users[0]);
+  ///
+  /// // Later, update to show different data (tooltip stays open)
+  /// controller.updateData(users[1]);
+  /// controller.updateData(users[2]);
+  ///
+  /// // Can also clear data while keeping tooltip open
+  /// controller.updateData(null);
+  /// ```
+  void updateData(dynamic data) {
+    if (_isOpen && _data != data) {
+      _data = data;
       notifyListeners();
     }
   }

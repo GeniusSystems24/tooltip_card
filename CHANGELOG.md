@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.1] - 2025-12-31 (UTC+03:00)
+
+### Added
+
+- **Live Data Updates** - Update tooltip content while it stays open
+  - `controller.updateData(value)` - Update data without closing tooltip
+  - `controller.open(data: value)` - Now also updates if already open
+  - Perfect for dynamic content like product quick views, data grids
+  - Data comparison to avoid unnecessary rebuilds
+
+### Example App
+
+- New "Live Data Updates" demo section showing real-time content switching
+- Product showcase with live data updates while tooltip remains visible
+
+---
+
 ## [2.6.0] - 2025-12-31 (UTC+03:00)
 
 ### Added
