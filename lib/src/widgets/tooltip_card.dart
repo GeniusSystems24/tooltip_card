@@ -517,7 +517,7 @@ class _TooltipCardState extends State<TooltipCard>
       setState(() {
         _resolvedSide = side;
         _resolvedBeakPosition = beakPosition;
-        _setupScale();
+        _setupAnimations();
       });
     });
   }
