@@ -5,7 +5,7 @@ description: >-
   modes, 9 animation types (fade/scale/bounce/elastic/slide/zoom), touch-friendly support,
   controller with data passing, modal barrier with blur, RTL support, accessibility,
   TooltipCardController, and TooltipCardContent for onboarding and feature discovery.
-version: 2.6.1
+version: 2.6.1+1
 homepage: https://github.com/geniussystems24/tooltip_card
 repository: https://github.com/geniussystems24/tooltip_card
 issue_tracker: https://github.com/geniussystems24/tooltip_card/issues

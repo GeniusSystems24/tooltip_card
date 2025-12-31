@@ -1,30 +1,17 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/geniussystems24/tooltip_card/main/screenshots/logo.png" alt="TooltipCard Logo" width="120"/>
-</p>
-
 <h1 align="center">TooltipCard</h1>
 
 <p align="center">
   <strong>A powerful, highly customizable tooltip and popover widget for Flutter</strong>
 </p>
 
-<p align="center">
-  <a href="https://pub.dev/packages/tooltip_card"><img src="https://img.shields.io/pub/v/tooltip_card.svg?logo=dart&logoColor=white" alt="Pub Version"></a>
-  <a href="https://pub.dev/packages/tooltip_card/score"><img src="https://img.shields.io/pub/points/tooltip_card?logo=dart&logoColor=white" alt="Pub Points"></a>
-  <a href="https://pub.dev/packages/tooltip_card"><img src="https://img.shields.io/pub/popularity/tooltip_card?logo=dart&logoColor=white" alt="Popularity"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-</p>
+[![pub package](https://img.shields.io/pub/v/tooltip_card.svg)](https://pub.dev/packages/tooltip_card)
+[![likes](https://img.shields.io/pub/likes/tooltip_card)](https://pub.dev/packages/tooltip_card/score)
+[![popularity](https://img.shields.io/pub/popularity/tooltip_card)](https://pub.dev/packages/tooltip_card/score)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![points](https://img.shields.io/pub/points/tooltip_card)](https://pub.dev/packages/tooltip_card/score)
+[![Platform](https://img.shields.io/badge/Platform-All-blueviolet?style=for-the-badge)](https://flutter.dev)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-View_Online-success?style=for-the-badge)](https://geniussystems24.github.io/tooltip_card)
 
-<p align="center">
-  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter" alt="Platform"></a>
-  <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart" alt="Dart"></a>
-  <a href="https://m3.material.io"><img src="https://img.shields.io/badge/Material-3-6200EA" alt="Material 3"></a>
-  <a href="https://geniussystems24.github.io/tooltip_card/"><img src="https://img.shields.io/badge/🚀_Live_Demo-Try_Now-00C853?style=flat" alt="Live Demo"></a>
-</p>
-
-<p align="center">
-  <em>👉 <a href="https://geniussystems24.github.io/tooltip_card/">Try the interactive demo in your browser</a> — no installation required!</em>
-</p>
 
 ---
 
