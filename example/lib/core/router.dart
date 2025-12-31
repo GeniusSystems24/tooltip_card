@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/home_screen.dart';
+import '../screens/animations_screen.dart';
 import '../screens/business_examples_screen.dart';
 import '../screens/social_examples_screen.dart';
 import '../screens/ecommerce_examples_screen.dart';
@@ -13,6 +14,7 @@ import '../widgets/app_shell.dart';
 class AppRoutes {
   static const String home = '/';
   static const String triggers = '/triggers';
+  static const String animations = '/animations';
   static const String business = '/business';
   static const String social = '/social';
   static const String ecommerce = '/ecommerce';
@@ -42,6 +44,15 @@ final GoRouter appRouter = GoRouter(
           pageBuilder: (context, state) => CustomTransitionPage(
             key: state.pageKey,
             child: const TriggersScreen(),
+            transitionsBuilder: _slideTransition,
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.animations,
+          name: 'animations',
+          pageBuilder: (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: const AnimationsScreen(),
             transitionsBuilder: _slideTransition,
           ),
         ),

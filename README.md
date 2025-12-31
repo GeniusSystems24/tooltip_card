@@ -54,8 +54,9 @@
 | Beak/Arrow Pointer | ❌ | ✅ With matching shadow |
 | Structured Content | ❌ | ✅ Icons, titles, actions |
 | Trigger Modes | Hover only | ✅ 7 modes: tap, hover, double-tap, right-click, long-press, force-press |
+| Animation Types | Basic fade | ✅ 9 types: fade, scale, bounce, elastic, slide, zoom |
 | Touch-Friendly | ❌ | ✅ Long press, force press (3D Touch) |
-| Programmatic Control | ❌ | ✅ Controller API |
+| Programmatic Control | ❌ | ✅ Controller API with data passing |
 | Modal Barrier | ❌ | ✅ With blur effect |
 | Material 3 | Partial | ✅ Full theming support |
 | RTL Support | ❌ | ✅ Complete |
@@ -118,12 +119,12 @@
       </ul>
     </td>
     <td>
-      <h3>🎬 Smooth Animations</h3>
+      <h3>🎬 9 Animation Types</h3>
       <ul>
-        <li>Spring-based transitions</li>
-        <li>Fade and scale effects</li>
-        <li>Configurable duration</li>
-        <li>Custom animation curves</li>
+        <li><strong>Basic:</strong> fade, scale, fadeScale, none</li>
+        <li><strong>Slide:</strong> slideIn, slideFade (direction-aware)</li>
+        <li><strong>Dynamic:</strong> bounce, elastic, zoom</li>
+        <li>Customizable per-tooltip animation</li>
       </ul>
     </td>
   </tr>

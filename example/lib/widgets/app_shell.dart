@@ -48,16 +48,18 @@ class _NavigationRail extends StatelessWidget {
         return 0;
       case AppRoutes.triggers:
         return 1;
-      case AppRoutes.business:
+      case AppRoutes.animations:
         return 2;
-      case AppRoutes.social:
+      case AppRoutes.business:
         return 3;
-      case AppRoutes.ecommerce:
+      case AppRoutes.social:
         return 4;
-      case AppRoutes.dashboard:
+      case AppRoutes.ecommerce:
         return 5;
-      case AppRoutes.forms:
+      case AppRoutes.dashboard:
         return 6;
+      case AppRoutes.forms:
+        return 7;
       default:
         return 0;
     }
@@ -67,6 +69,7 @@ class _NavigationRail extends StatelessWidget {
     final routes = [
       AppRoutes.home,
       AppRoutes.triggers,
+      AppRoutes.animations,
       AppRoutes.business,
       AppRoutes.social,
       AppRoutes.ecommerce,
@@ -116,7 +119,7 @@ class _NavigationRail extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'v2.5.0',
+                'v2.6.0',
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
@@ -136,6 +139,11 @@ class _NavigationRail extends StatelessWidget {
             icon: Icon(Icons.touch_app_outlined),
             selectedIcon: Icon(Icons.touch_app_rounded),
             label: Text('Triggers'),
+          ),
+          NavigationRailDestination(
+            icon: Icon(Icons.animation_outlined),
+            selectedIcon: Icon(Icons.animation_rounded),
+            label: Text('Animations'),
           ),
           NavigationRailDestination(
             icon: Icon(Icons.business_center_outlined),
@@ -178,6 +186,7 @@ class _BottomNavBar extends StatelessWidget {
       case AppRoutes.home:
         return 0;
       case AppRoutes.triggers:
+      case AppRoutes.animations:
         return 1;
       case AppRoutes.business:
       case AppRoutes.social:
@@ -207,9 +216,9 @@ class _BottomNavBar extends StatelessWidget {
           label: 'Home',
         ),
         NavigationDestination(
-          icon: Icon(Icons.touch_app_outlined),
-          selectedIcon: Icon(Icons.touch_app_rounded),
-          label: 'Triggers',
+          icon: Icon(Icons.auto_awesome_outlined),
+          selectedIcon: Icon(Icons.auto_awesome_rounded),
+          label: 'Features',
         ),
         NavigationDestination(
           icon: Icon(Icons.apps_rounded),

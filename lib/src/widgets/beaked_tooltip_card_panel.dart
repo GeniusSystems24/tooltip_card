@@ -7,6 +7,8 @@ class BeakedTooltipCardPanel extends StatelessWidget {
     super.key,
     required this.fade,
     required this.scale,
+    required this.slide,
+    required this.animation,
     required this.onEscape,
     required this.elevation,
     required this.backgroundColor,
@@ -29,6 +31,8 @@ class BeakedTooltipCardPanel extends StatelessWidget {
 
   final Animation<double> fade;
   final Animation<double> scale;
+  final Animation<Offset> slide;
+  final TooltipCardAnimation animation;
   final VoidCallback onEscape;
   final double elevation;
   final Color backgroundColor;
@@ -56,59 +60,103 @@ class BeakedTooltipCardPanel extends StatelessWidget {
     final baseSide = side.baseSide;
     final double topExtra =
         (beakEnabled && baseSide == TooltipCardPlacementSide.bottom)
-        ? beakSize
-        : 0;
+            ? beakSize
+            : 0;
     final double bottomExtra =
         (beakEnabled && baseSide == TooltipCardPlacementSide.top)
-        ? beakSize
-        : 0;
+            ? beakSize
+            : 0;
     final double leftExtra =
         (beakEnabled && baseSide == TooltipCardPlacementSide.end)
-        ? beakSize
-        : 0;
+            ? beakSize
+            : 0;
     final double rightExtra =
         (beakEnabled && baseSide == TooltipCardPlacementSide.start)
-        ? beakSize
-        : 0;
+            ? beakSize
+            : 0;
 
-    return RepaintBoundary(
-      child: FadeTransition(
-        opacity: fade,
-        child: ScaleTransition(
-          scale: scale,
-          alignment: _getScaleAlignment(),
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: topExtra,
-              bottom: bottomExtra,
-              left: leftExtra,
-              right: rightExtra,
-            ),
-            child: LayoutBuilder(
-              builder: (context, boxConstraints) {
-                return BeakedPanelWithBeak(
-                  baseSide: baseSide,
-                  beakEnabled: beakEnabled,
-                  beakSize: beakSize,
-                  beakColor: beakColor,
-                  beakPosition: beakPosition,
-                  elevation: elevation,
-                  backgroundColor: backgroundColor,
-                  borderRadius: borderRadius,
-                  constraints: constraints,
-                  padding: padding,
-                  onEscape: onEscape,
-                  textDirection: textDirection,
-                  borderColor: borderColor,
-                  borderWidth: borderWidth,
-                  child: child,
-                );
-              },
-            ),
-          ),
-        ),
+    Widget panel = Padding(
+      padding: EdgeInsets.only(
+        top: topExtra,
+        bottom: bottomExtra,
+        left: leftExtra,
+        right: rightExtra,
+      ),
+      child: LayoutBuilder(
+        builder: (context, boxConstraints) {
+          return BeakedPanelWithBeak(
+            baseSide: baseSide,
+            beakEnabled: beakEnabled,
+            beakSize: beakSize,
+            beakColor: beakColor,
+            beakPosition: beakPosition,
+            elevation: elevation,
+            backgroundColor: backgroundColor,
+            borderRadius: borderRadius,
+            constraints: constraints,
+            padding: padding,
+            onEscape: onEscape,
+            textDirection: textDirection,
+            borderColor: borderColor,
+            borderWidth: borderWidth,
+            child: child,
+          );
+        },
       ),
     );
+
+    // Apply animations based on type
+    panel = _applyAnimations(panel);
+
+    return RepaintBoundary(child: panel);
+  }
+
+  Widget _applyAnimations(Widget child) {
+    switch (animation) {
+      case TooltipCardAnimation.none:
+        return child;
+
+      case TooltipCardAnimation.fade:
+        return FadeTransition(opacity: fade, child: child);
+
+      case TooltipCardAnimation.scale:
+        return ScaleTransition(
+          scale: scale,
+          alignment: _getScaleAlignment(),
+          child: child,
+        );
+
+      case TooltipCardAnimation.fadeScale:
+        return FadeTransition(
+          opacity: fade,
+          child: ScaleTransition(
+            scale: scale,
+            alignment: _getScaleAlignment(),
+            child: child,
+          ),
+        );
+
+      case TooltipCardAnimation.slideIn:
+        return SlideTransition(position: slide, child: child);
+
+      case TooltipCardAnimation.slideFade:
+        return FadeTransition(
+          opacity: fade,
+          child: SlideTransition(position: slide, child: child),
+        );
+
+      case TooltipCardAnimation.bounce:
+      case TooltipCardAnimation.elastic:
+      case TooltipCardAnimation.zoom:
+        return FadeTransition(
+          opacity: fade,
+          child: ScaleTransition(
+            scale: scale,
+            alignment: _getScaleAlignment(),
+            child: child,
+          ),
+        );
+    }
   }
 
   /// Gets the appropriate scale alignment based on placement

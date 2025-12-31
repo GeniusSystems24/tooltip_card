@@ -113,6 +113,13 @@ class HomeScreen extends StatelessWidget {
                   subtitle: 'Explore all 7 activation methods',
                   color: colorScheme.tertiary,
                   route: AppRoutes.triggers,
+                ),
+                _CategoryTile(
+                  icon: Icons.animation_rounded,
+                  title: 'Animations & Data',
+                  subtitle: '9 animation types + controller data',
+                  color: colorScheme.secondary,
+                  route: AppRoutes.animations,
                   badge: 'NEW',
                 ),
                 _CategoryTile(
@@ -257,7 +264,7 @@ class _HeroSection extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text(
-                              'v2.5.0',
+                              'v2.6.0',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
